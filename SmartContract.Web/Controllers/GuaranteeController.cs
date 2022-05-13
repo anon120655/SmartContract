@@ -297,7 +297,6 @@ namespace SmartContract.Web.Controllers
 			}
 		}
 
-
 		[HttpPost]
 		public async Task<IActionResult> Create(ELGCreateMain indata)
 		{
