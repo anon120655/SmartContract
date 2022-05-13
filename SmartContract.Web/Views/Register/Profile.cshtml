@@ -1,0 +1,102 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Profile";
+
+
+    Layout = "_LayoutRegister";
+    var userName = UserService.GetUserName();
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-3">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small class="text-dark"><i class="fa fa-book mr-1"></i>Profile</small>
+                        </h4>
+                    </div>
+                    <div class="col-6 text-right">
+                        <h5>
+                            <b>สถานะ : </b>
+                            <partial name="_PartialRegStatus.cshtml" model="Model" />
+                        </h5>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingUserView">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseUserView" aria-expanded="true" aria-controls="collapseUserView">
+                <i class="fas fa-user"></i> ผู้เข้าใช้งาน
+            </button>
+        </h5>
+    </div>
+    <div id="collapseUserView" class="collapse show" aria-labelledby="headingUserView">
+        <partial name="_PartialUserView.cshtml" model="Model" />
+    </div>
+</div>
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailVendor">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendor" aria-expanded="true" aria-controls="collapseDetailVendor">
+                <i class="fas fa-id-card"></i> หน่วยบริการ/คู่สัญญา
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailVendor" class="collapse  show" aria-labelledby="headingDetailVendor">
+        <partial name="_PartialVendorView.cshtml" model="Model" />
+    </div>
+</div>
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailVendorRole">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendorRole" aria-expanded="true" aria-controls="collapseDetailVendorRole">
+                <i class="fas fa-users"></i> รายชื่อ/บทบาท ผู้เข้าใช้งานภายใต้หน่วยบริการ
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailVendorRole" class="collapse  show" aria-labelledby="headingDetailVendorRole">
+        <partial name="_PartialVendorRoleView.cshtml" model="Model" />
+    </div>
+</div>
+
+
+
+@if (String.IsNullOrEmpty(userName))
+{
+    <div class="form-group text-center">
+        <a asp-controller="Authorize" asp-action="LogOut" class="btn btn-success mr-2" name="BtnSubmit" value="0">เข้าสู่ระบบ</a>
+    </div>
+}
+
+<br />
+<br />
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}

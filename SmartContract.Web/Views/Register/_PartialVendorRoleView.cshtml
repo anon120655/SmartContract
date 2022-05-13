@@ -1,0 +1,94 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+
+}
+
+<div class="card-body thead_tabsub1 bg-form">
+    <div class="form-group">
+        <div class="col-md-12 table-responsive">
+            <table id="table1" class="table table-condensed thead_tabsub1" style="border-collapse: collapse; font-size: 13px; background-color: whitesmoke">
+                <thead style="background-color: deepskyblue">
+                    <tr>
+                        <th>ลำดับ</th>
+                        <th>ชื่อเต็ม</th>
+                        <th>ตำแหน่ง</th>
+                        <th>ประเภทผู้เข้าใช้งาน</th>
+                        @*<th>อำนาจลงนาม</th>*@
+                        <th>วันที่ลงทะเบียน</th>
+                        <th>สถานะ</th>
+                        @*<th>#</th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.UsersUnderServiceUnit != null && Model.UsersUnderServiceUnit.Count > 0)
+                    {
+                        foreach (var item in Model.UsersUnderServiceUnit.Select((value, index) => new { Value = value, Index = index }))
+                        {
+                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                <td class="text-center">@(item.Index + 1)</td>
+                                <td>@item.Value.UserFullname</td>
+                                <td>@item.Value.PositionName</td>
+                                <td class="text-center">@(item.Value.SignerType == "S1" ? "เป็นผู้มีอำนาจด้วยตัวเอง" : "รับมอบอำนาจ")</td>
+                                @*<td>
+                                    <b>
+                                        ชื่อผู้มอบอำนาจ
+                                    </b> : นายxxx xxx
+                                    <br />
+                                    <b>
+                                        จากวันที่
+                                    </b> : 01/10/2564
+                                    <br />
+                                    <b>
+                                        ถึงวันที่
+                                    </b> : 31/10/2564
+                                    <br />
+                                </td>*@
+                                <td>
+                                    <b>
+                                        ผู้ลง
+                                    </b> : @item.Value.UserFullnameCreate
+                                    <br />
+                                    <b>
+                                        วันที่ลง
+                                    </b> : @(GeneralUtils.DateToThString(item.Value.CreateDate))
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Value.Status == UserSmctStatus.Cancel)
+                                    {
+                                        <span class="badge badge-pill badge-danger fa-1x">
+                                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.Cancel).Name)
+                                        </span>
+                                    }
+                                    else if (item.Value.Status == UserSmctStatus.WaitUse)
+                                    {
+                                        <span class="badge badge-pill badge-warning fa-1x">
+                                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.WaitUse).Name)
+                                        </span>
+                                    }
+                                    else if (item.Value.Status == UserSmctStatus.NotUse)
+                                    {
+                                        <span class="badge badge-pill badge-danger fa-1x">
+                                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.NotUse).Name)
+                                        </span>
+                                    }
+                                    else if (item.Value.Status == UserSmctStatus.Used)
+                                    {
+                                        <span class="badge badge-pill badge-success fa-1x">
+                                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.Used).Name)
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <br />
+            <br />
+        </div>
+        <hr class="my-4">
+    </div>
+</div>

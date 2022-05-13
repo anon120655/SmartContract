@@ -1,0 +1,24 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "coming soon";
+    if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+        Layout = "_LayoutTemplatesVendor";
+    else
+        Layout = "_LayoutTemplates";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12" style="height:100px"></div>
+            <div class="col-12">
+                <h4 class="text-center text-danger">อยู่ระหว่างดำเนินการ</h4>
+            </div>
+
+        </div>
+    </div>
+</section>
+

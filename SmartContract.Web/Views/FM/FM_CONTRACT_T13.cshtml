@@ -1,0 +1,100 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "FM_CONTRACT_T13";
+    Layout = "~/Views/Shared/_LayoutFM.cshtml";
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indataCon = Model.InfoContract;
+    var indataNhso = Model.InfoContractNhso;
+    var indataVendor = Model.InfoPartnersOfContract;
+    var indataConstation = Model.ContractStation;
+    var ConDetail = Model.InfoConDetail.ContractDetail11;
+    var indataReqApp = Model.InfoRequestForApproval;
+}
+
+<link rel="stylesheet" href="~/css/font.css" />
+<link rel="stylesheet" href="~/css/FM.css" asp-append-version="true" />
+
+<section>
+    <div class="main-page size-15">
+        <div class="content-page ">
+            <div class="text-right ">เลขที่อ้างอิง <span class="para">@indataCon.RefId</span></div>
+            <div class="text-center">
+                <img src="../images/logo/NHSO.png" />
+            </div>
+            <h3 class="text-center size-17 mt-1">หนังสือแสดงความจำนงตอบรับการดำเนินงาน </h3>
+            <div class="text">
+                เรียน   เลขาธิการสำนักงานหลักประกันสุขภาพแห่งชาติ
+            </div>
+            <br />
+            <div class="text-1">{1@03} {2@04}  {3@05}  ประจำปี {4@06}  เพื่อให้หน่วยงานที่สนใจเข้าร่วมดำเนินงานตามแผนงานโครงการแนวทางต่างๆ ความละเอียดแจ้งแล้ว นั้น</div>
+            <br />
+            <div class="text-1">
+                ในการนี้ {1@07}  มีความประสงค์และยินดีเข้าร่วมดำเนินงาน ดังนี้
+            </div>
+            <div class="text-1">
+                1. {1@08}
+            </div>
+            <div class="text-1">
+                2. {1@09}
+            </div>
+            <div class="text-1">
+                3. {1@10}
+            </div>
+            <div class="text-1">
+                4. {1@11}
+            </div>
+            <div class="text-1">
+                5. {1@12}
+            </div>
+            <div class="text-1">
+                {1@13}
+            </div>
+            <div class="text-1">
+                {2@14}
+            </div>
+            <br />
+            <div class="text-1">
+                ทั้งนี้ {1@07}  ตกลงดำเนินตามแผนงานโครงการ พร้อมทั้งปฏิบัติตามเงื่อนไขการจ่ายเงินและเงื่อนไขการประชาสัมพันธ์ตามที่สำนักงานหลักประกันสุขภาพแห่งชาติ กำหนดทุกประการ  กรณีที่ดำเนินโครงการไม่แล้วเสร็จหรือไม่ส่งผลการดำเนินงานภายในกำหนดเวลา ยินยอมให้สำนักงานหักเงินพึงจ่าย เพื่อหักกลบลบหนี้ได้
+            </div>
+            <br />
+            <br />
+            <br />
+            <div class="float-left w-25 text-right">ลงชื่อ</div>
+            <div class="float-left w-50 text-left">&nbsp;</div>
+            <div class="float-left w-25 text-left">สำนักงาน</div>
+            @*<br />*@
+            <div class="float-left w-25 text-right">&nbsp;</div>
+            <div class="float-left w-50 text-center">{1@75}</div>
+            <div class="float-left w-25 text-left">&nbsp;</div>
+            @*<br />*@
+            <div class="float-left w-25 text-right">&nbsp;</div>
+            <div class="float-left w-50 text-center">ตำแหน่ง {1@76}</div>
+            <div class="float-left w-25 text-left">&nbsp;</div>
+            <br />
+            <br />
+            <div class="float-left w-25 text-right">&nbsp;</div>
+            <div class="float-left w-50 text-center">วันที่...{1@21}...เดือน...{2@22}...พ.ศ....{3@23}...</div>
+            <div class="float-left w-25 text-left">&nbsp;</div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+</section>
+
+<section>
+    <partial name="/Views/FM/SignatureLast.cshtml" model="Model" />
+</section>
+
+@section Scripts {
+    <script src="~/js/FM.js" asp-append-version="true"></script>
+}
+
+
+

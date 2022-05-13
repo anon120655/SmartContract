@@ -1,0 +1,209 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    string _Station = Model.ContractStation.StationStatusCurr;
+    String IsDisabled = "";
+    @if (_Station == ContractStationStatusAll.S5Signing2)
+    {
+        IsDisabled = "disabled";
+    }
+}
+
+<section>
+    <fieldset @(IsDisabled)>
+        @*<div class="col-md-12">
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารภาคผนวกแนบท้ายสัญญาดังต่อไปนี้ ให้ถือเป็นส่วนหนึ่งของสัญญานี้</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-9 col-form-label text-sm-right">2.1 ผนวก 1 แผนงาน/โครงการ จำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail11.P1">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-9 col-form-label text-sm-right">2.2 ผนวก 2 หลักเกณฑ์/วิธีการ/เงื่อนไข การจ่ายเงินสนับสนุน จำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail11.P2">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-9 col-form-label text-sm-right">2.3 ผนวก 3 หนังสืออนุมัติยกเว้นวางหลักประกันสัญญา จำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail11.P3">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">2.4 ผนวก 4  :</label>
+                <div class="col-sm-5 ">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail11.P4">
+                </div>
+                <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail11.P5">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+
+
+
+
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 3 สำนักงานตกลงให้เงินสนับสนุน และผู้ดำเนินงานตกลงรับเงินสนับสนุน</label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เงินสนับสนุนจำนวนทั้งสิ้นไม่เกิน :</label>
+                <div class="col-sm-7 ">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail11.P6">
+                </div>
+                <label class="col-sm-1 col-form-label">บาท</label>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 6 ค่าปรับ</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label text-sm-right">ค่าปรับเป็นเงินวันละ :</label>
+                <div class="col-sm-7">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail11.P7">
+                </div>
+                <label class="col-sm-1 col-form-label">บาท</label>
+            </div>
+        </div>*@
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 1 สำนักงานตกลงให้และผู้ดำเนินงานตกลงรับดำเนินงาน </label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">(ชื่อแผนงาน/โครงการ) :</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" readonly asp-for="InfoConDetail.ContractDetail11.A1" value="@Model.ParameterCondition.ContractName">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">ในขณะทำสัญญานี้ ผู้ดำเนินงานตกลงรับดำเนินงานตามแผนงาน/โครงการรวม :</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail11.A2">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารภาคผนวกแนบท้ายสัญญาดังต่อไปนี้ ให้ถือเป็นส่วนหนึ่งของสัญญานี้ </label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">2.1 ผนวก 1 แผนงาน/โครงการ :</label>
+                <div class="col-sm-3">
+                    <textarea rows="2" class="form-control " asp-for="InfoConDetail.ContractDetail11.A3"></textarea>
+                </div>
+                <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail11.A4">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">2.2 ผนวก 2 หลักเกณฑ์/วิธีการ/เงื่อนไข การจ่ายเงินสนับสนุน จำนวน :</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail11.A5">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">2.3 ผนวก 3 หนังสืออนุมัติยกเว้นหลักประกันสัญญา จำนวน :</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail11.A6">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">2.4 ผนวก 4 :</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail11.A7">
+                </div>
+                <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail11.A8">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 3 สำนักงานตกลงให้เงินสนับสนุน และผู้ดำเนินงาน </label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">ตกลงรับเงินสนับสนุนจำนวนทั้งสิ้นไม่เกิน :</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail11.A9">
+                </div>
+                <label class="col-sm-1 col-form-label">บาท</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">รายละเอียดตามเงื่อนไขการจ่ายเงินสนับสนุน ตามผนวก :</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" readonly asp-for="InfoConDetail.ContractDetail11.A10">
+                </div>
+                <label class="col-sm-2 col-form-label">แนบท้ายสัญญานี้</label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">บัญชีธนาคาร :</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" readonly value="-" asp-for="InfoConDetail.ContractDetail11.A11">
+                </div>
+                <label class="col-md-1 col-form-label text-sm-right">สาขา</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail11.A12">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">ชื่อบัญชี :</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" readonly value="-" asp-for="InfoConDetail.ContractDetail11.A13">
+                </div>
+                <label class="col-md-1 col-form-label text-sm-right">เลขที่บัญชี</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" readonly value="-" asp-for="InfoConDetail.ContractDetail11.A14">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label text-sm-right"></label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           asp-for="InfoConDetail.ContractDetail11.A15">
+                    <label class="form-check-label" for="gridCheck4">
+                        ยกเว้นหลักประกัน
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">ได้รับยกเว้นตามหนังสือ :</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail11.A16">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 6 ค่าปรับ  </label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">คิดค่าปรับเป็นเงินวันละ :</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail11.A17">
+                </div>
+                <label class="col-sm-1 col-form-label">บาท</label>
+            </div>
+
+        </div>
+    </fieldset>
+</section>

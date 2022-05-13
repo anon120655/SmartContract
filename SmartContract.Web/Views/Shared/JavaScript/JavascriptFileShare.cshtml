@@ -1,0 +1,21 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Share.LookUpResource
+
+@{
+    var resource = Model;
+}
+
+<script type="text/javascript">
+    var bankinfosModelList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.BankInfos)))
+    var UserSmctSignerModelList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.UserSmctSigner)))
+    var MasterVendorsModelList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.MasterVendors)))
+    //คณะกรรมการ
+    var CommitteeListModelList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.CommitteeList)))
+    var BudgetcodeListModelList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.BudgetcodeList)))
+    var NhsoSignerListModelList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.NhsoSigner)))
+    var VNhsoEmployeeAllListModelList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.VNhsoEmployeeAll)))
+        
+
+    var hostname = '@(Model.SubDomainServer)'
+    console.log(hostname)
+</script>

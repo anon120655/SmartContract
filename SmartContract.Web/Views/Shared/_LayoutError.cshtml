@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="Shortcut Icon" href="~/favicon.ico" type="image/x-icon" />
+
+    <!-- Mobile Specific Meta
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <!-- Themefisher Icon font -->
+    <link rel="stylesheet" href="~/templates/plugins/themefisher-font.v-2/style.css">
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="~/templates/plugins/bootstrap/dist/css/bootstrap.css" asp-append-version="true">
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href="~/templates/plugins/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="~/templates/plugins/slick-carousel/slick/slick-theme.css">
+
+    <link href="~/lib/fontawesome5_11_2/css/fontawesome.css" rel="stylesheet">
+    <link href="~/lib/fontawesome5_11_2/css/brands.css" rel="stylesheet">
+    <link href="~/lib/fontawesome5_11_2/css/solid.css" rel="stylesheet">
+
+    <link href="~/lib/Datepicker/DateThai/css/bootstrap-datepicker.css" rel="stylesheet" />
+    @*<link href="~/lib/toastr/toastr.css" rel="stylesheet" />*@
+
+    <link href="~/lib/bootstrap-sweetalert/dist/sweetalert.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/pagination.css" rel="stylesheet" asp-append-version="true" />
+
+    <!-- Main Stylesheet -->
+    <link href="~/templates/css/style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/btnOnTop.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body>
+    <div id="body" class="page-container loaddingcontent">
+        <div id="content-wrap">
+
+            <section class="top-header">
+                <div class="container-fluid" style="padding: 0;">
+                    <div class="row">
+                        <div class="col-md-8">
+                           
+                        </div>
+                        <div class="col-md-4" style="padding: 0;">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="header  navigation" style="background-color: #007bff !important;">
+                <div class="row">
+                    <div class="col-md-12" style="height : 50px;">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+
+                                <a class="nav-link" style="font-size:20px;"
+                                   asp-controller="Authorize"
+                                   asp-action="Local"><i class="fas fa-sign-out-alt"></i> เข้าสู่ระบบ</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            @RenderBody()
+            <footer id="footer" class="bg-one">
+                <div class="footer-bottom">
+                    <img src="~/images/logo/thpf_logo1.png" width='50' />
+                    <br />
+                    อาคารศูนย์เรียนรู้สุขภาวะ เลขที่ 99/8 ซอยงามดูพลี แขวงทุ่งมหาเมฆ เขตสาทร กรุงเทพฯ 10120<br />โทรศัพท์ 02-343-1500 / โทรสาร 02-343-1551<br />อีเมล์ info@thaihealth.or.th
+                </div>
+            </footer>
+
+            <!-- Main jQuery -->
+            <script src="~/templates/plugins/jquery/dist/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            @*<script src="~/templates/plugins/bootstrap/dist/js/popper.min.js"></script>*@
+            <script src="~/templates/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+            <!-- Owl Carousel -->
+            <script src="~/templates/plugins/slick-carousel/slick/slick.min.js"></script>
+
+            <!-- Smooth Scroll js -->
+            <script src="~/templates/plugins/smooth-scroll/dist/js/smooth-scroll.min.js"></script>
+
+            <script src="~/lib/fontawesome5_11_2/js/fontawesome.js" asp-append-version="true"></script>
+
+            @RenderSection("Scripts", required: false)
+        </div>
+    </div>
+    <div id="divLoading">
+    </div>
+</body>
+</html>

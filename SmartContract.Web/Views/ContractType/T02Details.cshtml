@@ -1,0 +1,750 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var indata = Model.InfoConDetail.ContractDetail02;
+}
+
+<section>
+    @*<div class="">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารอันเป็นส่วนหนึ่งของสัญญา</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label text-sm-right">2.1 ผนวก 1 รายชื่อผู้มีสิทธิในรูปอิเล็กทรอนิกส์ที่ลงทะเบียนกับหน่วยบริการ โดยอ้างอิงจากฐานข้อมูลของสำนักงานหลักประกันสุขภาพแห่งชาติ ณ วันที่ :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                               asp-for="InfoConDetail.ContractDetail02.P1"
+                               placeholder="วว/ดด/ปปปป" autocomplete="off">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P2">
+                    </div>
+                    <label class="col-sm-1 col-form-label">คน(ถ้ามี)</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.2 ผนวก 2 สิทธิประโยชน์ ประเภทและขอบเขต ของบริการสาธารณสุข ตามพระราชบัญญัติ หลักประกันสุขภาพแห่งชาติ พ.ศ.2545 จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P3">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.3 ผนวก 3 หน้าที่ของหน่วยบริการตามมาตรา 45 แห่งพระราชบัญญัติหลักประกันสุขภาพแห่งชาติ พ.ศ.2545 จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P4">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.4 ผนวก 4 ข้อมูลพื้นฐานหน่วยบริการและเครือข่ายหน่วยบริการในรูปอิเล็กทรอนิกส์ จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P5">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.5 ผนวก 5 ประเภทและรายชื่อบุคลากรประจำหน่วยบริการ จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P6">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.6 ผนวก 6 การให้บริการสร้างเสริมสุขภาพและป้องกันโรค จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P7">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.7 ผนวก 7 รายละเอียดและเงื่อนไขการให้หน่วยบริการรับลงทะเบียนผู้มีสิทธิหรือขอเปลี่ยนแปลงหน่วยบริการประจำจำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P8">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.8 ผนวก 8 รายงานและสถิติการให้บริการของหน่วยบริการ :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P9">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">2.9 ผนวก 9  :</label>
+                    <div class="col-sm-7 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P10">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">2.10 ผนวก 10  :</label>
+                    <div class="col-sm-7 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P11">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 3 ข้อตกลงให้บริการสาธารณสุข</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-form-label h3"><span class="">3.1 คู่สัญญาเป็นหน่วยบริการที่ได้รับขึ้นทะเบียน ตามกฎ ระเบียบ ข้อบังคับ ประกาศ เกี่ยวกับเกณฑ์การขึ้นทะเบียนและตรวจประเมินเพื่อขึ้นทะเบียนเป็นหน่วยบริการ และที่แก้ไขเพิ่มเติม ที่คณะกรรมการ หรือคณะกรรมการควบคุมคุณภาพและมาตราฐาน หรือสำนักงาน กำหนด ประเภท</span></label>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label pt-sm-0 text-sm-right">ประเภทหน่วยบริการ :</label>
+                    <div class="col-sm-7">
+                        <div class="form-group row">
+                            <div class="form-check">
+                                <input id="P12_CB_1" class="form-check-input cb_group_p12" type="checkbox"
+                                       name="InfoConDetail.ContractDetail02.P12" value="1" @((indata.P12 == "1" ? "checked" : ""))>
+                                <label class="form-check-label" for="gridCheck1">
+                                    หน่วยบริการประจำ
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="form-check">
+                                <input id="P12_CB_2" class="form-check-input cb_group_p12" type="checkbox"
+                                       name="InfoConDetail.ContractDetail02.P12" value="2" @((indata.P12 == "2" ? "checked" : ""))>
+                                <label class="form-check-label" for="gridCheck2">
+                                    หน่วยบริการปฐมภูมิ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-check">
+                                <input id="P12_CB_3" class="form-check-input cb_group_p12" type="checkbox"
+                                       name="InfoConDetail.ContractDetail02.P12" value="3" @((indata.P12 == "3" ? "checked" : ""))>
+                                <label class="form-check-label" for="gridCheck3">
+                                    หน่วยบริการที่รับการส่งต่อ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label pt-sm-0 text-sm-right"></label>
+                            <div class="col-sm-9">
+                                <div class="form-group row">
+                                    <div class="form-check">
+                                        <input class="form-check-input cb_group_p12_level1" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P16">
+                                        <label class="form-check-label" for="gridCheck4">
+                                            ทั่วไป
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="form-check">
+                                        <input class="form-check-input cb_group_p12_level1" type="checkbox" onchange="CB_P12_Type3_Specialty()"
+                                               asp-for="InfoConDetail.ContractDetail02.P17">
+                                        <label class="form-check-label" for="gridCheck4">
+                                            เฉพาะทาง
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-1 col-form-label pt-sm-0 text-sm-right"></label>
+                                    <div class="col-sm-9">
+                                        <div class="form-group row">
+                                            <div class="form-check">
+                                                <input class="form-check-input cb_group_p12_level2" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P18">
+                                                <label class="form-check-label" for="gridCheck4">
+                                                    ด้านโรคมะเร็งโลหิตวิทยา
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-check">
+                                                <input class="form-check-input cb_group_p12_level2" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P19">
+                                                <label class="form-check-label" for="gridCheck4">
+                                                    ด้านรังสีรักษา
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-check">
+                                                <input class="form-check-input cb_group_p12_level2" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P20">
+                                                <label class="form-check-label" for="gridCheck4">
+                                                    ด้านศัลยกรรมหัวใจ
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-check">
+                                                <input class="form-check-input cb_group_p12_level2" type="checkbox" onchange="IsP21_25_Change()"
+                                                       asp-for="InfoConDetail.ContractDetail02.IsP21_25">
+                                                <label class="form-check-label" for="gridCheck4">
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6 ">
+                                                <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P21">
+                                            </div>
+                                            <div class="col-sm-4 " id="AddRemove_GroupSpecialty">
+                                                <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer" onclick="AddRemove_Specialty('A')"></i>
+                                                <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer" onclick="AddRemove_Specialty('D')"></i>
+                                            </div>
+                                        </div>
+                                        <div id="Render_Specialty">
+                                            @{String P22 = "d-none";} @if (!String.IsNullOrEmpty(indata.P22)) { P22 = "show"; }
+                                            <div id="Specialty_1" class="Render_Specialty_sub form-group row @P22">
+                                                <div class="form-check"></div>
+                                                <div class="col-sm-6 ">
+                                                    <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P22">
+                                                </div>
+                                            </div>
+                                            @{String P23 = "d-none";} @if (!String.IsNullOrEmpty(indata.P23)) { P23 = "show"; }
+                                            <div id="Specialty_2" class="Render_Specialty_sub form-group row @P23">
+                                                <div class="form-check"></div>
+                                                <div class="col-sm-6 ">
+                                                    <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P23">
+                                                </div>
+                                            </div>
+                                            @{String P24 = "d-none";} @if (!String.IsNullOrEmpty(indata.P24)) { P24 = "show"; }
+                                            <div id="Specialty_3" class="Render_Specialty_sub form-group row @P24">
+                                                <div class="form-check"></div>
+                                                <div class="col-sm-6 ">
+                                                    <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P24">
+                                                </div>
+                                            </div>
+                                            @{String P25 = "d-none";} @if (!String.IsNullOrEmpty(indata.P25)) { P25 = "show"; }
+                                            <div id="Specialty_4" class="Render_Specialty_sub form-group row @P25">
+                                                <div class="form-check"></div>
+                                                <div class="col-sm-6 ">
+                                                    <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P25">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <fieldset>
+                            <div class="form-group row">
+                                <div class="form-check">
+                                    <input id="P12_CB_4" class="form-check-input cb_group_p12" type="checkbox"
+                                           name="InfoConDetail.ContractDetail02.P12" value="4" @((indata.P12 == "4" ? "checked" : ""))>
+                                    <label class="form-check-label" for="gridCheck4">
+                                        หน่วยที่ร่วมบริการ
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-1 col-form-label pt-sm-0 text-sm-right"></label>
+                                <div class="col-sm-9">
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P27">
+                                            <label class="form-check-label" for="gridCheck4">
+                                                ด้านเวชกรรม
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P28">
+                                            <label class="form-check-label" for="gridCheck4">
+                                                ด้านทันตกรรม
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P29">
+                                            <label class="form-check-label" for="gridCheck4">
+                                                ด้านเภสัชกรรม
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P30">
+                                            <label class="form-check-label" for="gridCheck4">
+                                                ด้านเทคนิคการแพทย์
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P31">
+                                            <label class="form-check-label" for="gridCheck4">
+                                                ด้านกายภาพบำบัด
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P32">
+                                            <label class="form-check-label" for="gridCheck4">
+                                                ด้านแพทย์แผนไทย
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" asp-for="InfoConDetail.ContractDetail02.P33">
+                                            <label class="form-check-label" for="gridCheck4">
+                                                ด้านแพทย์แผนไทยประยุกต์
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="form-check">
+                                            <input class="form-check-input cb_group_JoinService" type="checkbox" onchange="IsP34_28_Change()"
+                                                   asp-for="InfoConDetail.ContractDetail02.IsP34_28">
+                                            <label class="form-check-label" for="gridCheck4">
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-6 ">
+                                            <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail02.P34">
+                                        </div>
+                                        <div class="col-sm-5 d-none" id="AddRemove_GroupJoinService">
+                                            <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer" onclick="AddRemove_JoinService('A')"></i>
+                                            <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer" onclick="AddRemove_JoinService('D')"></i>
+                                        </div>
+                                    </div>
+                                    <div id="Render_JoinService">
+                                        @{String P35 = "d-none";} @if (!String.IsNullOrEmpty(indata.P35)) { P35 = "show"; }
+                                        <div id="JoinService_1" class="Render_JoinService_sub form-group row @P35">
+                                            <div class="form-check"></div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail02.P35">
+                                            </div>
+                                        </div>
+                                        @{String P36 = "d-none";} @if (!String.IsNullOrEmpty(indata.P36)) { P36 = "show"; }
+                                        <div id="JoinService_2" class="Render_JoinService_sub form-group row @P36">
+                                            <div class="form-check"></div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail02.P36">
+                                            </div>
+                                        </div>
+                                        @{String P37 = "d-none";} @if (!String.IsNullOrEmpty(indata.P37)) { P37 = "show"; }
+                                        <div id="JoinService_3" class="Render_JoinService_sub form-group row @P37">
+                                            <div class="form-check"></div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail02.P37">
+                                            </div>
+                                        </div>
+                                        @{String P38 = "d-none";} @if (!String.IsNullOrEmpty(indata.P38)) { P38 = "show"; }
+                                        <div id="JoinService_4" class="Render_JoinService_sub form-group row @P38">
+                                            <div class="form-check"></div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail02.P38">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ซึ่งให้บริการผู้ป่วยประเภท :</label>
+                    <div class="col-sm-7 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P39">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">หน่วยบริการที่รับการส่งต่อคือ :</label>
+                    <div class="col-sm-7 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P40">
+                    </div>
+                    <div class="col-sm-2 " id="AddRemove_GroupGetForward">
+                        <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer" onclick="AddRemove_GetForward('A')"></i>
+                        <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer" onclick="AddRemove_GetForward('D')"></i>
+                    </div>
+                </div>
+                <div id="Render_GetForward">
+                    @{String P41 = "d-none";} @if (!String.IsNullOrEmpty(indata.P41)) { P41 = "show"; }
+                    <div id="GetForward_1" class="Render_GetForward_sub form-group row @P41">
+                        <label class="col-sm-3 col-form-label text-sm-right"></label>
+                        <div class="col-sm-7 ">
+                            <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P41">
+                        </div>
+                    </div>
+                    @{String P42 = "d-none";} @if (!String.IsNullOrEmpty(indata.P42)) { P42 = "show"; }
+                    <div id="GetForward_2" class="Render_GetForward_sub form-group row @P42">
+                        <label class="col-sm-3 col-form-label text-sm-right"></label>
+                        <div class="col-sm-7 ">
+                            <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P42">
+                        </div>
+                    </div>
+                    @{String P43 = "d-none";} @if (!String.IsNullOrEmpty(indata.P43)) { P43 = "show"; }
+                    <div id="GetForward_3" class="Render_GetForward_sub form-group row @P43">
+                        <label class="col-sm-3 col-form-label text-sm-right"></label>
+                        <div class="col-sm-7 ">
+                            <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P43">
+                        </div>
+                    </div>
+                    @{String P44 = "d-none";} @if (!String.IsNullOrEmpty(indata.P44)) { P44 = "show"; }
+                    <div id="GetForward_4" class="Render_GetForward_sub form-group row @P44">
+                        <label class="col-sm-3 col-form-label text-sm-right"></label>
+                        <div class="col-sm-7 ">
+                            <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P44">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">หน่วยบริการที่ร่วมให้บริการคือ :</label>
+                    <div class="col-sm-7 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P45">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">สถานพยาบาลส่งต่อด้านต่างๆคือ :</label>
+                    <div class="col-sm-7 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.P46">
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-form-label h3"><span class="">3.2 หน่วยบริการตกลงเปิดทำการและให้บริการแก่ผู้มีสิทธิไม่น้อยกว่าวันเวลาที่กำหนดไว้ดังต่อไปนี้</span></label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-form-label h3"><span class="">3.2.1 กรณีหน่วยบริการประจำและหรือปฐมภูมิ</span></label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">(1)วันจันทร์ - วันศุกร์ เวลา :</label>
+                    <div class="col-sm-1 mt-sm-2">
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="CB_321_24_G_1()" type="checkbox"
+                                   asp-for="InfoConDetail.ContractDetail02.IsP47">
+                            <label class="form-check-label" for="time1">
+                                24 ชม.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P48">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P49">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">(2)วันเสาร์ - วันอาทิตย์  :</label>
+                    <div class="col-sm-1 mt-sm-2">
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="CB_321_24_G_2()" type="checkbox"
+                                   asp-for="InfoConDetail.ContractDetail02.IsP50">
+                            <label class="form-check-label" for="time1">
+                                24 ชม.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P51">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P52">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-form-label h3"><span class="">3.2.2 กรณีหน่วยบริการที่รับส่งต่อทั่วไปและหรือเฉพาะด้าน</span></label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">(1)วันจันทร์ - วันศุกร์ เวลา :</label>
+                    <div class="col-sm-1 mt-sm-2">
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="CB_322_24_G_1()" type="checkbox"
+                                   asp-for="InfoConDetail.ContractDetail02.IsP53">
+                            <label class="form-check-label" for="time1">
+                                24 ชม.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P54">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P55">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">(2)วันเสาร์ - วันอาทิตย์  :</label>
+                    <div class="col-sm-1 mt-sm-2">
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="CB_322_24_G_2()" type="checkbox"
+                                   asp-for="InfoConDetail.ContractDetail02.IsP56">
+                            <label class="form-check-label" for="time1">
+                                24 ชม.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P57">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P58">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label h3"><span class="">3.2.3 กรณีหน่วยบริการร่วมให้บริการ ไม่น้อยกว่า :</span></label>
+                    <div class="col-sm-3 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P59">
+                    </div>
+                    <label class="col-sm-4 col-form-label ">ชั่วโมงต่อสัปดาห์</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">(1)วันจันทร์ - วันศุกร์ เวลา :</label>
+                    <div class="col-sm-1 mt-sm-2">
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="CB_323_24_G_1()" type="checkbox"
+                                   asp-for="InfoConDetail.ContractDetail02.IsP60">
+                            <label class="form-check-label" for="time1">
+                                24 ชม.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P61">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P62">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">(2)วันเสาร์ - วันอาทิตย์  :</label>
+                    <div class="col-sm-1 mt-sm-2">
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="CB_323_24_G_2()" type="checkbox"
+                                   asp-for="InfoConDetail.ContractDetail02.IsP63">
+                            <label class="form-check-label" for="time1">
+                                24 ชม.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P64">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                    <div class="col-sm-2 ">
+                        <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P65">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 14 การบอกกล่าว</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-6 col-form-label text-sm-right">หากคู่สัญญาเปลี่ยนแปลงที่อยู่ ต้องแจ้งให้คู่สัญญาอีกฝ่ายหนึ่งทราบภายใน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.P66">
+                    </div>
+                    <label class="col-sm-1 col-form-label">วัน</label>
+                </div>
+
+            </div>
+        </div>*@
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารอันเป็นส่วนหนึ่งของสัญญา</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">2.1 ผนวก 1 เอกสารการสมัคร/การประเมินและข้อมูลพื้นฐานหน่วยบริการและเครือข่ายหน่วยบริการในรูปแบบอิเล็กหรอนิกส์ของคู่สัญญาฝ่ายหน่วยบริการ </label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.A1">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">2.2 ผนวก 2 ประเภทและรายชื่อบุคลากรประจำหน่วยบริการ ของคู่สัญญาฝ่ายหน่วยบริการ </label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.A2">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 col-form-label text-sm-right">2.3 ผนวก 3 การให้บริการสร้างเสริมสุขภาพและป้องกันโรค (มาจากผนวก 6 เดิม) </label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail02.A3">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">2.4 ผนวก 4  :</label>
+                <div class="col-sm-5 ">
+                    <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.A4">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 3 ข้อตกลงให้บริการสาธารณสุข</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-form-label h3"><span class="">3.1 คู่สัญญาเป็นหน่วยบริการที่ได้รับขึ้นทะเบียน ตามกฎ ระเบียบ ข้อบังคับ ประกาศ เกี่ยวกับเกณฑ์การขึ้นทะเบียนและตรวจประเมินเพื่อขึ้นทะเบียนเป็นหน่วยบริการ และที่แก้ไขเพิ่มเติม ที่คณะกรรมการ หรือคณะกรรมการควบคุมคุณภาพและมาตราฐาน หรือสำนักงาน กำหนด ประเภท</span></label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label pt-sm-0 text-sm-right">ประเภทหน่วยบริการ :</label>
+                <div class="col-sm-7">
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <input id="P12_CB_1" class="form-check-input cb_group_p12" type="checkbox"
+                                   name="InfoConDetail.ContractDetail02.A5" value="1" @((indata.A5 == "1" ? "checked" : ""))>
+                            <label class="form-check-label" for="gridCheck1">
+                                หน่วยบริการประจำ
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label text-sm-right"><b>หน่วยบริการที่รับการส่งต่อ คือ</b></label>
+                        <div class="col-sm-5 ">
+                            <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.A6">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <input id="P12_CB_2" class="form-check-input cb_group_p12" type="checkbox"
+                                   name="InfoConDetail.ContractDetail02.P12" value="2" @((indata.A5 == "2" ? "checked" : ""))>
+                            <label class="form-check-label" for="gridCheck2">
+                                หน่วยบริการปฐมภูมิ
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <input id="P12_CB_3" class="form-check-input cb_group_p12" type="checkbox"
+                                   name="InfoConDetail.ContractDetail02.P12" value="3" @((indata.A5 == "3" ? "checked" : ""))>
+                            <label class="form-check-label" for="gridCheck3">
+                                หน่วยบริการที่รับการส่งต่อ
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-1 col-form-label pt-sm-0 text-sm-right"></label>
+                        <div class="col-sm-9">
+                            <div class="form-group row">
+                                <div class="form-check">
+                                    <input class="form-check-input cb_group_p12_level1" type="checkbox" asp-for="InfoConDetail.ContractDetail02.A7">
+                                    <label class="form-check-label" for="gridCheck4">
+                                        ทั่วไป
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-check">
+                                    <input class="form-check-input cb_group_p12_level1" type="checkbox" asp-for="InfoConDetail.ContractDetail02.A8">
+                                    <label class="form-check-label" for="gridCheck4">
+                                        เฉพาะด้าน
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 ">
+                                    <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail02.A9">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-sm-12 col-form-label h3"><span class="">3.2 หน่วยบริการตกลงเปิดทำการและให้บริการแก่ผู้มีสิทธิไม่น้อยกว่าวันเวลาที่กำหนดไว้ดังต่อไปนี้</span></label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-form-label h3"><span class="">3.2.1 กรณีหน่วยบริการประจำและหรือปฐมภูมิ ไม่น้อยกว่า 56 (ห้าสิบหก) ชั่วโมงต่อสัปดาห์</span></label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">(1)วันจันทร์ - วันศุกร์ เวลา :</label>
+                <div class="col-sm-1 mt-sm-2">
+                    <div class="form-check">
+                        <input class="form-check-input" onchange="CB_321_24_G_1()" type="checkbox"
+                               asp-for="InfoConDetail.ContractDetail02.IsP47">
+                        <label class="form-check-label" for="time1">
+                            24 ชม.
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P48">
+                </div>
+                <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P49">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">(2)วันเสาร์ - วันอาทิตย์  :</label>
+                <div class="col-sm-1 mt-sm-2">
+                    <div class="form-check">
+                        <input class="form-check-input" onchange="CB_321_24_G_2()" type="checkbox"
+                               asp-for="InfoConDetail.ContractDetail02.IsP50">
+                        <label class="form-check-label" for="time1">
+                            24 ชม.
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P51">
+                </div>
+                <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P52">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-form-label h3"><span class="">3.2.2 กรณีหน่วยบริการที่รับส่งต่อทั่วไปและหรือเฉพาะด้าน ไม่น้อยกว่า 56 (ห้าสิบหก) ชั่วโมงต่อสัปดาห์</span></label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">(1)วันจันทร์ - วันศุกร์ เวลา :</label>
+                <div class="col-sm-1 mt-sm-2">
+                    <div class="form-check">
+                        <input class="form-check-input" onchange="CB_322_24_G_1()" type="checkbox"
+                               asp-for="InfoConDetail.ContractDetail02.IsP53">
+                        <label class="form-check-label" for="time1">
+                            24 ชม.
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P54">
+                </div>
+                <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P55">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">(2)วันเสาร์ - วันอาทิตย์  :</label>
+                <div class="col-sm-1 mt-sm-2">
+                    <div class="form-check">
+                        <input class="form-check-input" onchange="CB_322_24_G_2()" type="checkbox"
+                               asp-for="InfoConDetail.ContractDetail02.IsP56">
+                        <label class="form-check-label" for="time1">
+                            24 ชม.
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P57">
+                </div>
+                <label class="col-sm-1 col-form-label text-sm-right">ถึงเวลา :</label>
+                <div class="col-sm-2 ">
+                    <input type="time" class="form-control" asp-for="InfoConDetail.ContractDetail02.P58">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,38 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+
+    String _Status = Model.Approvetype == "U" ? Model.UserSmct.Status : Model.RegisterNhso.Status;
+
+}
+
+<td class="text-center">
+    @if (_Status == UserSmctStatus.Cancel)
+    {
+        <span class="badge badge-pill badge-danger fa-1x">
+            @(ContractUtils.SmctStatusProperties(UserSmctStatus.Cancel).Name)
+        </span>
+    }
+    else if (_Status == UserSmctStatus.WaitUse)
+    {
+        <span class="badge badge-pill badge-warning fa-1x">
+            @(ContractUtils.SmctStatusProperties(UserSmctStatus.WaitUse).Name)
+        </span>
+    }
+    else if (_Status == UserSmctStatus.NotUse)
+    {
+        <span class="badge badge-pill badge-danger fa-1x">
+            @(ContractUtils.SmctStatusProperties(UserSmctStatus.NotUse).Name)
+        </span>
+    }
+    else if (_Status == UserSmctStatus.Used)
+    {
+        <span class="badge badge-pill badge-success fa-1x">
+            @(ContractUtils.SmctStatusProperties(UserSmctStatus.Used).Name)
+        </span>
+    }
+</td>

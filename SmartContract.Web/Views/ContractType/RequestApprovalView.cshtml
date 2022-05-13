@@ -1,0 +1,131 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoRequestForApproval;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ฝ่ายคู่สัญญา</label>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ชื่อโครงการ :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                           asp-for="InfoRequestForApproval.ContractName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เหตุผลความจำเป็น :</label>
+                <div class="col-sm-7">
+                    <textarea class="form-control-plaintext text-primary" readonly="readonly"
+                              rows="3" asp-for="InfoRequestForApproval.Reason"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือขออนุมัติดำเนินการ :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoRequestForApproval.ApprovalReqId" value="@(indata.ApprovalReqId !=null ? indata.ApprovalReqId : "-")">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">วันที่หนังสือขออนุมัติดำเนินการ :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.ContractDate" value="@(indata.ApprovalReqDate.HasValue ?  GeneralUtils.DateToThString(indata.ApprovalReqDate) : "-")">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้ประสานงาน :</label>
+                <div class="col-sm-3">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.Coordinators.FirstOrDefault(x=>x.IdUserSmct == indata.CoordinatorUserSelect)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">E-mail :</label>
+                <div class="col-sm-7">
+                    <input type="email" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoRequestForApproval.Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เบอร์โทรศัพท์ :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoRequestForApproval.Phone">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">โทรสาร :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoRequestForApproval.Fax">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-12 col-form-label "> <span class="h5">ฝ่ายสำนักงาน</span></label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">คณะกรรมการตรวจรับผลงาน/ประเมินผลงาน :</label>
+                <div class="col-sm-3">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.CommitteeList.FirstOrDefault(x=>x.EmpId == indata.ApprovalReqUserChairm)?.BoradFullname ?? String.Empty)">
+
+                </div>
+                <label class="col-form-label">ประธานกรรมการ</label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-3">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.CommitteeList.FirstOrDefault(x=>x.EmpId == indata.Committees.FirstOrDefault()?.EmpId)?.BoradFullname ?? String.Empty)">
+
+                </div>
+                <label class=" col-form-label">กรรมการ </label>
+            </div>
+            <div id="Committee_Render">
+                @if (indata.Committees != null && indata.Committees.Count > 0)
+                {
+                    foreach (var item in indata.Committees.Select((value, i) => (value, i)))
+                    {
+                        if (item.i > 0)
+                        {
+                            <div class="Committee_Sub Committee_Sub_@(item.i) form-group row">
+                                <label class="col-sm-3 col-form-label"></label>
+                                <div class="col-sm-4">
+                                    <input type="text" readonly class="form-control-plaintext text-primary"
+                                           value="@(lookUp.CommitteeList.FirstOrDefault(x=>x.EmpId == item.value.EmpId)?.BoradFullname ?? String.Empty)">
+
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ลงชื่อผู้ขออนุมัติ :</label>
+                <div class="col-sm-4">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.VNhsoEmployeeAll.FirstOrDefault(x => x.EmpId == indata.ApprovalReqUser)?.EmpFullname ?? String.Empty)">
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ตำแหน่ง :</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                           value="@(lookUp.VNhsoEmployeeAll.FirstOrDefault(x => x.EmpId == indata.ApprovalReqUser)?.EmpPosition ?? String.Empty)">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

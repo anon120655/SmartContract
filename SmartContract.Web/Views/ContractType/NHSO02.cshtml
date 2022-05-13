@@ -1,0 +1,112 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoContractNhso.NhsoAddress;
+    var _Style = Model.ParameterCondition.Style;
+    string _Station = Model.ContractStation.StationStatusCurr;
+    String _MenuCode = Model.ParameterCondition.MenuEn != null ? SecurityRepo.Decrypt(Model.ParameterCondition.MenuEn) : String.Empty;
+
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <form>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">สัญญาฉบับนี้ทำขึ้น ณ :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.Header">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">จังหวัด :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.ChangwatName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">อำเภอ/เขต :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.AmphurName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ตำบล/แขวง :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.TumbonName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ถนน :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.Road">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ตั้งอยู่เลขที่ :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.Address0">
+                    </div>
+                </div>
+                @if (Model.ParameterCondition.ContractTypeId != "14")
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม :</label>
+                        <div class="col-sm-4">
+                            @if (_Station == ContractStationStatusAll.S5Signing2 || _Station == ContractStationStatusAll.S6ContractNumber || _Station == ContractStationStatusAll.S7Binding && _MenuCode != ContractSuccessTypes.T1_EDIT)
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       value="@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId ==Model.InfoContractNhso.EmpId)?.SignerFullname ?? String.Empty)">
+                            }
+                            else
+                            {
+                                <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true" onchange="NhsoSignerChange(this)"
+                                        asp-for="InfoContractNhso.EmpId"
+                                        asp-items="@(new SelectList((from s in lookUp.NhsoSigner select new {
+                                                            Code=s.EmpId,
+                                                            FullName = $"{s.SignerFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.InfoContractNhso.EmpId))">
+                                    <option value="">---เลือก---</option>
+                                </select>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ตำแหน่ง :</label>
+                        <div class="col-sm-7">
+                            <input type="text" asp-for="InfoContractNhso.SignerPosition" readonly class="form-control-plaintext text-primary">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">E-mail :</label>
+                        <div class="col-sm-7">
+                            <input type="email" asp-for="InfoContractNhso.SignerEmail" readonly class="form-control-plaintext text-primary">
+                        </div>
+                    </div>
+                }
+                @if (_Style == "S1")
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">คำสั่งสำนักงานหลักประกันสุขภาพแห่งชาติ ที่ :</label>
+                        <div class="col-sm-4 pr-sm-0">
+                            <input type="text" asp-for="InfoContractNhso.NhsoContractId" class="form-control bg-focus" placeholder=" ">
+                        </div>
+                        <label class="col-sm-1 col-form-label text-sm-right">ลงวันที่ :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" asp-for="InfoContractNhso.NhsoContractDateStr" class="form-control bg-focus input_icon_calendar datepicker"
+                                   placeholder="วว/ดด/ปปปป" autocomplete="off">
+                        </div>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+</section>
+

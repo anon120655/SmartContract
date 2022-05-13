@@ -1,0 +1,196 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.CTVendorMasterView
+
+@{
+    ViewData["Title"] = "สร้างข้อมูลนิติกรรมใหม่";
+    Layout = "_LayoutTemplatesVendor";
+
+    string _Style = Model.Style;
+   
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>สร้างนิติกรรมสัญญา > </small>
+                            <small><span class="text-primary"><u>สร้าง(ร่าง)นิติกรรมใหม่</u></span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<form asp-controller="HomeVendor" asp-action="ContractCondition" method="post" data-ajax="true" data-ajax-method="post"
+      data-ajax-begin="onbeginContractCondition"
+      data-ajax-complete="completedContractCondition"
+      data-ajax-failure="failedContractCondition">
+    <div class="card accordion-group">
+        <div class="card-header" id="headingDetailContract">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailContract" aria-expanded="true" aria-controls="collapseDetailContract">
+                    <i class="fas fa-pencil-alt"></i> เลือกเงื่อนไขการสร้าง(ร่าง)นิติกรรม
+                </button>
+            </h5>
+        </div>
+        <div id="collapseDetailContract" class="collapse show" aria-labelledby="headingDetailContract">
+            <div class="card-body thead_tabsub1 bg-form">
+                <div class="form-group">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียด(ร่าง)นิติกรรม</label>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label text-sm-right">สำนัก/กองทุนย่อย/เขต :</label>
+                        <div class="col-sm-8">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="ConditionType.BureauSubFundCounty">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label text-sm-right">คู่สัญญา :</label>
+                        <div class="col-sm-8">
+                            @if (!String.IsNullOrEmpty(UserService.GetVendorId()))
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-primary" value="@(UserService.GetVendorName())(@UserService.GetVendorId())">
+                            }
+                            else
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-danger" value="(ไม่มีรหัสคู่สัญญา)">
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label text-sm-right">ประเภทนิติกรรมสัญญา :</label>
+                        @if (_Style == "S1")
+                        {
+                            <div class="col-sm-4">
+                                <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                        asp-for="ConditionType.ContractTypeSelected"
+                                        asp-items="@(new SelectList((from s in Model.GetLookUp.ContractTypes.Where(x=>x.Used && x.IdContractStyle == "440DD02F7793423682608E0BAD40EADD" && x.GpType == "P") select new {
+                                                            Code=s.ContractTypeId,
+                                                            FullName = $"({s.ContractTypeId}) {s.ContractTypeShortName}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.ConditionType.ContractTypeSelected))">
+                                    <option value="">---เลือก---</option>
+                                </select>
+                            </div>
+                        }
+                        else if (_Style == "S2")
+                        {
+                            <div class="col-sm-4">
+                                <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                        asp-for="ConditionType.ContractTypeSelected"
+                                        asp-items="@(new SelectList((from s in Model.GetLookUp.ContractTypes.Where(x=>x.Used && x.IdContractStyle == "2AD52C75410349E0898A72CC63FE9A4C" && x.GpType == "P") select new {
+                                                            Code=s.ContractTypeId,
+                                                            FullName = $"({s.ContractTypeId}) {s.ContractTypeShortName}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.ConditionType.ContractTypeSelected))">
+                                    <option value="">---เลือก---</option>
+                                </select>
+                            </div>
+                        }
+                        else if (_Style == "S41")
+                        {
+                            <div class="col-sm-8">
+                                <input type="hidden" asp-for="ConditionType.ContractTypeSelected" value="11" />
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       value="สัญญาดำเนินการตามโครงการ">
+                            </div>
+                        }
+                        else if (_Style == "S42")
+                        {
+                            <div class="col-sm-8">
+                                <input type="hidden" asp-for="ConditionType.ContractTypeSelected" value="13" />
+                                <input type="text" readonly class="form-control-plaintext text-primary" value="หนังสือแสดงความจำนงตอบรับการดำเนินการ(เอกชน)">
+                            </div>
+                        }
+                    </div>
+                    @if (_Style == "S42")
+                    {
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-sm-right">สัญญาให้บริการสาธารณสุขฯ :</label>
+                            <div class="col-sm-4">
+                                <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                        asp-for="ConditionType.ContractIdSelected"
+                                        asp-items="@(new SelectList((from s in Model.ContractStationSuccess select new {
+                                                            Code=s.ContractId,
+                                                            FullName = $"{s.ContractId} {s.ContractName}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: ""))">
+                                    <option value="">---เลือก---</option>
+                                </select>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label text-sm-right">รูปแบบการลงนาม :</label>
+                        <div class="col-md-7 form-check form-check-inline mb-0">
+                            <input class="form-check-input checkboxA2 ml-4 cb_group_signing" type="checkbox"
+                                   asp-for="ConditionType.SigningElectronic" />
+                            <label class="form-check-label text-bold x_title_before col-sm-3" for="inlineCheckbox12">ลงนาม Electronic<font color="red"><b>*</b></font></label>
+                            <input class="form-check-input checkboxA2 cb_group_signing" type="checkbox"
+                                   asp-for="ConditionType.SigningPaper" />
+                            <label class="form-check-label text-bold x_title_before col-sm-4" for="inlineCheckbox12">ลงนามจริงในเอกสาร<font color="red"><b>*</b></font></label>
+                        </div>
+                    </div>
+                    @if (_Style == "S1")
+                    {
+                        <div class="form-group row">
+                            @if (_Style == "S1")
+                            {
+                                @*<label class="col-sm-4 col-form-label text-sm-right">รหัสคู่สัญญา :</label>
+                                    <div class="col-md-7 form-check form-check-inline mb-0">
+                                        <input class="form-check-input checkboxA ml-4 cb_group_counterpartycode" type="checkbox"
+                                               asp-for="ConditionType.CounterpartyCodeD" />
+                                        <label class="form-check-label text-bold x_title_before col-sm-3">มี<font color="red"><b>*</b></font></label>
+                                        <input class="form-check-input checkboxA cb_group_counterpartycode" type="checkbox"
+                                               asp-for="ConditionType.CounterpartyCodeN" />
+                                        <label class="form-check-label text-bold x_title_before col-sm-4">ไม่มี<font color="red"><b>*</b></font></label>
+                                    </div>*@
+                            }
+                        </div>
+                    }
+                    <hr class="my-4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12">
+        <div class="col text-center">
+            <a class="btn btn-secondary mr-2" onclick="showLoading()"
+               asp-controller="HomeVendor"
+               asp-action="Index">
+                <i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ
+            </a>
+            <input type="hidden" asp-for="Style" />
+            <input type="hidden" asp-for="Sector" />
+            <button type="submit" class="btn btn-success" onclick="showLoading()">ตกลง <i class="fa fa-angle-right align-middle"></i></button>
+        </div>
+    </div>
+
+    <br />
+    <br />
+</form>
+
+
+@section scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/contracttypevendor/ContractCondition.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,142 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.UserLogin
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<style>
+    .card-design {
+        width: 30rem;
+        border-radius: 1rem;
+        padding: 2rem;
+    }
+
+    .model_sign {
+        line-height: 0.6;
+    }
+</style>
+
+<section>
+    <div class="container px-0 px-sm-auto">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="card card-design mt-sm-4">
+                    <h3 class="text-center "><span class="text-primary">Smart</span>Contract Sign in</h3>
+                    <div class="card-body">
+                        <form asp-controller="Authorize" asp-action="Local" enctype="multipart/form-data" method="post"
+                              data-ajax="true" data-ajax-method="post"
+                              data-ajax-begin="onbeginForm"
+                              data-ajax-complete="completedForm"
+                              data-ajax-failure="failedForm">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="text" class="form-control" placeholder="Enter email" asp-for="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" placeholder="Password" asp-for="PassWord">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg btn-block mt-sm-4">Sign in</button>
+                            <p class="text-center m-1">or</p>
+                            @*@if (Model.ServerSite.ToUpper() == "UAT")
+                            {
+                                <a class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#ModalDOPAError">Sign in With D.DOPA</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#ModalDOPA">Sign in With D.DOPA</a>
+                            }*@
+                            <a class="btn btn-info btn-lg btn-block" href="@Model.UrlDDOPA">Sign in With D.DOPA</a>
+
+                            <input type="hidden" asp-for="StateRandom" />
+                            <input type="hidden" asp-for="UrlDDOPA" />
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="card card-design mt-4 ">
+                    <h4 class="text-center ">Don't have Account?</h4>
+                    <div class="card-body">
+                        <a class="btn btn-outline-dark btn-lg btn-block " onclick="showLoading()"
+                           asp-controller="Register"
+                           asp-action="CheckMailPassCode">Create Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="/Views/Shared/LayoutPartial/_PartialFooterLogin.cshtml" />
+
+<!-- Modal -->
+<div class="modal fade" id="ModalDOPA" tabindex="-1" role="dialog" aria-labelledby="ModalDOPATitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="">
+            <div class="embed-responsive-16by9">
+                <iframe class="" width="640" height="700"
+                        src="@Model.UrlDDOPA" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="ModalDOPAError" tabindex="-1" role="dialog" aria-labelledby="ModalDOPAErrorTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">แจ้งเตือนระบบ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ใช้ได้เฉพาะ Production
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
+
+        function PassQRCode() {
+            $('#Email').val('User1');
+            $('#PassWord').val('P@ssword1');
+            $('form').submit();
+        }
+
+        onbeginForm = function (xhr) {
+            showLoading();
+        };
+
+        completedForm = function (xhr) {
+            hideLoading()
+            console.log(xhr.responseJSON);
+            if (xhr.responseJSON.Status == false && xhr.responseJSON.MessagError != null) {
+                SweetAlert2Warning(xhr.responseJSON.MessagError);
+            } else {
+                RedirectToAction(xhr.responseJSON.UrlRedirect);
+            }
+        };
+
+        failedForm = function (xhr) {
+            console.log(xhr);
+            SweetAlert2Warning(`${xhr.status} ${xhr.statusText}\nเกิดข้อผิดพลาดในการบันทึกข้อมูล`);
+        };
+
+    </script>
+}
+
+
+
+

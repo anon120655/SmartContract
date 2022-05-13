@@ -1,0 +1,16 @@
+﻿@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using Microsoft.Extensions.Options;
+@using SmartContract.Infrastructure.Helpers;
+
+@inject IOptions<AppSettings> _mySet
+
+@{
+    Layout = null;
+}
+
+<footer class="page-footer font-small text-light" style="color:black !important;">
+    <!--Copyright-->
+    <p class="text-center text-md-left ml-3 ">
+        © 2021 Copyright: Version @_mySet.Value.SiteUpdate
+    </p>
+</footer>

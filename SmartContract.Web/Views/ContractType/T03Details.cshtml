@@ -1,0 +1,37 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var indata = Model.InfoConDetail.ContractDetail03;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารอันเป็นส่วนหนึ่งของสัญญา</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-9 col-form-label text-sm-right">2.2 ผนวก 2 กฎระเบียบข้อบังคับประกาศมติหลักเกณฑ์เงื่อนไขคู่มือแนวปฏิบัติที่คณะกรรมการหลักประกันสุขภาพแห่งชาติคณะกรรมการควบคุมคุณภาพและมาตรฐานบริการสาธารณสุขคณะอนุกรรมการหรือสำนักงานกำหนดจำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail03.P1">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-9 col-form-label text-sm-right">2.3 ผนวก 3 รายงานผลการตรวจประเมินสถานบริการสำรองเตียงพร้อมเอกสารหลักฐานที่เกี่ยวข้อง จำนวน :</label>
+                <div class="col-sm-1">
+                    <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail03.P2">
+                </div>
+                <label class="col-sm-1 col-form-label">หน้า</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">2.4 ผนวก 4 :</label>
+                <div class="col-sm-7 ">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail03.P3">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

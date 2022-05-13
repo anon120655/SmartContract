@@ -1,0 +1,356 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "Tracking";
+
+    var _tab = "tab_all";
+    if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+        Layout = "_LayoutTemplatesVendor";
+    else
+        Layout = "_LayoutTemplates";
+}
+
+<style>
+    .tbl_padding1 td {
+        padding: 10px;
+    }
+</style>
+
+<link href="~/css/home/Tracking.css" rel="stylesheet" />
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>ยุติสัญญา > </small>
+                            <small><span class="text-primary">ติดตามสถานะ(Tracking)</span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <nav>
+                    <ul id="tabs" class="nav nav-tabs nav-fill">
+                        <li class="nav-item tab_station_bar"><a href="" data-target="#tab_all" data-toggle="tab" class="tab_station_bar_active tab_all up-arrow nav-link" onclick="show_table1()">ทั้งหมด(5)</a></li>
+                        <li class="nav-item tab_station_bar"><a href="" data-target="#tab_1" data-toggle="tab" class="tab_station_bar_active tab_document up-arrow nav-link text-uppercase" onclick="show_table2()">หน่วยบริการ(1)</a></li>
+                        <li class="nav-item tab_station_bar"><a href="" data-target="#tab_2" data-toggle="tab" class="tab_station_bar_active tab_approve_dircetor nav-link text-uppercase">สำนัก/กองทุนย่อย/เขต(0)</a></li>
+                        <li class="nav-item tab_station_bar"><a href="" data-target="#tab_4" data-toggle="tab" class="tab_station_bar_active tab_receive_doc up-arrow nav-link text-uppercase">ส่วนกลาง(3)</a></li>
+                        <li class="nav-item tab_station_bar"><a href="" data-target="#tab_6" data-toggle="tab" class="tab_station_bar_active tab_finance nav-link text-uppercase">สำเร็จ(0)</a></li>
+                        <li class="nav-item tab_station_bar"><a href="" data-target="#tab_7" data-toggle="tab" class="tab_station_bar_active tab_finance nav-link text-uppercase">ยกเลิก(0)</a></li>
+                    </ul>
+                </nav>
+                <br />
+
+                <div id="tabsContent" class="tab-content">
+                    @*//TabAll---ทั้งหมด---*@
+                    <div id="tab_all" class="tab-pane fade">
+                        <label class="lable_blue" for="">แสดงข้อมูลรายการนิติกรรมสัญญา :</label> <span class=""><b>ทั้งหมด : 5 ฉบับ</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>วงเงินรวม: 1,xxx,xxx.xx บ.</b></span>
+                        <div class="list-group">
+                            <table style="font-size:13px;" class="table-bordered thead_tabsub2 table-hover tbl_padding1">
+                                @*table-hover*@
+                                <tbody>
+                                    <tr class="text-black p-2" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;1</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00001&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00001&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลศูนย์ลำปาง(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;หน่วยบริการ</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งอนุมัติ
+                                        </td>
+                                    </tr>
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;2</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00002&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00002&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลศูนย์สวรรค์ประชารักษ์(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;หน่วยบริการ</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งอนุมัติ
+                                        </td>
+                                    </tr>
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;3</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00003&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00003&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลศูนย์สวรรค์ประชารักษ์(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;สำนัก/กองทุนย่อย/เขต</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งต่อ
+                                        </td>
+                                    </tr>
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;4</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00004&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00004&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลชุมชนดอนตาล(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;สำนัก/กองทุนย่อย/เขต</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งต่อ
+                                        </td>
+                                    </tr>
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;5</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00005&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00005&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลชุมชนคำชะอี(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;อนุมัติ สบบ.</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งต่อ
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    @*//Tab1--- หน่วยบริการ---*@
+                    <div id="tab_1" class="tab-pane fade">
+                        <label class="lable_blue" for="">แสดงข้อมูลรายการนิติกรรมสัญญา :</label> <span class=""><b>หน่วยบริการ : 1 ฉบับ</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>วงเงินรวม: 2xx,xxx.xx บ.</b></span>
+                        <div class="list-group">
+                            <table style="font-size:13px;" class="table-bordered thead_tabsub2 table-hover tbl_padding1">
+                                @*table-hover*@
+                                <tbody>
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;1</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00001&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00001&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลศูนย์ลำปาง(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;หน่วยบริการ</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : บันทึกร่าง
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    @*//Tab2--- สำนัก/กองทุนย่อย/เขต---*@
+                    <div id="tab_2" class="tab-pane fade">
+                        <label class="lable_blue" for="">แสดงข้อมูลรายการนิติกรรมสัญญา :</label> <span class=""><b>สำนัก/กองทุนย่อย/เขต : 0 ฉบับ</b></span>
+                        <div class="list-group text-center">ไม่พบข้อมูล</div>
+                    </div>
+
+                    @*//Tab4---ส่วนกลาง---*@
+                    <div id="tab_4" class="tab-pane fade">
+                        <label class="lable_blue" for="">แสดงข้อมูลรายการนิติกรรมสัญญา :</label> <span class=""><b>ส่วนกลาง : 3 ฉบับ</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>วงเงินรวม: 9xx,xxx.xx บ.</b></span>
+                        <div class="list-group">
+                            <table style="font-size:13px;" class="table-bordered thead_tabsub2 table-hover tbl_padding1">
+                                @*table-hover*@
+                                <tbody>
+
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00005&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00005&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลชุมชนคำชะอี(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;อนุมัติ สบบ.</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งต่อ
+
+                                        </td>
+                                    </tr>
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;2</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00002&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00002&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลศูนย์สวรรค์ประชารักษ์(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;หน่วยบริการ</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งอนุมัติ
+                                        </td>
+                                    </tr>
+                                    <tr class="text-black" data-toggle="modal" data-placement="right" title="ReadOnly">
+                                        <td><b>ลำดับที่</b>&nbsp;3</td>
+                                        <td class="text-left">
+                                            <b>เลขที่สัญญา</b>&nbsp;:&nbsp;65/B/00003&nbsp;&nbsp;<b>วันที่ทำสัญญา</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>เลขที่ REF</b>&nbsp;:&nbsp;REF65/00003&nbsp;&nbsp;<b>ลงวันที่</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ประเถทนิติกรรม</b>&nbsp;:&nbsp;ข้อตกลงให้บริการสาธารณสุขฯ
+                                            <br />
+                                            <b>คู่สัญญา</b>&nbsp;:&nbsp;โรงพยาบาลศูนย์สวรรค์ประชารักษ์(Hxxxx)
+                                            <br />
+                                            <b>สำนัก/ฝ่าย</b>&nbsp;:&nbsp;สำนักงานเขตพื้นที่ xxx
+                                            <br />
+                                            <b>ผู้ขออนุมัติ</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันที่บันทึก</b>&nbsp;:&nbsp;01/10/2564
+                                            <br />
+                                            <b>ผู้บันทึกล่าสุด</b>&nbsp;:&nbsp;นายxxx xxx&nbsp;&nbsp;<b>วันทีบันทึกล่าสุด</b>&nbsp;:&nbsp;01/10/2564
+                                        </td>
+                                        <td><b>station</b>&nbsp;:&nbsp;สำนัก/กองทุนย่อย/เขต</td>
+                                        <td>
+                                            <b>
+                                                สถานะเอกสาร
+                                            </b> : รอบันทึกส่งต่อ
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    @*//Tab6---สำเร็จ---*@
+                    <div id="tab_6" class="tab-pane fade">
+                        <label class="lable_blue" for="">แสดงข้อมูลรายการนิติกรรมสัญญา :</label> <span class=""><b>สำเร็จ : 0 ฉบับ</b></span>
+                        <div class="list-group text-center">ไม่พบข้อมูล</div>
+                    </div>
+
+                    @*//Tab7---ยกเลิก---*@
+                    <div id="tab_7" class="tab-pane fade">
+                        <label class="lable_blue" for="">แสดงข้อมูลรายการนิติกรรมสัญญา :</label> <span class=""><b>ยกเลิก : 0 ฉบับ</b></span>
+                        <div class="list-group text-center">ไม่พบข้อมูล</div>
+                    </div>
+
+                    <br />
+                </div>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        var _tab_active = '@(_tab)';
+        $(function () {
+            if (_tab_active != "" && _tab_active != undefined) {
+                $(`.${_tab_active}`).addClass('active'); $(`#${_tab_active}`).addClass('active show');
+            } else {
+                $('.tab_all').addClass('active'); $('#tab_all').addClass('active show');
+            }
+
+            $('[data-toggle="modal"]').tooltip()
+        });
+    </script>
+}

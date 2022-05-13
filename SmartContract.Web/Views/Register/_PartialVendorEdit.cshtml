@@ -1,0 +1,437 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+    var lookUp = Model.GetLookUp;
+
+}
+
+
+<div class="card-body thead_tabsub1">
+
+    @if (Model.Approvetype != "S")
+    {
+        <div class="form-group d-none">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>หน่วยบริการ</label>
+            <div class="row">
+                <label class="col-sm-2 col-form-label text-sm-right mr-1">เลือกประเภท :</label>
+                <div class="col-sm-7">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" onchange="RegisterTypeChange(this.value)"
+                               asp-for="RegisterNhso.RegisterType" value="P11" checked>
+                        <label class="form-check-label">
+                            ลงทะเบียนผ่านระบบสมัคร
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" onchange="RegisterTypeChange(this.value)"
+                               asp-for="RegisterNhso.RegisterType" value="P21">
+                        <label class="form-check-label">
+                            ไม่ได้ลงทะเบียนผ่านระบบสมัคร
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        <div class="col-md-12">
+            <label class="text-primary" for="">หน่วยบริการจากระบบสมัคร</label>
+            <div class="row col-md-12">
+                <div class="col-md-7">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">สปสช. เขต :</label>
+                        <div class="col-6 col-md-6">
+                            <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                                    onchange="NhsoZoneChange(this.value)"
+                                    asp-for="NhsoZone"
+                                    asp-items="@(new SelectList((from s in lookUp.NhsoZones select new {
+                                                            Code=s.NhsoZone,
+                                                            FullName = $" ({s.NhsoZone}) {s.NhsoZonename}"}),
+                                    "Code" ,
+                                    "FullName" ,
+                                    selectedValue: Model.NhsoZone))">
+                                <option value="00000">---เลือก---</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-info" name="" onclick="ModalDetailShow()">
+                                รายละเอียด
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">หน่วยบริการ :</label>
+                        <div class="col-6 col-md-6">
+                            <input type="hidden" id="Hcode_db" value="@(Model.RegisterNhso != null ? Model.RegisterNhso.Hcode : String.Empty)" />
+                            @if (Model.Approvetype != "S")
+                            {
+                                <select class="form-control bg-focus selectpicker select-ajax-search" data-size="10" data-live-search="true"
+                                        onchange="HcodeChange(this.value)" asp-for="RegisterNhso.Hcode">
+                                    <option value="">---เลือก---</option>
+                                </select>
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrEmpty(Model.RegisterNhso.Hcode))
+                                {
+
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                                           value="@(Model.RegisterNhso.VendorName) (@(Model.RegisterNhso.Hcode))">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control-plaintext text-danger" readonly="readonly"
+                                           value="-ไม่ได้ลงทะเบียนผ่านระบบสมัคร-">
+                                }
+                                <input type="hidden" asp-for="RegisterNhso.Hcode" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div id="" class="col-md-12">
+            <label class="text-primary" for="">รายละเอียดบริษัทต้นสังกัด</label>
+            <div class="row col-md-12">
+                <div class="col-md-7">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">รหัสคู่สัญญา :</label>
+                        <div class="col-sm-6">
+
+                            <input type="hidden" asp-for="CheckRegister" />
+                            @if (Model.RegisterNhso == null || !String.IsNullOrEmpty(Model.RegisterNhso.VendorId))
+                            {
+                                <select class="form-control selectpicker" data-size="10" data-live-search="true"
+                                        onchange="VendorChange(this.value)"
+                                        asp-for="RegisterNhso.VendorId">
+                                    <option value="">---เลือก---</option>
+                                    <option value="99999">(---ไม่มี---)</option>
+                                </select>
+                                <input type="hidden" asp-for="VendorId" />
+                            }
+                            else
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-danger" value="-ไม่มีรหัสคู่สัญญา-">
+                                <input type="hidden" asp-for="VendorId" value="99999" />
+                            }
+                        </div>
+                    </div>
+
+                    <fieldset class="CompanyDetails">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">ชื่อคู่สัญญา :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control bg-focus" maxlength="255"
+                                       asp-for="RegisterNhso.VendorName">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">ชื่อบุคคล/นิติบุคคล เจ้าของสถานบริการ :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control bg-focus" maxlength="100"
+                                       asp-for="RegisterNhso.CompanyName">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">จังหวัดที่ตั้ง :</label>
+                            <div class="col-sm-6">
+                                <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                                        asp-for="ProvinceId"
+                                        asp-items="@(new SelectList((from s in lookUp.LKProvinces select new {
+                                                            Code=s.ProvinceId,
+                                                            FullName = $" ({s.ProvinceId}) {s.ProvinceName}"}),
+                                    "Code" ,
+                                    "FullName" ,
+                                    selectedValue: Model.ProvinceId))">
+                                    <option value="00000">---เลือก---</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">จังหวัด :</label>
+                            <div class="col-sm-6">
+                                <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                                        onchange="ProvinceChange(this.value)"
+                                        asp-for="ProvinceIdCatm"
+                                        asp-items="@(new SelectList((from s in lookUp.LKProvinces select new {
+                                                            Code=s.ProvinceId.Substring(0,2),
+                                                            FullName = $" ({s.ProvinceId.Substring(0,2)}) {s.ProvinceName}"}),
+                                    "Code" ,
+                                    "FullName" ,
+                                    selectedValue: Model.ProvinceIdCatm))">
+                                    <option value="00000">---เลือก---</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">ตำบล/แขวง :</label>
+                            <div class="col-sm-6">
+                                <input type="hidden" id="DistrictId_db" value="@Model.DistrictId" />
+                                <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                                        asp-for="DistrictId">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">เลขที่ :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control " maxlength="50"
+                                       asp-for="RegisterNhso.VillageNo">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">เลขฯผู้เสียภาษี :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control bg-focus" maxlength="13"
+                                       asp-for="RegisterNhso.TaxId">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">ถนน :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control " maxlength="100"
+                                       asp-for="RegisterNhso.Road">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">ตามใบอนุญาตฯเลขที่ (ส.พ.7) :</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control bg-focus" maxlength="100"
+                                       asp-for="RegisterNhso.Sp7">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <fieldset class="col-md-5 CompanyDetails">
+                    <div class="form-group row" id="group_top_gp">
+                        <div class="col-sm-9 top_group_4"></div>
+                    </div>
+                    <div class="form-group row" id="group_top_gp">
+                        <div class="col-sm-9 top_group_4"></div>
+                    </div>
+                    <div class="form-group row d-none" id="group_gp">
+                        <label class="col-sm-3 col-form-label text-sm-right">รัฐ/เอกชน :</label>
+                        <div class="col-sm-9">
+                            <div class="form-check form-check-inline mt-2">
+                                <input class="form-check-input" type="radio" asp-for="GPType" value="G">
+                                <label class="form-check-label">รัฐ</label>
+                            </div>
+                            <div class="form-check form-check-inline mt-2">
+                                <input class="form-check-input" type="radio" asp-for="GPType" value="P">
+                                <label class="form-check-label">เอกชน</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">จดทะเบียนเป็นนิติบุคคล ณ :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control "
+                                   asp-for="RegisterNhso.RegisterAt">
+                        </div>
+                    </div>
+                    <div class="form-group row" id="">
+                        <div class="col-sm-9 top_group_4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">อำเภอ :</label>
+                        <div class="col-sm-9">
+                            <input type="hidden" id="AmphurId_db" value="@Model.AmphurId" />
+                            <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                                    onchange="AmphurChange(this.value)"
+                                    asp-for="AmphurId">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">หมู่ที่ :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" maxlength="2"
+                                   asp-for="RegisterNhso.Moo">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">อาคาร :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control " maxlength="100"
+                                   asp-for="RegisterNhso.Building">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ตรอกซอย :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control " maxlength="100"
+                                   asp-for="RegisterNhso.Soi">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">รหัสไปรษณีย์ :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control bg-focus" maxlength="10"
+                                   asp-for="RegisterNhso.PostCode">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ลงวันที่ :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                                   asp-for="Sp7DateStr"
+                                   placeholder="วว/ดด/ปปปป" autocomplete="off">
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+            <br />
+        </div>
+        <hr class="my-4">
+    </div>
+    <div class="form-group">
+        <fieldset>
+            <div class="form-group">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์เอกสารจากระบบสมัคร</label>
+                @*<div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 1 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/files/FileNhso.pdf">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 2 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/files/FileNhso.pdf">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 3 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/files/FileNhso.pdf">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>*@
+                <div  id="AttachfileSystem_Rander">
+
+                </div>
+               
+            </div>
+        </fieldset>
+        <fieldset class="CompanyDetails">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบเพิ่มเติม</label>
+            <div id="Attachfile_Rander">
+                @if (Model.FileList != null && Model.FileList.Count > 0)
+                {
+                    int index_file = 0;
+                    foreach (var item_file in Model.FileList)
+                    {
+                        <div class="Attachfile_Sub form-row col-12 form_create">
+                            <div class="form-group form-group-file col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" title="@item_file.RegisterFileName"
+                                           name="FileList[@index_file].FormFile">
+                                    <input type="hidden" name="FileList[@index_file].IdRegisterNhsoFile" value="@item_file.IdRegisterNhsoFile">
+                                    <label class="custom-file-label" for="customFile">
+                                        @(!string.IsNullOrEmpty(item_file.RegisterFileName) ? GeneralUtils.WappText(item_file.RegisterFileName, 25) : "Choose file")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2">
+                                <input type="image" src="~/images/icon/close-2x.png"
+                                       onclick="remove_row_attachfile(this); return false;" class="border-0 mt-2" width="17">
+                            </div>
+                            <div>
+                                @if (!String.IsNullOrEmpty(item_file.IdRegisterNhsoFile))
+                                {
+                                    <a asp-action="Render"
+                                       asp-controller="Files"
+                                       asp-route-fileftp="@(item_file.RegisterFileFtp)"
+                                       asp-route-type="Register"
+                                       target="_blank" class="ml-3">
+                                        <i class="fas fa-file-pdf fa-lg"></i> View
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                        index_file++;
+                    }
+                }
+            </div>
+            <div class="form-row col-12">
+                <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                    <button class="btn btn_add_element btn_small btn_filter_w" type="button" onclick="insert_row_attachfile()">
+                        <span class="button_fas_small"><i class="fas fa-plus"></i></span> เพิ่มไฟล์
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+        <hr class="my-4">
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalDetail" tabindex="-1" role="dialog" aria-labelledby="ModalDetailTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text_blue_blod" id="exampleModalLongTitle">รายละเอียด จังหวัดสังกัดภายใต้ สปสช.เขต</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="" class="table table-sm table-bordered" style="width:100%;">
+                    <thead class="table-primary">
+                        <tr>
+                            <td class="text-center" style="width:80px">รหัส</td>
+                            <td class="text-center">สาขาเหตุพื้นที่</td>
+                            <td class="text-center" style="width:100px">รหัสจังหวัด</td>
+                            <td class="text-center">ชื่อจังหวัด</td>
+                        </tr>
+                    </thead>
+                    <tbody id="">
+                        @if (Model.GetLookUp != null && Model.GetLookUp.ProvincesUnderNHSOList != null && Model.GetLookUp.ProvincesUnderNHSOList.Count() > 0)
+                        {
+                            List<string> checkZone = new List<string>();
+                            foreach (var item in Model.GetLookUp.ProvincesUnderNHSOList)
+                            {
+                                String _NhsoZone = String.Empty;
+                                String _NhsoZonename = String.Empty;
+                                @if (!checkZone.Contains(item.NhsoZone))
+                                {
+                                    checkZone.Add(item.NhsoZone);
+                                    _NhsoZone = item.NhsoZone;
+                                    _NhsoZonename = item.NhsoZonename;
+                                }
+                                <tr>
+                                    <td class="text-center">
+                                        @_NhsoZone
+                                    </td>
+                                    <td>
+                                        @_NhsoZonename
+                                    </td>
+                                    <td class="text-center">
+                                        @item.ProvinceId
+                                    </td>
+                                    <td>
+                                        @item.ProvinceName
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    string _Menu = Model.ParameterCondition.Menu;
+    var indata = Model.InfoRequestBinding;
+}
+
+<div>
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="lable_blue" for="">ผลการตรวจสอบขอ@(ContractUtils.BindingPropertite(_Menu).MenuFullName)</label>
+                    @if (indata.ContractSuccessStatus == ContractStatusAll.S3Approve)
+                    {
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input cb_group_approval_binding" onclick="return false;" checked>
+                            <label class="custom-control-label" for="ApproveBinding_Approve">อนุมัติ</label>
+                        </div>
+                    }
+                    @if (indata.ContractSuccessStatus == ContractStatusAll.S2UnApprove)
+                    {
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input cb_group_approval_binding" onclick="return false;" checked>
+                            <label class="custom-control-label" for="ApproveBinding_UnApprove">ไม่อนุมัติ</label>
+                            <div class="form-group col-md-8 mt-2 group_apprpval_nsho_dept_remark">
+                                <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control-plaintext " readonly="readonly"
+                                              asp-for="InfoRequestBinding.ContractSuccessRemarkKet"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

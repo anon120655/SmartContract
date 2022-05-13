@@ -1,0 +1,16 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://192.168.202.84:28080/iamws/services/Authentication?wsdl"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, ServiceIAMAuthentication"
+    ],
+    "targetFramework": "net5.0",
+    "typeReuseMode": "None"
+  }
+}

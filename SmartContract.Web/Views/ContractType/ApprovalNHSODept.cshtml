@@ -1,0 +1,50 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+
+@{
+    Layout = null;
+    string _Station = Model.ContractStation.StationStatusCurr;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="lable_blue" for="">ผลการตรวจสอบนิติกรรมสัญญา</label>
+                @if (_Station == ContractStationStatusAll.S5Signing2)
+                {
+                    <div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input select_approve_proposal"
+                                   asp-for="ApproveContract.Approve" onclick="return false;" checked>
+                            <label class="custom-control-label" for="ApproveProposal_Approve">อนุมัติ</label>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input cb_group_approval_nsho_dept"
+                               asp-for="ApproveContract.Approve">
+                        <label class="custom-control-label" for="ApproveContract_Approve">อนุมัติ</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input cb_group_approval_nsho_dept"
+                               asp-for="ApproveContract.UnApprove">
+                        <label class="custom-control-label" for="ApproveContract_UnApprove">ไม่อนุมัติ</label>
+                        <div class="form-group col-md-8 mt-2 group_apprpval_nsho_dept_remark">
+                            <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                            <div class="col-sm-8">
+                                <textarea cols="80" rows="5" asp-for="ApproveContract.Remark"
+                                          placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

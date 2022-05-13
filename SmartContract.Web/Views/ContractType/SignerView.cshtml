@@ -1,0 +1,83 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoSignerPartnersOfContract;
+    string _Station = Model.ContractStation.StationStatusCurr;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม (สำนักงาน) :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                           value="@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indata.NhsoSignerUser)?.SignerFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม (คู่สัญญา) :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorSignerUser)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">พยาน (ฝ่ายสำนักงาน) :</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                           value="@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indata.NhsoWitnessUser)?.SignerFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">พยาน (ฝ่ายคู่สัญญา) :</label>
+                <div class="col-sm-4 bootstrapSelectRemove">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorWitnessUser)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div id="FootNoteNhso_Render">
+                @if (indata.FootNotesNhso.Count > 0)
+                {
+                    foreach (var item in indata.FootNotesNhso.Select((value, i) => (value, i)))
+                    {
+                        <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">@(item.i == 0 ? "Foot Note (ฝ่ายสำนักงาน)" : "") @(item.i + 1):</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                                           value="@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == item.value.EmpId)?.SignerFullname ?? String.Empty)">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div id="">
+                @if (indata.FootNotes.Count > 0)
+                {
+                    foreach (var item in indata.FootNotes.Select((value, i) => (value, i)))
+                    {
+                        <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">@(item.i == 0 ? "Foot Note (ฝ่ายคู่สัญญา)" : "") @(item.i + 1):</label>
+                                <div class="col-sm-4">
+                                    <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                                        <input type="text" readonly class="form-control-plaintext text-primary"
+                                               value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.FootNotes[item.i].IdUserSmct)?.UserFullname ?? String.Empty)">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

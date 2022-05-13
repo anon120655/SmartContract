@@ -1,0 +1,311 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Other.SearchMain
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+
+@{
+    ViewData["Title"] = "ค้นหา";
+    if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+        Layout = "_LayoutTemplatesVendor";
+    else
+        Layout = "_LayoutTemplates";
+
+}
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+        /*transition: 0.3s;*/
+    }
+
+        .cursor-pointer:hover {
+            text-decoration: underline;
+        }
+
+        .cursor-pointer:active {
+            opacity: 0.5;
+        }
+</style>
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var lookUp = Model.GetLookUp;
+
+    var _Items = (Model != null ? Model.SearchResource.Items : null);
+    var _pager = (_Items != null ? Model.SearchResource.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-book mr-1"></i>จัดการข้อมูลอื่นๆ > </small>
+                                <small><span class="text-primary">ค้นหาข้อมูลนิติกรรมสัญญา</span></small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <form method="get" asp-action="Search">
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ปีงบประมาณ :</label>
+                        <div class="col-sm-3">
+                            <select class="form-control bg-focus selectpicker" data-live-search="true" asp-for="BudgetYear"
+                                    asp-items="@(new SelectList((from s in lookUp.BudgetYears select new {
+                                                            Code=s.Id,
+                                                            FullName = $"{s.Value}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.BudgetYear))">
+                                <option value="">---ทั้งหมด---</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">สำนัก/กองทุนย่อย/เขต :</label>
+                        <div class="col-sm-3">
+                            <select class="form-control bg-focus selectpicker" data-live-search="true" asp-for="DepartmentCode"
+                                    asp-items="@(new SelectList((from s in lookUp.LkDepartmentList.Where(x=>x.Dcode != null) select new {
+                                                            Code=s.Dcode,
+                                                            FullName = $"({s.Dcode}) {s.DnameNew}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.DepartmentCode))">
+                                <option value="">---ทั้งหมด---</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ประเภทนิติกรรมสัญญา :</label>
+                        <div class="col-sm-3">
+                            <select class="form-control bg-focus selectpicker" data-live-search="true" asp-for="ContractTypeId"
+                                    asp-items="@(new SelectList((from s in lookUp.ContractTypes.Where(x=>x.ContractTypeId != null) select new {
+                                                            Code=s.ContractTypeId,
+                                                            FullName = $"({s.ContractTypeId}) {s.ContractTypeShortName}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.ContractTypeId))">
+                                <option value="">---ทั้งหมด---</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">เลขที่ REF :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="REFXXXXXXX" asp-for="RefId" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">เลขที่สัญญา :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="XX/X/XXXXX" asp-for="ContractId" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ชื่อคู่สัญญา :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" asp-for="VendorName" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">รหัสงบประมาณ :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" asp-for="BudgetCode" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2 mr-5"></div>
+                        <div class="col-sm-3 ml-5">
+                            <button type="submit" class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
+                            <button type="button" class="btn btn-secondary loadding text-white" style="width:120px" onclick="clear_input()"> ล้าง </button>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-align-justify mr-1"></i>แสดงรายละเอียดข้อมูล</small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="">
+            <div id="div_table11" class="col-md-12 search-table-outter table-responsive">
+                <table id="table11" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:13px;">
+                    <thead style="background-color: #86c0ff">
+                        <tr>
+                            <th>ลำดับ</th>
+                            <th>เลขที่อ้างอิง</th>
+                            <th>วันที่ทำเอกสาร</th>
+                            <th>ประเภทการลงนาม</th>
+                            <th>เลขที่สัญญา</th>
+                            <th>ชื่อสัญญา</th>
+                            <th>ประเภทนิติกรรมสัญญา</th>
+                            <th>ผู้บันทึก</th>
+                            <th>สถานะ</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (_Items != null && _Items.Count > 0)
+                        {
+                            foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                            {
+                                <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                    <td>@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
+                                    <td class="text-center col-md-1">
+                                        @item.Value.RefId
+                                    </td>
+                                    <td>@GeneralUtils.DateToThString(item.Value.CreateDate)</td>
+                                    <td>@ContractUtils.SigningTypes(item.Value.ContractSignType).Description</td>
+                                    <td>
+                                        <b class="">
+                                            เลขที่สัญญา
+                                        </b> : @item.Value.ContractId
+                                        <br />
+                                        <b>
+                                            วันที่ทำสัญญา
+                                        </b> : @GeneralUtils.DateToThString(item.Value.ContractDate)
+                                    </td>
+                                    <td>@item.Value.ContractName</td>
+                                    <td>@item.Value.ContractTypeName</td>
+                                    <td>
+                                        <b>
+                                            ผู้สร้างเอกสาร
+                                        </b> : @item.Value.CreateUserFullname
+                                        <br />
+                                        <b>
+                                            ผู้บันทึกล่าสุด
+                                        </b> : @item.Value.EditUserFullname
+                                        <br />
+                                        <b>
+                                            วันที่บันทึกล่าสุด
+                                        </b> :@GeneralUtils.DateToThString(item.Value.EditDate)
+                                    </td>
+                                    <td class="">
+                                        <span class="badge badge-pill p-2"
+                                              style="min-width: 100px; color: #ffffff; background-color: @(ContractUtils.ContractSations(item.Value.StationStatusCurr).Color)">
+                                            @ContractUtils.ContractSations(item.Value.StationStatusCurr).Name
+                                        </span>
+                                    </td>
+                                    @if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+                                    {
+                                        <td class="text-center col-md-1">
+                                            <a class="btn-outline-primary" onclick="showLoading()"
+                                               asp-controller="ContractTypeVendor"
+                                               asp-action="T@(item.Value.ContractTypeId)"
+                                               asp-route-Style="@item.Value.ContractStyleCode"
+                                               asp-route-Station="@item.Value.StationStatusCurr"
+                                               asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                               asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)">รายละเอียด</a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        if (item.Value.StationStatusCurr != ContractStationStatusAll.S1Draft && item.Value.StationStatusCurr != ContractStationStatusAll.S2BookRequestApproval)
+                                        {
+                                            <td class="text-center col-md-1">
+                                                <a class="btn-outline-primary" onclick="showLoading()"
+                                                   asp-controller="ContractType"
+                                                   asp-action="T@(item.Value.ContractTypeId)C"
+                                                   asp-route-Style="@item.Value.ContractStyleCode"
+                                                   asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                                   asp-route-Station="@item.Value.StationStatusCurr"
+                                                   asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                                   asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)"
+                                                   asp-route-State="@SecurityRepo.Encrypt("1")">รายละเอียด</a>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>-</td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <div class="col-md-12">
+        <div class="row mr-1">
+            <div class="col-xl-4 col-md-4 mt-2 pagination_font font_bold">
+                แสดงผล <span class="text_blue">@(Model.SearchResource.Items.Count)</span> จากทั้งหมด <span class="text_blue">@(Model.SearchResource.Pager.TotalItems)</span>
+            </div>
+            <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.SearchResource.Pager" />
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+
+        function clear_input() {
+            $('form input[type="text"]').val('');
+            $('form select').prop('selectedIndex', 0);
+            $('.selectpicker').selectpicker('refresh');
+
+        }
+
+
+    </script>
+}

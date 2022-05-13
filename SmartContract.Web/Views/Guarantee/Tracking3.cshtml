@@ -1,0 +1,224 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeBureau.TrackingGuaranteeMain
+
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "Tracking3";
+    String _MenuEn = Context.Request.Query["MenuEn"].ToString();
+    String _Menu = String.Empty;
+    String _Title = String.Empty;
+}
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+        /*transition: 0.3s;*/
+    }
+
+        .cursor-pointer:hover {
+            text-decoration: underline;
+        }
+
+        .cursor-pointer:active {
+            opacity: 0.5;
+        }
+</style>
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var _Items = (Model != null ? Model.TrackingGuaranteeNew.Items : null);
+    var _pager = (_Items != null ? Model.TrackingGuaranteeNew.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    if (_MenuEn != null)
+    {
+        _Menu = SecurityRepo.Decrypt(_MenuEn);
+        if (_Menu == ContractGuaranteeTypes.T1_NEW || _Menu == ContractGuaranteeTypes.T2_RENEW || _Menu == ContractGuaranteeTypes.T3_RETURN || _Menu == ContractGuaranteeTypes.T4_CLAIM)
+        {
+            _Title = ContractUtils.GuaranteePropertite(_Menu).MenuFullName;
+            ViewData["Title"] = _Title;
+        }
+    }
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-book mr-1"></i>หลักประกันสัญญา > </small>
+                                <small><span class="text-primary">@_Title</span></small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <form method="get" asp-action="Search">
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">Tax ID :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="1234455666789" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ชื่อลูกค้า :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="ชื่อลูกค้าที่เป็นเจ้าของงาน" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">เลขที่สัญญา :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="XX/X/XXXXX" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">เลขที่หนังสือค้ำประกัน :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" placeholder="00019/200008/0203/63" />
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-3 ml-5">
+                            <button type="submit" class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
+                            <button type="button" class="btn btn-secondary loadding text-white" style="width:120px" onclick="clear_input()"> ล้างข้อมูล </button>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <section>
+                    <div class="">
+                        <div id="div_table1" class="col-md-12 search-table-outter table-responsive">
+                            <table id="table1" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:13px;">
+                                <thead style="background-color: @(ContractUtils.GuaranteePropertite(_Menu).Color)">
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>สัญญา</th>
+                                        <th>ชื่อสัญญา</th>
+                                        <th>ประเภทนิติกรรมสัญญา</th>
+                                        <th>ชื่อคู่สัญญา</th>
+                                        <th>เลขที่หนังสือค้ำประกัน</th>
+                                        <th>วันที่เริ่มค้ำประกัน</th>
+                                        <th>วันที่สิ้นสุดค้ำประกัน</th>
+                                        <th>มูลค่าค้ำประกัน</th>
+                                        <th class="col-2">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (_Items != null && _Items.Count > 0)
+                                    {
+                                        foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                                        {
+                                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                        <td class="text-center">@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
+                                        <td class="col-md-2">
+                                            <b class="">
+                                                เลขที่อ้างอิง
+                                            </b> : <br />@item.Value.RefId
+                                            <br />
+                                            <b class="">
+                                                เลขที่สัญญา
+                                            </b> : <br />@item.Value.ContractId
+                                            <br />
+                                            <b>
+                                                วันที่ทำสัญญา
+                                            </b> : <br />@GeneralUtils.DateToThString(item.Value.ContractDate)
+                                        </td>
+                                        <td class="col-md-2">@item.Value.ContractName</td>
+                                        <td class="col-md-2">@item.Value.ContractTypeName</td>
+                                        <td class="col-md-2">
+                                            <b class="">
+                                                รหัสคู่สัญญา
+                                            </b> : @item.Value.VendorId
+                                            <br />
+                                            <b>
+                                                ชื่อคู่สัญญา
+                                            </b> : @item.Value.VendorName
+                                        </td>
+                                        <td class="text-center">00019/200008/0203/63</td>
+                                        <td class="text-center">
+                                            @GeneralUtils.DateToThString(item.Value.ContractDate)
+                                        </td>
+                                        <td class="text-center">
+                                            @GeneralUtils.DateToThString(item.Value.EditDate)
+                                        </td>
+                                        <td class="text-right">200,000.00</td>
+                                        <td class="text-center col-md-1">
+                                            @if (_Menu == ContractGuaranteeTypes.T1_NEW)
+                                            {
+                                                <a class="btn btn-warning btn-sm mr-2" onclick="showLoading()"
+                                                   asp-controller="Guarantee"
+                                                   asp-action="Create2"
+                                                   asp-route-ContractGuaranteeTypeEn="@SecurityRepo.Encrypt(ContractGuaranteeTypes.T2_RENEW)">สร้างคำขอ</a>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <div class="col-md-12">
+                    <div class="row mr-1">
+                        <div class="col-xl-4 col-md-4 mt-2 pagination_font font_bold">
+                            แสดงผล <span class="text_blue">@(Model.TrackingGuaranteeNew.Items.Count)</span> จากทั้งหมด <span class="text_blue">@(Model.TrackingGuaranteeNew.Pager.TotalItems)</span>
+                        </div>
+                        <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.TrackingGuaranteeNew.Pager" />
+                    </div>
+                </div>
+
+                <br />
+                <br />
+
+            </div>
+        </div>
+    </section>
+
+
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}

@@ -1,0 +1,175 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "FM_APPROVAL_REQ";
+    Layout = "~/Views/Shared/_LayoutFM.cshtml";
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indataCon = Model.InfoContract;
+    var indataPara = Model.ParameterCondition;
+    var indataNhso = Model.InfoContractNhso;
+    var indataReqStation = Model.ApprovalReqStation;
+    var indataConstation = Model.ContractStation;
+    var indataReqApp = Model.InfoRequestForApproval;
+    var infoSignature = Model.InfoAttachFileSignature;
+
+    String BudgetYear = indataReqStation.ApprovalReqDate.HasValue ? (indataReqStation.ApprovalReqDate.Value.Year + 543).ToString() : String.Empty;
+
+}
+
+<link rel="stylesheet" href="~/css/font.css" />
+<link rel="stylesheet" href="~/css/FM.css" asp-append-version="true" />
+
+<section>
+    <div class="main-page size-15">
+        <div class="content-page ">
+            <p class="text-right">เลขที่อ้างอิง <span class="para">@indataCon.RefId</span></p>
+
+            <div class="lh_NHSO02">
+                <div class="float-left w-30 text-right">
+                    <div class="text-left">
+                        <img src="../images/logo/NHSO02.png" alt="Mountain" width="200" height="88">
+                    </div>
+                </div>
+                <div class="text size-18">
+                    <b class=" ml-2"><span class="para">@indataNhso.NhsoAddress.Header</span></b>
+                </div>
+                <div class="text-1 size-11">
+                    <span class="para">@indataNhso.NhsoAddress.Address0</span>
+                </div>
+                <div class="text-1 size-11">
+                    <span class="para">@indataNhso.NhsoAddress.Address1</span>
+                </div>
+                <div class="text-1 size-11">
+                    <span class="para">@indataNhso.NhsoAddress.Address2</span>
+                </div>
+            </div>
+            <br />
+            <div class="text ">
+                ที่ สปสช. <span class="para">@indataCon.RefId</span>
+            </div>
+            <div class="text-right ">วันที่  <span class="para">@GeneralUtils.getFullThaiFullShot(indataReqStation.ApprovalReqDate)</span> </div>
+            <div class="text ">
+                เรื่องขออนุมัติดำเนินการตาม<span class="para">@indataCon.ContractTypeFullName</span> ปีงบประมาณ <span class="para">@BudgetYear</span>
+            </div>
+            <br />
+            <div class="text ">
+                เรียนเลขาธิการสำนักงานหลักประกันสุขภาพแห่งชาติ
+            </div>
+            <br />
+            <div class="text-1">
+                ด้วย <span class="para">@indataReqStation.DepartmentName</span>  มีความประสงค์จะดำเนินการและจัดทำนิติกรรมสัญญาร่วมกับ <span class="para">@indataReqStation.VendorName</span>  ที่อยู่เลขที่ <span class="para">@indataReqStation.MasterVendor.VillageNo</span>  ถนน <span class="para">@indataReqStation.MasterVendor.Road</span>  ตำบล/แขวง <span class="para">@indataReqStation.MasterVendor.CATMs.DistrictName</span>  อำเภอ/เขต <span class="para">@indataReqStation.MasterVendor.CATMs.AmphurName</span>  จังหวัด <span class="para">@indataReqStation.MasterVendor.CATMs.ProvinceName</span>  รหัสไปรษณีย์ <span class="para">@indataReqStation.MasterVendor.PostCode</span>  โทรศัพท์ <span class="para">@indataReqStation.MasterVendor.Phone</span>  เพื่อให้คู่สัญญาดำเนินการจัดทำโครงการ <span class="para">@indataReqStation.ContractName</span>  โดยเบิกจ่ายจากเงิน {11@14} {12@15}  ตามรายละเอียด ดังนี้
+            </div>
+            <div class="text-2">
+                1. <span class="para">@indataReqApp.Reason</span>
+            </div>
+            <div class="text-2">
+                2. งบประมาณในการดำเนินการ วงเงินจำนวน <span class="para">@(indataCon.Budget > 0 ? indataCon.Budget.ToString("#,##0.00") : "")</span> บาท (<span class="para">@(GeneralUtils.ThaiBahtText(indataCon.Budget.ToString()))</span>)
+            </div>
+            <div class="text-2">
+                โดยเบิกจ่ายจากงบประมาณรหัส <span class="para">@(string.Join(" ,", indataCon.Budgetcodes.Select(x=>x.Budgetcode)))</span>  จำนวนเงิน <span class="para">@(indataCon.Budget > 0 ? indataCon.Budget.ToString("#,##0.00") : "")</span> บาท
+            </div>
+            <div class="text-2">
+                3. ระยะเวลาดำเนินการตั้งแต่
+            </div>
+            <div class="text-2">
+                4. <span class="para"> @(lookUp.Coordinators.FirstOrDefault(x => x.IdUserSmct == indataReqApp.CoordinatorUserSelect)?.UserFullname ?? String.Empty) E-mail @indataReqApp.Email เบอร์โทรศัพท์  @indataReqApp.Phone โทรสาร  @indataReqApp.Fax</span>
+            </div>
+            <div class="text-2">
+                5. ขออนุมัติแต่งตั้งคณะกรรมการตรวจรับผลงาน/ประเมินผลงาน
+            </div>
+            <div class="text-left">
+                <div class="float-left w-70 text-3">
+                    <span class="para">5.1 @(lookUp.CommitteeList.FirstOrDefault(x=>x.EmpId == indataReqApp.ApprovalReqUserChairm)?.BoradFullname ?? String.Empty)</span>
+                </div>
+            </div>
+            <div class="float-left w-30 ">
+                ตำแหน่ง  ประธานกรรมการ
+            </div>
+        </div>
+        @if (indataReqApp.Committees != null && indataReqApp.Committees.Count > 0)
+        {
+            int item_i = 2;
+            foreach (var item in indataReqApp.Committees.Select((value, i) => (value, i)))
+            {
+                <div class="text-left">
+                    <div class="float-left w-70 text-3">
+                        <span class="para">5.@(item_i++)  @(lookUp.CommitteeList.FirstOrDefault(x=>x.EmpId == item.value.EmpId)?.BoradFullname ?? String.Empty)</span>
+                    </div>
+                    <div class="float-left w-30 ">
+                        ตำแหน่ง  กรรมการ
+                    </div>
+                </div>
+            }
+        }
+        <br />
+        <div class="text-1">
+            จึงเรียนมาเพื่อโปรดพิจารณาอนุมัติ
+        </div>
+        <br />
+        <div class="text">
+            <div class="float-left w-30 text-left">&nbsp;</div>
+            <div class="float-left w-70 text-center">
+                ขอแสดงความนับถือ
+            </div>
+        </div>
+        <br />
+        <div class="text">
+            <div class="float-left w-30 text-left">&nbsp;</div>
+            <div class="float-left w-70 text-center">
+                @if (infoSignature != null && infoSignature.SmctMasterFile != null)
+                {
+                    var file = infoSignature.SmctMasterFile.FirstOrDefault(x => x.FileType == "F13");
+                    if (file != null)
+                    {
+                        String pathFolder = $"Signature/T{indataPara.ContractTypeId}\\{file.PathFolder}";
+                        <img src="@Url.Action("OpenIMG", "Files",new {PathFolder = pathFolder,FileFtp = file.FileFtp })" width="200" />
+                    }
+                    else
+                    {
+                        <div>&nbsp;</div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="text">
+            <div class="float-left w-30 text-left">&nbsp;</div>
+            <div class="float-left w-70 text-center">
+                <span class="para">@(lookUp.VNhsoEmployeeAll.FirstOrDefault(x => x.EmpId == indataReqApp.ApprovalReqUser)?.EmpFullname ?? String.Empty)</span>
+            </div>
+        </div>
+        <div class="text">
+            <div class="float-left w-30 text-left">&nbsp;</div>
+            <div class="float-left w-70 text-center">
+                ตำแหน่ง <span class="para">@(lookUp.VNhsoEmployeeAll.FirstOrDefault(x => x.EmpId == indataReqApp.ApprovalReqUser)?.EmpPosition ?? String.Empty)</span>
+            </div>
+        </div>
+        <div class="text">
+            <div class="float-left w-30 text-left">&nbsp;</div>
+            <div class="float-left w-70 text-center">
+
+            </div>
+        </div>
+        <div class="text">
+            ความเห็นของผู้มีอำนาจ
+        </div>
+        @if (indataPara.StatusReq == ApproveStationStatusAll.S2CreateApprove || indataPara.StatusReq == ApproveStationStatusAll.S3Consider)
+        {
+            <div class="text">
+                (  @(indataPara.StationReq == ApproveStationStatusAll.S4Approve ? "/": Html.Raw("&nbsp")) ) อนุมัติ  &nbsp;  (  @(indataPara.StationReq != ApproveStationStatusAll.S4Approve ? "/": Html.Raw("&nbsp")) ) ไม่อนุมัติ
+            </div>
+        }
+        else
+        {
+            <div class="text">
+                (  ) อนุมัติ  &nbsp;  (  ) ไม่อนุมัติ
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/FM.js" asp-append-version="true"></script>
+}
+

@@ -1,0 +1,292 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+}
+
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-3">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>หน่วยบริการ > </small>
+                            <small><span class="text-primary"><u>ลงทะเบียนใหม่</u></span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailUser">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailUser" aria-expanded="true" aria-controls="collapseDetailUser">
+                <i class="fas fa-file-archive"></i> ผู้ขอลงทะเบียน
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailUser" class="collapse show" aria-labelledby="headingDetailUser">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="text-primary" for="">รายละเอียดผู้ขอลงทะเบียน</label>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label tltle ml-5">ประเภทผู้เข้าใช้งาน :</label>
+                    <div class="col-12 col-md-4">
+                        <select class="form-control selectpicker">
+                            <option value="">---เลือก---</option>
+                            <option value="">ผู้ใช้งานทั่วไป</option>
+                            <option value="">ผู้ประสาน</option>
+                            <option value="">ผู้ได้รับมอบอำนาจ</option>
+                            <option value="">ผู้มีอำนาจ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อเต็ม : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">รหัสบัตรประชาชน : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">E-Mail : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">หมายเลขโทรศัพท์ : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailVendor">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendor" aria-expanded="true" aria-controls="collapseDetailVendor">
+                <i class="fas fa-file-archive"></i> หน่วยบริการ(สังกัด)
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailVendor" class="collapse show" aria-labelledby="headingDetailVendor">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="text-primary" for="">รายละเอียดหน่วยบริการ</label>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label tltle ml-5">หน่วยบริการ :</label>
+                    <div class="col-12 col-md-4">
+                        <select class="form-control selectpicker">
+                            <option value="">---เลือก---</option>
+                            <option value="">H0001_xxx</option>
+                            <option value="">H0002_xxx</option>
+                            <option value="">H0003_xxx</option>
+                            <option value="">H0004_xxx</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อหน่วยบริการ : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="โรงพยาบาลเมืองพัทยา">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">รหัส : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="28005">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ประเภท : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="โรงพยาบาล">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">จังหวัดที่ตั้ง : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="ชลบุรี">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ที่อยู่ : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="เลขที่ xx xx xx ชลบุรี xxxx">
+                    </div>
+                </div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailAuthorize">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailAuthorize" aria-expanded="true" aria-controls="collapseDetailAuthorize">
+                <i class="fas fa-file-archive"></i> รับมอบอำนาจ(กรณีมอบอำนาจ)
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailAuthorize" class="collapse show" aria-labelledby="headingDetailAuthorize">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="text-primary" for="">ผู้มอบอำนาจ</label>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อเต็ม : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="นายxxx1 xxx">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="ตำแหน่งxxx1">
+                    </div>
+                </div>
+                <label class="text-primary" for="">ผู้รับมอบอำนาจ</label>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อเต็ม : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="นายxxx2 xxx">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="ตำแหน่งxxx2">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">จากวันที่ : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="01/10/64">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ถึงวันที่ : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="31/10/64">
+                    </div>
+                </div>
+                <label class="text-primary" for="">เอกสารมอบอำนาจ</label>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ไฟล์แนบ : </label>
+                    <div class="col-sm-3 custom-file">
+                        <input type="file" class="custom-file-input" id="inputFile1" accept="application/pdf">
+                        <label class="custom-file-label" for="inputFile1">ขนาดไม่เกิน 20 Mbp</label>
+                    </div>
+                </div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailApprove">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailApprove" aria-expanded="true" aria-controls="collapseDetailApprove">
+                <i class="fas fa-file-archive"></i> การพิจารณาอนุมัติ
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailApprove" class="collapse show" aria-labelledby="headingDetailApprove">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="text-primary" for="">ความเห็นการอนุมัติ</label>
+                <div class="custom-control custom-checkbox ml-5">
+                    <input type="checkbox" class="custom-control-input cb_group_apprpve_b" onchange="ChengeApprove()">
+                    <label class="custom-control-label" for="Approved">อนุมัติ</label>
+                </div>
+                <div class="custom-control custom-checkbox ml-5">
+                    <input type="checkbox" class="custom-control-input cb_group_apprpve_b" onchange="ChengeApprove()">
+                    <label class="custom-control-label" for="UnApproved">ไม่อนุมัติ</label>
+                    <div class="form-group col-md-8 mt-2 group_apprpve_b_remark">
+                        <div class="col-sm-8">
+                            <textarea rows="5" class="form-control" placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="col-md-12">
+    <div class="col text-center">
+        <button onclick="showLoading()" type="button" class="btn btn-success mr-2">บันทึกอนุมัติ</button>
+        <button type="button" class="btn btn-dark" onclick="showLoading();submit_departmentdelete()"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</button>
+
+    </div>
+</div>
+<br />
+<br />
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            set_1();
+        });
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        function Get_Request(key) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const newUser = urlParams.get(key)
+            return newUser;
+        }
+
+        function set_1() {
+            var x = Get_Request('tab');
+            if (x == 'A') {
+                $('#Approve').show();
+                $('#bt').hide();
+                $("#form1 :input").attr("disabled", true);
+            } else {
+                $('#Approve').hide();
+            }
+        }
+
+    </script>
+}

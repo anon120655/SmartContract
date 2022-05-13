@@ -1,0 +1,54 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <section>
+                <div class="">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="lable_blue" for="">ผลการตรวจสอบหนังสือขออนุมัติ</label>
+                            @*@if (true)
+                                {*@
+                            <div>
+                                <label class="col-sm col-form-label text-danger">รอผลการตรวจสอบทางเมล์</label>
+                            </div>
+                            @*}
+                                else
+                                {
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input select_approve_req"
+                                               asp-for="ApproveReq.Approve">
+                                        <label class="custom-control-label" for="ApproveReq_Approve">อนุมัติ</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input select_approve_req"
+                                               asp-for="ApproveReq.UnApprove">
+                                        <label class="custom-control-label" for="ApproveReq_UnApprove">ไม่อนุมัติ (ตีกลับหน่วยบริการ)</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input select_approve_req"
+                                               asp-for="ApproveReq.UnApproveCheck">
+                                        <label class="custom-control-label" for="ApproveReq_UnApproveCheck">ไม่อนุมัติ (ตีกลับเจ้าหน้าที่ตรวจสอบ)</label>
+                                    </div>
+                                    <div class="form-group col-md-8 mt-2 ">
+                                        <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                                        <div class="col-sm-8">
+                                            <textarea cols="80" rows="5" asp-for="ApproveReq.Remark"
+                                                      placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                                        </div>
+                                    </div>
+                                }*@
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>

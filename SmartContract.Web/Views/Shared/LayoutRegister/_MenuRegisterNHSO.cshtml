@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+<style>
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsSmart01" aria-controls="navbarsSmart01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand " onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="registercheck"><h4><b><span class="text-primary">Smart</span>Contract </b><span style="font-size:medium">จัดการผู้ใช้งาน </span></h4></a>
+
+        <div class="collapse navbar-collapse justify-content-end " id="navbarsSmart01">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link text-primary" onclick="showLoading()" asp-area="" asp-controller="Home" asp-action="Index">เข้าโปรแกรม SmartContract</a>
+                </li>
+                <li class="nav-item active dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownSmart01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ตรวจสอบและอนุมัติ
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownSmart">
+                        <li>
+                            <a class="dropdown-item" onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="RegisterCheck">หน่วยบริการ</a>
+                        </li>
+                        <li><a class="dropdown-item" onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="RegisterCheckUser">ผู้เข้าใช้งาน</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="justify-content-end navbar-toggle-box-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-area="" asp-controller="Authorize" asp-action="LogOut">ออกจากระบบ <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+

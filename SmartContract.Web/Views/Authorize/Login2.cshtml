@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcashpay/cashpaycreate.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-3">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small class="text-dark"><i class="fa fa-book mr-1"></i>ลงชื่อเข้าใช้งาน</small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+<div class="col-md-12">
+    <div class="col text-center">
+        @*<button onclick="showLoading()" type="button" class="btn btn-primary fa-3x mr-2" asp-area="" asp-controller="Register" asp-action="Profile">D.DOPA</button>
+            <button type="button" class="btn btn-success fa-3x" onclick="showLoading();" asp-area="" asp-controller="Register" asp-action="Profile">PassCode</button>*@
+
+        <a class="btn btn-primary fa-3x mr-2" onclick="showLoading()" asp-controller="Authorize" asp-action="DDOPA">D.DOPA</a>
+        <a class="btn btn-success fa-3x" onclick="showLoading()" asp-controller="Authorize" asp-action="LoginPassCode">PassCode</a>
+    </div>
+</div>
+<br />
+<br />
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}

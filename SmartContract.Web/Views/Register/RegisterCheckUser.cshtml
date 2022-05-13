@@ -1,0 +1,209 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Share.IGeneralRepo _repoShare
+@model SmartContract.Infrastructure.Resources.Registers.TrackingRegCheckMain
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "RegisterCheck";
+    Layout = "_LayoutRegisterNHSO";
+    String _Status = String.Empty;
+}
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    _Status = Context.Request.Query["Status"].ToString();
+    var _Items = (Model != null ? Model.TrackingResource.Items : null);
+    var _pager = (_Items != null ? Model.TrackingResource.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-user mr-1"></i>ตรวจสอบและอนุมัติ > </small>
+                                <small><span class="text-primary"><u>ผู้เข้าใช้งาน</u></span></small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group mb-1">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <i class="fas fa-indent fa-lg text-dark mr-2 cursor-pointer">
+                                <a class="ml-1 text-dark" id="_S0" onclick="showLoading();"
+                                   asp-controller="Register"
+                                   asp-action="RegisterCheckUser"
+                                   asp-route-Status="S1">ทั้งหมด (@Model.Dashboard.SumCount())</a>
+                            </i>
+                            <i class="fas fa-hourglass-half text-warning mr-2 cursor-pointer">
+                                <a class="ml-1 text-warning" id="_S1"
+                                   asp-controller="Register"
+                                   asp-action="RegisterCheckUser"
+                                   asp-route-Status="S1" onclick="showLoading();">@ContractUtils.SmctStatusProperties(UserSmctStatus.WaitUse).Description (@Model.Dashboard.WaitUse)</a>
+                            </i>
+                            <i class="fas fa-check text-success mr-2 cursor-pointer">
+                                <a class="ml-1 text-success" id="_S3"
+                                   asp-controller="Register"
+                                   asp-action="RegisterCheckUser"
+                                   asp-route-Status="S3" onclick="showLoading();">@ContractUtils.SmctStatusProperties(UserSmctStatus.Used).Description (@Model.Dashboard.Used)</a>
+                            </i>
+                            <i class="fas fa-times text-danger mr-2 cursor-pointer">
+                                <a class="ml-1 text-danger" id="_S2"
+                                   asp-controller="Register"
+                                   asp-action="RegisterCheckUser"
+                                   asp-route-Status="S2" onclick="showLoading();">@ContractUtils.SmctStatusProperties(UserSmctStatus.NotUse).Description (@Model.Dashboard.CancelCount)</a>
+                            </i>
+                        </div>
+                        <div class="col-sm-6">
+                            @*<div class="text-sm-right">
+                                <a class="btn btn-success" onclick="showLoading()" asp-controller="Register" asp-action="Register"><i class="fa fa-user mr-1"></i>ลงทะเบียนใหม่</a>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="">
+            <div class="col-md-12 table-responsive">
+                <table id="table1" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:12px;">
+                    <thead style="background-color: deepskyblue">
+                        <tr>
+                            <th>ลำดับ</th>
+                            <th>เลขที่ Req</th>
+                            <th>ชื่อผู้เข้าใช้งาน</th>
+                            <th>ประเภทเข้าใช้งาน</th>
+                            <th>ชื่อหน่วยบริการ</th>
+                            <th>ลงทะเบียน</th>
+                            <th>สถานะ</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (_Items != null && _Items.Count > 0)
+                        {
+                            foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                            {
+                                <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                    <td class="text-center">@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
+                                    <td class="text-center col-md-1">
+                                        @item.Value.RegisterNo
+                                    </td>
+                                    <td>@item.Value.UserFullname</td>
+                                    <td>@item.Value.PositionName</td>
+                                    <td>
+                                        <b>ชื่อ</b> :
+                                        @if (!String.IsNullOrEmpty(item.Value.VendorName))
+                                        {
+                                            @item.Value.VendorName
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">-ไม่มี-</span>
+                                        }
+                                        <br />
+                                        <b>รหัส</b> :
+                                        @if (!String.IsNullOrEmpty(item.Value.VendorId))
+                                        {
+                                            @item.Value.VendorId
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">-ไม่มี-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <b>
+                                            ผู้ลง
+                                        </b> : @item.Value.UserFullnameCreate
+                                        <br />
+                                        <b>
+                                            วันที่ลง
+                                        </b> : @(GeneralUtils.DateToThString(item.Value.CreateDate))
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.Value.Status == UserSmctStatus.Cancel)
+                                        {
+                                            <span class="badge badge-pill badge-danger fa-1x">
+                                                @(ContractUtils.SmctStatusProperties(UserSmctStatus.Cancel).Name)
+                                            </span>
+                                        }
+                                        else if (item.Value.Status == UserSmctStatus.WaitUse)
+                                        {
+                                            <span class="badge badge-pill badge-warning fa-1x">
+                                                @(ContractUtils.SmctStatusProperties(UserSmctStatus.WaitUse).Name)
+                                            </span>
+                                        }
+                                        else if (item.Value.Status == UserSmctStatus.NotUse)
+                                        {
+                                            <span class="badge badge-pill badge-danger fa-1x">
+                                                @(ContractUtils.SmctStatusProperties(UserSmctStatus.NotUse).Name)
+                                            </span>
+                                        }
+                                        else if (item.Value.Status == UserSmctStatus.Used)
+                                        {
+                                            <span class="badge badge-pill badge-success fa-1x">
+                                                @(ContractUtils.SmctStatusProperties(UserSmctStatus.Used).Name)
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="text-center col-md-1">
+                                        <a class="btn-outline-primary" onclick="showLoading()"
+                                           asp-controller="Register"
+                                           asp-action="Approve"
+                                           asp-route-idusersmct="@item.Value.IdUserSmct"
+                                           asp-route-approvetype="@(SecurityRepo.Encrypt("U"))">รายละเอียด</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
+    <div class="col-md-12">
+        <div class="row mr-1">
+            <div class="col-xl-4 col-md-4 mt-2 pagination_font font_bold">
+                แสดงผล <span class="text_blue">@(Model.TrackingResource.Items.Count)</span> จากทั้งหมด <span class="text_blue">@(Model.TrackingResource.Pager.TotalItems)</span>
+            </div>
+            <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.TrackingResource.Pager" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+             $(document).ready(function () {
+            var _Status = '@(_Status)';
+            if (_Status == '') {
+                _Status = 'S0';
+            }
+
+            $(`#_${_Status}`).attr('style', 'text-decoration: underline !important; font-size: 15pt;');
+
+        });
+    </script>
+}

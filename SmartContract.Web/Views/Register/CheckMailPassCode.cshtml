@@ -1,0 +1,178 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+
+@{
+    ViewData["Title"] = "MailPassCode";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<style>
+    .card-design {
+        width: 30rem;
+        border-radius: 1rem;
+        padding: 2rem;
+    }
+</style>
+
+<section>
+    <div class="container px-0 px-sm-auto">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="card card-design mt-sm-4">
+                    <h3 class="text-center ">Create Your Account</h3>
+                    <div class="card-body">
+                        <form asp-controller="Register" asp-action="CheckMailPassCode" method="post" data-ajax="true" data-ajax-method="post"
+                              data-ajax-begin="onbeginMailPassCode"
+                              data-ajax-complete="completedMailPassCode"
+                              data-ajax-failure="failedMailPassCode">
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" name="email" placeholder="Enter email" onchange="">
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn btn-success btn-lg btn-block">ตกลง</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a class="btn btn-secondary btn-lg btn-block text-white" onclick="history.back()">กลับ</a>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @*@if (Model.ServerSite.ToUpper() == "UAT")
+                                    {
+                                        <a class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#ModalDOPAError">With D.DOPA</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#ModalDOPA">With D.DOPA</a>
+                                    }*@
+                                    <a class="btn btn-info btn-lg btn-block" href="@Model.UrlDDOPA">Sign in With D.DOPA</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalDOPA" tabindex="-1" role="dialog" aria-labelledby="modalPassCodeTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="">
+                    <div class="embed-responsive-16by9">
+                        <iframe class="" width="640" height="700"
+                                src="@Model.UrlDDOPA" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalDOPAError" tabindex="-1" role="dialog" aria-labelledby="ModalDOPAErrorTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">แจ้งเตือนระบบ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ใช้ได้เฉพาะ Production
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalPassCode" tabindex="-1" role="dialog" aria-labelledby="modalPassCodeTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLongTitle">Smart Contract Guard</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form asp-controller="Register" asp-action="SpecialCode" method="post" data-ajax="true" data-ajax-method="post"
+                      data-ajax-begin="onbeginSpecialCode"
+                      data-ajax-complete="completedSpecialCode"
+                      data-ajax-failure="failedSpecialCode">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-1 align-self-center">
+                                    <i class="fas fa-envelope fa-3x "></i>
+
+                                </div>
+                                <div class="col-md-11 ">
+                                    <h5 class="my-0">สวัสดี!</h5>
+                                    <p>เนืองด้วยมาตรการรักษาความปลอดภัยของบัญขีเพื่มเติม คุณจำเป็นต้องกรอกรหัสพิเศษที่เราส่งไปยังอีเมลของคุณในขณะนี้</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="hidden" name="semail" class="form-control d-inline">
+                                    <input type="text" name="code" class="form-control d-inline" placeholder="กรอกรหัสของคุณที่นี้">
+                                </div>
+                                <div class="col-md-1 align-self-center p-0">
+                                    <i class="fas fa-key d-inline"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a class="btn btn-warning" onclick="showLoading()" asp-controller="Register" asp-action="register">confirm</a>
+        <button type="submit" class="btn btn-success btn-lg btn-block">confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalDOPA" tabindex="-1" role="dialog" aria-labelledby="ModalDOPATitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">เข้าสู่ระบบกับ D.DOPA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center model_sign">
+                <p>แสกนคิวอาร์โค้ด</p>
+                <p>เชื่อมต่อกับกรมการปกครอง</p>
+                <hr class="my-4">
+                <form asp-controller="Authorize" asp-action="Local2" method="post" id="PassQRCodeFix">
+                    <div>
+                        <input type="hidden" class="form-control" name="Email" value="User1">
+                        <input type="hidden" class="form-control" name="PassWord" value="P@ssword1">
+                        <img src="~/images/logo/stang_qr.png" width="250" onclick="PassQRCodeFix()" />
+                    </div>
+                </form>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <div>
+                    คิวอาร์โค้ดนี้เป็นสิ่งยืนยันตนทางดิจิตอล ออกให้โดย กรมการปกครอง กระทรวงมหาดไทย
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/authorize/mailPasscode.js" asp-append-version="true"></script>
+}
+

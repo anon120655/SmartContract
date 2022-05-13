@@ -1,0 +1,121 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    var lookUp = Model.CTVendor.GetLookUp;
+    var paraCon = Model.ParameterCondition;
+    var infoSignature = Model.InfoAttachFileSignature;
+    var indataSigner = Model.InfoSignerPartnersOfContract;
+}
+
+<div class="main-page size-16">
+    <div class="content-page ">
+        <br />
+        <div class="after_always">
+            <div class="text-1">
+                สัญญานี้ ทำขึ้นเป็นสองฉบับมีข้อความตรงกันคู่สัญญาทั้งสองฝ่ายได้อ่านและเข้าใจข้อความในสัญญานี้ตลอดแล้ว  จึงได้ลงลายมือชื่อพร้อมทั้งประทับตรา (ถ้ามี) ไว้เป็นหลักฐานสำคัญต่อหน้าพยานและแต่ละฝ่ายต่างเก็บไว้ฝ่ายละหนึ่งฉบับ
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="float-left w-25 text-right mt-2">ลงชื่อ</div>
+            <div class="float-left w-50 text-center">
+                @if (infoSignature != null && infoSignature.SmctMasterFile != null)
+                {
+                    var file = infoSignature.SmctMasterFile.FirstOrDefault(x => x.FileType == "F7");
+                    if (file != null)
+                    {
+                        String pathFolder = $"Signature/T{paraCon.ContractTypeId}\\{file.PathFolder}";
+                        <img src="@Url.Action("OpenIMG", "Files",new {PathFolder = pathFolder,FileFtp = file.FileFtp })" width="250" height="45" />
+                    }
+                    else
+                    {
+                        <div>&nbsp;</div>
+                    }
+                }
+            </div>
+            <div class="float-left w-25 text-left mt-2">สำนักงาน</div>
+            <div class="float-left w-100 text-center">@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indataSigner.NhsoSignerUser)?.SignerFullname ?? String.Empty)</div>
+            <div class="float-left w-100 text-center">@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indataSigner.NhsoSignerUser)?.SignerPosition ?? String.Empty)</div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="float-left w-25 text-right mt-2">ลงชื่อ</div>
+            <div class="float-left w-50 text-center">
+                @if (infoSignature != null && infoSignature.SmctMasterFile != null)
+                {
+                    var file = infoSignature.SmctMasterFile.FirstOrDefault(x => x.FileType == "F5");
+                    if (file != null)
+                    {
+                        String pathFolder = $"Signature/T{paraCon.ContractTypeId}\\{file.PathFolder}";
+                        <img src="@Url.Action("OpenIMG", "Files",new {PathFolder = pathFolder,FileFtp = file.FileFtp })" width="250" height="45" />
+                    }
+                    else
+                    {
+                        <div>&nbsp;</div>
+                    }
+                }
+            </div>
+            <div class="float-left w-25 text-left mt-2">คู่สัญญา</div>
+            <div class="float-left w-100 text-center">@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indataSigner.VendorSignerUser)?.UserFullname ?? String.Empty)</div>
+            <div class="float-left w-100 text-center">@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indataSigner.VendorSignerUser)?.PositionName ?? String.Empty)</div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="float-left w-25 text-right mt-2">ลงชื่อ</div>
+            <div class="float-left w-50 text-center">
+                @if (infoSignature != null && infoSignature.SmctMasterFile != null)
+                {
+                    var file = infoSignature.SmctMasterFile.FirstOrDefault(x => x.FileType == "F6");
+                    if (file != null)
+                    {
+                        String pathFolder = $"Signature/T{paraCon.ContractTypeId}\\{file.PathFolder}";
+                        <img src="@Url.Action("OpenIMG", "Files",new {PathFolder = pathFolder,FileFtp = file.FileFtp })" width="250" height="45" />
+                    }
+                    else
+                    {
+                        <div>&nbsp;</div>
+                    }
+                }
+            </div>
+            <div class="float-left w-25 text-left mt-2">พยาน</div>
+            <div class="float-left w-100 text-center">@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indataSigner.NhsoWitnessUser)?.SignerFullname ?? String.Empty)</div>
+            <div class="float-left w-100 text-center">@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indataSigner.NhsoWitnessUser)?.SignerPosition ?? String.Empty)</div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="float-left w-25 text-right mt-2">ลงชื่อ</div>
+            <div class="float-left w-50 text-center">
+                @if (infoSignature != null && infoSignature.SmctMasterFile != null)
+                {
+                    var file = infoSignature.SmctMasterFile.FirstOrDefault(x => x.FileType == "F4");
+                    if (file != null)
+                    {
+                        String pathFolder = $"Signature/T{paraCon.ContractTypeId}\\{file.PathFolder}";
+                        <img src="@Url.Action("OpenIMG", "Files",new {PathFolder = pathFolder,FileFtp = file.FileFtp })" width="250" height="45" />
+                    }
+                    else
+                    {
+                        <div>&nbsp;</div>
+                    }
+                }
+            </div>
+            <div class="float-left w-25 text-left mt-2">พยาน</div>
+            <div class="float-left w-100 text-center">@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indataSigner.VendorWitnessUser)?.UserFullname ?? String.Empty)</div>
+            <div class="float-left w-100 text-center">@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indataSigner.VendorWitnessUser)?.PositionName ?? String.Empty)</div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+
+    </div>
+</div>

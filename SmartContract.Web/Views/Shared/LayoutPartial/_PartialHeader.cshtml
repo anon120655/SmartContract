@@ -1,0 +1,43 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@using Microsoft.AspNetCore.Http
+
+@{
+    Layout = null;
+    String Background = "#007bff";
+    if (UserService.GetRoleRoleCode() == PermissionRole.CentralAdmin || UserService.GetRoleRoleCode() == PermissionRole.CentralUser)
+        Background = "#da44da";
+}
+
+
+<style>
+    .fa, .fas, .far, .fal, .fad, .fab {
+        /*font-family: 'Font Awesome 5 Free';*/
+        font-weight: 100;
+        font-style: normal;
+        font-variant: normal;
+        /*text-rendering: auto;*/
+        /*line-height: 2;*/
+    }
+</style>
+
+<section id="topbar" class="d-flex align-items-center text-light" style="background-color: @Background;">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-center justify-content-md-between">
+            <div class="contact-info d-flex align-items-center mt-3 mb-3">
+                <i class="fas fa-user mr-3"><span class="ml-1">@UserService.GetUserFullName()</span></i>
+                <i class="fas fa-id-card mr-3"><span class="ml-1">@(UserService.GetVendorName())(@UserService.GetDepartmentCode())</span></i>
+                <i class="fas fa-star mr-3"><span class="ml-1">@(UserService.GetRoleFullName())(@UserService.GetRoleShotName())</span></i>
+            </div>
+            @*<div class="social-links d-none d-md-flex align-items-center">
+                    <i>
+                        <a class="fas fa-comment-alt text-light"> แจ้งเตือน</a>
+                        <span style="vertical-align:top;" class="badge badge-pill badge-danger">1</span>
+                    </i>
+                </div>*@
+        </div>
+    </div>
+</section>

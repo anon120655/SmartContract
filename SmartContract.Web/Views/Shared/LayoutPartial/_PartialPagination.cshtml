@@ -1,0 +1,61 @@
+﻿
+@using SmartContract.Utils
+@model SmartContract.Infrastructure.Resources.Share.Pager
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject SmartContract.Infrastructure.Wrapper.IRepositoryWrapper _repo
+
+@{
+    Layout = null;
+
+    var action = ViewContext.RouteData.Values["Action"];
+    var _Style = Context.Request.Query["style"].ToString();
+    string ParamenterAll = String.Empty;
+
+    if (action.ToString().ToLower() == "trackingbinding" || action.ToString().ToLower() == "indexbinding")
+    {
+        ParamenterAll = _repo.ContractRepo.ParameterSearchOptionStation(Model);
+    }
+    else if (action.ToString().ToLower() == "search")
+    {
+        ParamenterAll = _repo.OtherRepo.ParameterSearchOptionsAll(Model);
+    }
+    else
+    {
+        ParamenterAll = _repo.GeneralRepo.SetParameteragination(_Style, Model);
+    }
+
+}
+
+<div class="col-xl-8 col-md-8 mt-2 text-md-right">
+    @if (Model.EndPage > 1)
+    {
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li>
+                    <a href="@(Model.UrlAction)?Style=@(_Style)@(ParamenterAll)" onclick="showLoading()">First</a>
+                </li>
+                <li>
+                    <a href="@(Model.UrlAction)?page=@(Model.CurrentPage - 1)@(ParamenterAll)" onclick="showLoading()">Previous</a>
+                </li>
+            }
+
+            @for (var page = Model.StartPage; page <= Model.EndPage; page++)
+            {
+                <li class="@(page == Model.CurrentPage ? "active" : "")">
+                    <a href="@(Model.UrlAction)?page=@(page)@(ParamenterAll)" onclick="showLoading()">@(page)</a>
+                </li>
+            }
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li>
+                    <a href="@(Model.UrlAction)?page=@(Model.CurrentPage + 1)@(ParamenterAll)" onclick="showLoading()">Next</a>
+                </li>
+                <li>
+                    <a href="@(Model.UrlAction)?page=@(Model.TotalPages)@(ParamenterAll)" onclick="showLoading()">Last</a>
+                </li>
+            }
+        </ul>
+    }
+</div>

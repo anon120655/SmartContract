@@ -1,0 +1,75 @@
+﻿.progressbar-wrapper {
+    background: #fff;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.progressbar li {
+    list-style-type: none;
+    width: 12.5%;
+    float: left;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    color: #7d7d7d;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+    .progressbar li:before {
+        width: 55px;
+        height: 55px;
+        content: "";
+        line-height: 60px;
+        border: 2px solid #7d7d7d;
+        display: block;
+        text-align: center;
+        margin: 0 auto 3px auto;
+        border-radius: 50%;
+        position: relative;
+        z-index: 2;
+        background-color: #fff;
+    }
+
+    .progressbar li:after {
+        width: 100%;
+        height: 3px;
+        content: '';
+        position: absolute;
+        background-color: #7d7d7d;
+        top: 30px;
+        left: -50%;
+        z-index: 0;
+    }
+
+    .progressbar li:first-child:after {
+        content: none;
+    }
+
+    .progressbar li.active {
+        color: green;
+        font-weight: bold;
+    }
+
+        .progressbar li.active:before {
+            border-color: #55b776;
+            background: green;
+        }
+
+        .progressbar li.active + li:after {
+            background-color: #55b776;
+        }
+
+
+        .progressbar li.active:before {
+            background: #2c8655 url('../../images/logo/user.svg') no-repeat center center;
+            background-size: 60%;
+        }
+
+    .progressbar li::before {
+        background: #fff url('../../images/logo/user.svg') no-repeat center center;
+        background-size: 60%;
+    }
+
+
+

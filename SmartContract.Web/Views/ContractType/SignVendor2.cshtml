@@ -1,0 +1,246 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    var paraCon = Model.ParameterCondition;
+    var indata = Model.InfoSignerPartnersOfContract;
+    var lookUp = Model.CTVendor.GetLookUp;
+    String contractTypeId = Model.ContractStation.ContractTypeId;
+    String contractSignType = Model.ContractStation.ContractSignType;
+    PermissionRole roleCode = UserService.GetRoleRoleCode();
+    string _ItemStatusCurr = Model.ContractStation.ItemStatusCurr;
+    string _Station = Model.ContractStation.StationStatusCurr;
+    var infoSignature = Model.InfoAttachFileSignature;
+
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="lable_blue" for="">รายละเอียดลงนาม(คู่สัญญา)</label>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม (คู่สัญญา) :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary"
+                               value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorSignerUser)?.UserFullname ?? String.Empty)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ตำแหน่ง :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary"
+                               value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorSignerUser)?.PositionName ?? String.Empty)">
+                    </div>
+                </div>
+                @if (contractSignType == SigningTypes.Paper)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ลายเซนต์ :</label>
+                        <div class="col-sm-2">
+                            @if (_Station != ContractStationStatusAll.S5Signing2 || _ItemStatusCurr == ContractStationStatusItemAll.S53WaitSigningNhso)
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-success" value="ลงนามแล้ว">
+                            }
+                            else
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-warning" value="รอลงนาม">
+                            }
+                        </div>
+                        @if (GroupRoles.GroupRoleUnit.Contains(roleCode))
+                        {
+                            if (indata.VendorWitnessStatus == WitnessStatusAll.W2WitnessComplete)
+                            {
+                                if (_ItemStatusCurr == ContractStationStatusItemAll.S51WaitSigning2 || _ItemStatusCurr == ContractStationStatusItemAll.S52WaitSigningVendor)
+                                {
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn btn-success mr-2" name="BtnSubmit" value="3">ยืนยันลงนาม</button>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                }
+                @if (contractSignType == SigningTypes.Electronic)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ลายเซนต์ :</label>
+                        <div class="col-sm-2">
+                            @if (_Station != ContractStationStatusAll.S5Signing2 || _ItemStatusCurr == ContractStationStatusItemAll.S53WaitSigningNhso)
+                            {
+                                @if (infoSignature != null && infoSignature.SmctMasterFile != null)
+                                {
+                                    var file = infoSignature.SmctMasterFile.FirstOrDefault(x => x.FileType == "F5");
+                                    if (file != null)
+                                    {
+                                        String pathFolder = $"Signature/T{contractTypeId}/{file.PathFolder}";
+                                        <img src="@Url.Action("OpenIMG", "Files",new {PathFolder = pathFolder,FileFtp = file.FileFtp })" class="img-fluid" width="250" />
+                                        <input type="text" readonly class="form-control-plaintext text-success" value="ลงนามแล้ว">
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var _MasterSendmail = Model.MasterSendmail.FirstOrDefault(x => x.SendmailType == SendmailTypes.VendorAuthority);
+                                if (Model.MasterSendmail == null || Model.MasterSendmail.Count == 0 || _MasterSendmail == null)
+                                {
+                                    <img src="~/files/Signature/SignatureBlank.png" width="250" class="img-fluid" />
+                                    <input type="text" readonly class="form-control-plaintext text-warning" value="รอลงนาม">
+                                }
+                                else
+                                {
+                                    <img src="~/files/Signature/SignatureBlank.png" width="250" class="img-fluid" />
+                                    <input type="text" readonly class="form-control-plaintext text-warning" value="รอลงนาม(ทางเมล์)">
+                                }
+                            }
+                        </div>
+                        @if (GroupRoles.GroupRoleUnit.Contains(roleCode))
+                        {
+                            if (indata.VendorWitnessStatus == WitnessStatusAll.W2WitnessComplete)
+                            {
+                                if (_ItemStatusCurr == ContractStationStatusItemAll.S51WaitSigning2 || _ItemStatusCurr == ContractStationStatusItemAll.S52WaitSigningVendor)
+                                {
+                                    var _MasterSendmail = Model.MasterSendmail.FirstOrDefault(x => x.SendmailType == SendmailTypes.VendorAuthority);
+                                    if (Model.MasterSendmail == null || Model.MasterSendmail.Count == 0 || _MasterSendmail == null)
+                                    {
+                                        <div class="col-sm-3">
+                                            <div class="col-sm-10">
+                                                <a class="btn btn-success mr-2" onclick="showLoading()"
+                                                   asp-controller="ElectronicSignature"
+                                                   asp-action="SentMailSignature"
+                                                   asp-route-Style="@paraCon.Style"
+                                                   asp-route-IdSmctMaster="@paraCon.IdSmctMaster"
+                                                   asp-route-ContractTypeId="@(contractTypeId)"
+                                                   asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(contractTypeId)"
+                                                   asp-route-Station="@paraCon.Station"
+                                                   asp-route-SigningType="@paraCon.SigningType"
+                                                   asp-route-SigningTypeEn="@paraCon.SigningTypeEn"
+                                                   asp-route-SendmailType="@SendmailTypes.VendorAuthority"
+                                                   asp-route-ItemStatusCurr="@_ItemStatusCurr"
+                                                   asp-route-BtnSubmit="3"
+                                                   asp-route-IsSentMail="true">
+                                                    <i class="fas fa-signature align-middle"></i> ส่งขอลายเชนต์ทางเมล์
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        }
+                    </div>
+                }
+                <hr class="mt-2 mb-3 width_75">
+                <br />
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">พยาน (คู่สัญญา) :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary"
+                               value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorWitnessUser)?.UserFullname ?? String.Empty)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ตำแหน่ง :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary"
+                               value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorWitnessUser)?.PositionName ?? String.Empty)">
+                    </div>
+                </div>
+                @if (contractSignType == SigningTypes.Paper)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ลายเซนต์ :</label>
+                        <div class="col-sm-2">
+                            @if (indata.VendorWitnessStatus == WitnessStatusAll.W2WitnessComplete)
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-success" value="ลงนามแล้ว">
+                            }
+                            else
+                            {
+                                <input type="text" readonly class="form-control-plaintext text-warning" value="รอลงนาม">
+                            }
+                        </div>
+                        @if (GroupRoles.GroupRoleUnit.Contains(roleCode))
+                        {
+                            if (indata.VendorWitnessStatus == WitnessStatusAll.W1WitnessUnsigned)
+                            {
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-success mr-2" name="BtnSubmit" value="4">ยืนยันลงนาม</button>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+
+                @if (contractSignType == SigningTypes.Electronic)
+                {
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ลายเซนต์ :</label>
+                        <div class="col-sm-2">
+                            @if (indata.VendorWitnessStatus == WitnessStatusAll.W2WitnessComplete)
+                            {
+                                @if (infoSignature != null && infoSignature.SmctMasterFile != null && infoSignature.SmctMasterFile.Count > 0)
+                                {
+                                    var file = infoSignature.SmctMasterFile.FirstOrDefault(x => x.FileType == "F4");
+                                    if (file != null)
+                                    {
+                                        String pathFolder = $"Signature/T{contractTypeId}/{file.PathFolder}";
+                                        <img src="@Url.Action("OpenIMG", "Files",new {PathFolder = pathFolder,FileFtp = file.FileFtp })" class="img-fluid" width="250" />
+                                        <input type="text" readonly class="form-control-plaintext text-success" value="ลงนามแล้ว">
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var _MasterSendmail = Model.MasterSendmail.FirstOrDefault(x => x.SendmailType == SendmailTypes.VendorWitness);
+                                if (Model.MasterSendmail == null || Model.MasterSendmail.Count == 0 || _MasterSendmail == null)
+                                {
+                                    <img src="~/files/Signature/SignatureBlank.png" width="250" class="img-fluid" />
+                                    <input type="text" readonly class="form-control-plaintext text-warning" value="รอลงนาม">
+                                }
+                                else
+                                {
+                                    <img src="~/files/Signature/SignatureBlank.png" width="250" class="img-fluid" />
+                                    <input type="text" readonly class="form-control-plaintext text-warning" value="รอลงนาม(ทางเมล์)">
+                                }
+                            }
+                        </div>
+                        @if (indata.VendorWitnessStatus == WitnessStatusAll.W1WitnessUnsigned)
+                        {
+                            @if (GroupRoles.GroupRoleUnit.Contains(roleCode))
+                            {
+                                var _MasterSendmail = Model.MasterSendmail.FirstOrDefault(x => x.SendmailType == SendmailTypes.VendorWitness);
+                                if (Model.MasterSendmail == null || Model.MasterSendmail.Count == 0 || _MasterSendmail == null)
+                                {
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-10">
+                                            <a class="btn btn-success mr-2" onclick="showLoading()"
+                                               asp-controller="ElectronicSignature"
+                                               asp-action="SentMailSignature"
+                                               asp-route-Style="@paraCon.Style"
+                                               asp-route-IdSmctMaster="@paraCon.IdSmctMaster"
+                                               asp-route-ContractTypeId="@(contractTypeId)"
+                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(contractTypeId)"
+                                               asp-route-Station="@paraCon.Station"
+                                               asp-route-SigningType="@paraCon.SigningType"
+                                               asp-route-SigningTypeEn="@paraCon.SigningTypeEn"
+                                               asp-route-SendmailType="@SendmailTypes.VendorWitness"
+                                               asp-route-BtnSubmit="4"
+                                               asp-route-IsSentMail="true">
+                                                <i class="fas fa-signature align-middle"></i> ส่งขอลายเชนต์ทางเมล์
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    //Layout = "~/Views/Shared/_LayoutRegisterNHSO.cshtml";
+
+    Layout = "_LayoutRegisterNHSO";
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-3">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small class="text-dark"><i class="fa fa-book mr-1"></i>Profile</small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailProfile">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailProfile" aria-expanded="true" aria-controls="collapseDetailProfile">
+                <i class="fas fa-file-archive"></i> ผู้เข้าใช้งาน
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailProfile" class="collapse show" aria-labelledby="headingDetailProfile">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="text-primary" for="">รายละเอียดผู้เข้าใช้งาน</label>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ประเภทผู้เข้าใช้งาน : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="ผู้ใช้งานทั่วไป">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อเต็ม : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="นายxxx xxx">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="ตำแหน่งxxx">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">รหัสบัตรประชาชน : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="12xxxxxxxxxxx">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">E-Mail : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="xxx@gmail.com">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">หมายเลขโทรศัพท์ : </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="086xxxxxxx">
+                    </div>
+                </div>
+                <hr class="my-4">
+                @*<div class="col-md-12 mb-2">
+                    <div class="text-center">
+                        <a class="btn btn-success" onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="Register">ลงทะเบียนใหม่</a>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br />
+<br />
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}

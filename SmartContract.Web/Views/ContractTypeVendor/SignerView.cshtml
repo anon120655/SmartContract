@@ -1,0 +1,51 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoSignerPartnersOfContract;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ฝ่ายคู่สัญญา</label>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม (ฝ่ายคู่สัญญา) :</label>
+                <div class="col-sm-4 bootstrapSelectRemove">
+                    <input type="text" readonly class="form-control-plaintext text-primary" id="VendorSignerTxt"
+                           value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorSignerUser)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">พยาน (ฝ่ายคู่สัญญา) :</label>
+                <div class="col-sm-4 bootstrapSelectRemove">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorWitnessUser)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div id="FootNote_Render">
+                @if (indata.FootNotes.Count > 0)
+                {
+                    foreach (var item in indata.FootNotes.Select((value, i) => (value, i)))
+                    {
+                        <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">@(item.i == 0 ? "Foot Note (ฝ่ายคู่สัญญา)" : "")  @(item.i + 1):</label>
+                                <div class="col-sm-4">
+                                    <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                                        <input type="text" readonly class="form-control-plaintext text-primary"
+                                               value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.FootNotes[item.i].IdUserSmct)?.UserFullname ?? String.Empty)">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+</section>

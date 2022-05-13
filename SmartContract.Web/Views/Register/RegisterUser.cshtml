@@ -1,0 +1,520 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+}
+
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-3">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>หน่วยบริการ > </small>
+                            <small><span class="text-primary"><u>ลงทะเบียนใหม่</u></span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailVendor">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendor" aria-expanded="true" aria-controls="collapseDetailVendor">
+                <i class="fas fa-file-archive"></i> หน่วยบริการ(สังกัด)
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailVendor" class="collapse show" aria-labelledby="headingDetailVendor">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>เลือกหน่วยบริการจากระบบสมัคร</label>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label tltle ml-5">หน่วยบริการ :</label>
+                    <div class="col-12 col-md-9">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="X0001_โรงพยาบาลXXX1">
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-12">
+                    <label class="text-primary" for="">รายละเอียดบริษัทต้นสังกัด</label>
+                    <div class="row col-md-12">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ชื่อบุคคล/นิติบุคคล เจ้าของสถานบริการ :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">จังหวัด :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ตำบล/แขวง :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">เลขที่ :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">เลขฯผู้เสียภาษี :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ถนน :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ตามใบอนุญาตฯเลขที่ (ส.พ.7) :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">จดทะเบียนเป็นนิติบุคคล ณ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">อำเภอ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">หมู่ที่ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">อาคาร :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ตรอกซอย :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">รหัสไปรษณีย์ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ลงวันที่ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <label class="text-primary" for="">รายละเอียดคู่สัญญา</label>
+                    <div class="row col-md-12">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ชื่อคู่สัญญา :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">จังหวัด :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">ตำบล :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">รหัสไปรษณีย์ :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">เลขฯผู้เสียภาษี :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group row">
+                                <div class="col-sm-9">
+                                    <input type="text" readonly class="form-control-plaintext text-primary" value="-">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">อำเภอ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">หมู่ที่ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">เบอร์โทรศัพท์ :</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="XXX">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+            </div>
+            <div class="form-group">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบ</label>
+                <table class="table  borderless">
+                    <tr>
+                        <td class="col-sm-1 pt-0">1</td>
+                        <td>
+                            <div class="form-group row mb-0">
+                                <div class="col-sm-7 text-left">
+                                    <input type="file" class="file" onchange="fileFormCashPayChange(event,1,this);" data-id="1" id="customFile_1"
+                                           name="DetailAttachFile.FFormFileChecklist[1].UploadFile">
+                                </div>
+                                @*<div class="col-sm-6">
+                                        <input type="text" class="col-sm-12 form-control filesnamestyle" id="filesnamelist_id_1" readonly
+                                               value=""
+                                               placeholder="ชื่อเอกสารแนบ">
+                                    </div>*@
+                                <div class="col-sm-3 text-right">
+                                    <input type="hidden"
+                                           name="DetailAttachFile.FFormFileChecklist[1].IdFFormFileChecklist"
+                                           value="" />
+                                    <input type="hidden"
+                                           name="DetailAttachFile.FFormFileChecklist[1].FileChecklistCode"
+                                           value="" />
+                                    @*<label class="tltle mt-1">1</label>*@
+                                    @if (!String.IsNullOrEmpty("1"))
+                                    {
+                                        <a style="margin-left:5px;" target="_blank" href="~/file/fm_formcashpay/attach/1">
+                                            <i class="fas fa-file-pdf fa-2x"></i> View
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-1 pt-0">2</td>
+                        <td>
+                            <div class="form-group row mb-0">
+                                <div class="col-sm-7 text-left">
+                                    <input type="file" class="file" onchange="fileFormCashPayChange(event,1,this);" data-id="1" id="customFile_1"
+                                           name="DetailAttachFile.FFormFileChecklist[1].UploadFile">
+                                </div>
+                                @*<div class="col-sm-6">
+                                        <input type="text" class="col-sm-12 form-control filesnamestyle" id="filesnamelist_id_1" readonly
+                                               value=""
+                                               placeholder="ชื่อเอกสารแนบ">
+                                    </div>*@
+                                <div class="col-sm-3 text-right">
+                                    <input type="hidden"
+                                           name="DetailAttachFile.FFormFileChecklist[1].IdFFormFileChecklist"
+                                           value="" />
+                                    <input type="hidden"
+                                           name="DetailAttachFile.FFormFileChecklist[1].FileChecklistCode"
+                                           value="" />
+                                    @*<label class="tltle mt-1">1</label>*@
+                                    @if (!String.IsNullOrEmpty("1"))
+                                    {
+                                        <a style="margin-left:5px;" target="_blank" href="~/file/fm_formcashpay/attach/1">
+                                            <i class="fas fa-file-pdf fa-2x"></i> View
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailUser">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailUser" aria-expanded="true" aria-controls="collapseDetailUser">
+                <i class="fas fa-file-archive"></i> ผู้ขอลงทะเบียน
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailUser" class="collapse show" aria-labelledby="headingDetailUser">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดผู้ขอลงทะเบียน</label>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label tltle ml-5">ประเภทผู้เข้าใช้งาน :</label>
+                    <div class="col-12 col-md-4">
+                        <select class="form-control  bg-focus selectpicker">
+                            <option value="">---เลือก---</option>
+                            <option value="">ผู้ใช้งานทั่วไป</option>
+                            <option value="">ผู้ประสาน</option>
+                            <option value="">ผู้ได้รับมอบอำนาจ</option>
+                            <option value="">ผู้มีอำนาจ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">UserName : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control bg-focus" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">Password : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control bg-focus" placeholder="">
+                    </div>
+                </div>
+                <br />
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อเต็ม : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control bg-focus" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control bg-focus" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">รหัสบัตรประชาชน : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control bg-focus" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">E-Mail : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control bg-focus" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label font-weight ml-5">หมายเลขโทรศัพท์ : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control bg-focus" placeholder="">
+                    </div>
+                </div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailAuthorize">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailAuthorize" aria-expanded="true" aria-controls="collapseDetailAuthorize">
+                <i class="fas fa-file-archive"></i> รับมอบอำนาจ(กรณีมอบอำนาจ)
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailAuthorize" class="collapse show" aria-labelledby="headingDetailAuthorize">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <form>
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดมอบอำนาจ</label>
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม :</label>
+                            <div class="col-sm-7">
+                                <div class="form-check">
+                                    <input class="form-check-input DecisionMaker" type="radio" name="DecisionMaker_Radios" id="DecisionMaker_Radios1" value="option1" checked>
+                                    <label class="form-check-label" for="DecisionMaker_Radios1">
+                                        เป็นผู้มีอำนาจด้วยตัวเอง
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input DecisionMaker" type="radio" name="DecisionMaker_Radios" id="DecisionMaker_Radios2" value="option2">
+                                    <label class="form-check-label" for="DecisionMaker_Radios2">
+                                        รับมอบอำนาจ
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div id="DecisionMaker_Radios2_Deail">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">หนังสือมอบอำนาจเลขที่ :</label>
+                            <div class="col-sm-4 pr-sm-0">
+                                <input type="text" class="form-control bg-focus" placeholder=" ">
+                            </div>
+                            <label class="col-sm-1 col-form-label text-sm-right">ลงวันที่ :</label>
+                            <div class="col-sm-2 ">
+                                <input type="date" class="form-control bg-focus" placeholder="dd/mm/yyyy">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">จากผู้มีอำนาจ :</label>
+                            <div class="col-sm-4">
+                                <select id="inputYY" class="form-control bg-focus">
+                                    <option value="0">---เลือก---</option>
+                                    <option value="1">นายทดสอบ1 ลงนาม</option>
+                                    <option value="2">นายทดสอบ2 ลงนาม</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ตามหนังสือ :</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control bg-focus" placeholder=" ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือ :</label>
+                        <div class="col-sm-4 pr-sm-0">
+                            <input type="text" class="form-control bg-focus" placeholder=" ">
+                        </div>
+                        <label class="col-sm-1 col-form-label text-sm-right">ลงวันที่ :</label>
+                        <div class="col-sm-2 ">
+                            <input type="date" class="form-control bg-focus" placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>
+
+                </form>
+                <hr class="my-4">
+            </div>
+            <div class="form-group">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบ</label>
+                <table class="table  borderless">
+                    <tr>
+                        <td class="col-sm-1 pt-0">1</td>
+                        <td>
+                            <div class="form-group row mb-0">
+                                <div class="col-sm-7 text-left">
+                                    <input type="file" class="file" onchange="fileFormCashPayChange(event,1,this);" data-id="1" id="customFile_1"
+                                           name="DetailAttachFile.FFormFileChecklist[1].UploadFile">
+                                </div>
+                                @*<div class="col-sm-6">
+                                        <input type="text" class="col-sm-12 form-control filesnamestyle" id="filesnamelist_id_1" readonly
+                                               value=""
+                                               placeholder="ชื่อเอกสารแนบ">
+                                    </div>*@
+                                <div class="col-sm-3 text-right">
+                                    <input type="hidden"
+                                           name="DetailAttachFile.FFormFileChecklist[1].IdFFormFileChecklist"
+                                           value="" />
+                                    <input type="hidden"
+                                           name="DetailAttachFile.FFormFileChecklist[1].FileChecklistCode"
+                                           value="" />
+                                    @*<label class="tltle mt-1">1</label>*@
+                                    @if (!String.IsNullOrEmpty("1"))
+                                    {
+                                        <a style="margin-left:5px;" target="_blank" href="~/file/fm_formcashpay/attach/1">
+                                            <i class="fas fa-file-pdf fa-2x"></i> View
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br />
+<br />
+<div class="col-md-12">
+    <div class="col text-center">
+        <a class="btn btn-dark mr-2" onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="Profile"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+        <a class="btn btn-success mr-2" onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="Profile">บันทึกข้อมูล <i class="fa fa-angle-right align-middle"></i></a>
+        <a class="btn btn-warning mr-2" onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="Profile">บันทึกแก้ไขข้อมูล <i class="fa fa-angle-right align-middle"></i></a>
+        <a class="btn btn-danger" onclick="showLoading()" asp-area="" asp-controller="Register" asp-action="Profile">ยกเลิกข้อมูล <i class="fa fa-times-circle align-middle"></i></a>
+
+    </div>
+</div>
+<br />
+<br />
+
+
+@section Scripts {
+    <script src="~/js/Contract_Vendor.js"></script>
+    <script src="~/js/Contract_Payment.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            set_1();
+        });
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        function Get_Request(key) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const newUser = urlParams.get(key)
+            return newUser;
+        }
+
+        function set_1() {
+            var x = Get_Request('tab');
+            if (x == 'A') {
+                $('#Approve').show();
+                $('#bt').hide();
+                $("#form1 :input").attr("disabled", true);
+            } else {
+                $('#Approve').hide();
+            }
+        }
+
+    </script>
+}

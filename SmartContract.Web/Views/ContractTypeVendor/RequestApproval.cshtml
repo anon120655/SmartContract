@@ -1,0 +1,80 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoRequestForApproval;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ฝ่ายคู่สัญญา</label>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ชื่อโครงการ :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control bg-focus"
+                           asp-for="InfoRequestForApproval.ContractName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เหตุผลความจำเป็น :</label>
+                <div class="col-sm-7">
+                    <textarea class="form-control bg-focus" rows="3" asp-for="InfoRequestForApproval.Reason"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือขออนุมัติดำเนินการ :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoRequestForApproval.ApprovalReqId">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">วันที่หนังสือขออนุมัติดำเนินการ :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@GeneralUtils.getFullThaiFullShot(indata.ApprovalReqDate)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้ประสานงาน :</label>
+                <div class="col-sm-3">
+                    <select class="form-control bg-focus selectpicker" data-live-search="true"
+                            asp-for="InfoRequestForApproval.CoordinatorUserSelect"
+                            asp-items="@(new SelectList((from s in lookUp.Coordinators select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"{s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.CoordinatorUserSelect))">
+                        <option value="">---เลือก---</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">E-mail :</label>
+                <div class="col-sm-7">
+                    <input type="email" class="form-control"
+                           asp-for="InfoRequestForApproval.Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เบอร์โทรศัพท์ :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control"
+                           asp-for="InfoRequestForApproval.Phone">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">โทรสาร :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control"
+                           asp-for="InfoRequestForApproval.Fax">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

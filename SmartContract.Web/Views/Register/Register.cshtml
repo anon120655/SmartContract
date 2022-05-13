@@ -1,0 +1,182 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Data.EntityFramework
+@using SmartContract.Infrastructure.Helpers
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+
+    var lookUp = Model.GetLookUp;
+    String TypeName = "ลงทะเบียนใหม่";
+    if (!String.IsNullOrEmpty(Model.Approvetype))
+    {
+        TypeName = Model.Approvetype == "U" ? "แก้ไขลงทะเบียน(ผู้เข้าใช้งาน)" : "แก้ไขลงทะเบียน(หน่วยบริการ)";
+    }
+
+    bool IsRoleAdmin = GroupRoles.GroupRoleAdmin.Contains(UserService.GetRoleRoleCode());
+
+}
+
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+<form asp-controller="Register" asp-action="Register" enctype="multipart/form-data" method="post"
+      data-ajax="true" data-ajax-method="post"
+      data-ajax-begin="onbeginForm"
+      data-ajax-complete="completedForm"
+      data-ajax-failure="failedForm">
+    <div>
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small><i class="fa fa-book mr-1"></i>หน่วยบริการ > </small>
+                                    <small><span class="text-primary"><u>@TypeName</u></span></small>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+
+        @*หน่วยบริการ(สังกัด)*@
+        <fieldset class="card accordion-group">
+            <div class="card-header" id="headingDetailVendor">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendor" aria-expanded="true" aria-controls="collapseDetailVendor">
+                        <i class="fas fa-file-archive"></i> หน่วยบริการ/คู่สัญญา
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseDetailVendor" class="collapse show" aria-labelledby="headingDetailVendor">
+                @if (Model.Approvetype != "U")
+                {
+                    <partial name="_PartialVendorEdit.cshtml" model="Model" />
+                }
+                else
+                {
+                    <partial name="_PartialVendorView.cshtml" model="Model" />
+                }
+            </div>
+        </fieldset>
+
+        @if (!IsRoleAdmin)
+        {
+
+            @*ผู้ขอลงทะเบียน*@
+            <div class="card accordion-group">
+                <div class="card-header" id="headingDetailUser">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailUser" aria-expanded="true" aria-controls="collapseDetailUser">
+                            <i class="fas fa-file-archive"></i> ผู้ขอลงทะเบียน
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseDetailUser" class="collapse show" aria-labelledby="headingDetailUser">
+                    @if (Model.Approvetype != "S")
+                    {
+                        <partial name="_PartialUserEditRole.cshtml" model="Model" />
+                    }
+                    else
+                    {
+                        <partial name="_PartialUserView.cshtml" model="Model" />
+                    }
+                </div>
+            </div>
+
+            @*ผู้มีอำนาจลงนาม*@
+            <fieldset id="tab_usersmctsigner">
+                <div class="card accordion-group">
+                    <div class="card-header" id="headingDetailAuthorize">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailAuthorize" aria-expanded="true" aria-controls="collapseDetailAuthorize">
+                                <i class="fas fa-file-archive"></i> ผู้มีอำนาจลงนาม
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseDetailAuthorize" class="collapse show" aria-labelledby="headingDetailAuthorize">
+                        @if (Model.Approvetype != "S")
+                        {
+                            <partial name="_PartialSignerAuthorizeEdit.cshtml" model="Model" />
+                        }
+                        else
+                        {
+                            <partial name="_PartialSignerAuthorizeView.cshtml" model="Model" />
+                        }
+                    </div>
+                </div>
+            </fieldset>
+
+        }
+
+        <br />
+        <div class="col-md-12">
+            <div class="col text-center">
+                <a class="btn btn-dark mr-2" onclick="showLoading()"
+                   asp-controller="Authorize" asp-action="LogOut"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+
+                <input type="hidden" asp-for="ObjectState" />
+                <input type="hidden" asp-for="UserSmct.IdUserSmct" />
+                <input type="hidden" asp-for="RegisterNhso.IdRegisterNhso" />
+                <input type="hidden" asp-for="Approvetype" value="@Model.Approvetype" />
+                <button type="submit" class="btn btn-success mr-2" onclick="showLoading();"
+                        name="BtnSubmit" value="0">
+                    บันทึกข้อมูล <i class="fa fa-angle-right align-middle"></i>
+                </button>
+                @*<a class="btn btn-danger" onclick="showLoading()"
+                    asp-controller="Register" asp-action="Profile">ยกเลิกข้อมูล <i class="fa fa-times-circle align-middle"></i></a>*@
+            </div>
+        </div>
+        <br />
+    </div>
+</form>
+
+
+<partial name="/Views/Shared/JavaScript/JavascriptFileShare.cshtml" for="@Model.GetLookUp" />
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/authorize/Registers.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            set_1();
+        });
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        function Get_Request(key) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const newUser = urlParams.get(key)
+            return newUser;
+        }
+
+        function set_1() {
+            var x = Get_Request('tab');
+            if (x == 'A') {
+                $('#Approve').show();
+                $('#bt').hide();
+                $("#form1 :input").attr("disabled", true);
+            } else {
+                $('#Approve').hide();
+            }
+        }
+
+    </script>
+
+}

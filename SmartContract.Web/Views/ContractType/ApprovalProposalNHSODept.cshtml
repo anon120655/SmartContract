@@ -1,0 +1,69 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+    var indata = Model;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <section>
+                <div class="">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="lable_blue" for="">ผลการตรวจสอบข้อเสนอ</label>
+                            @if (Model.ApprovalReqStation != null && Model.ApprovalReqStation.StationStatusCurr == ApproveStationStatusAll.S3Consider)
+                            {
+                                <div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input select_approve_proposal"
+                                               asp-for="ApproveProposal.Approve" onclick="return false;" checked>
+                                        <label class="custom-control-label" for="ApproveProposal_Approve">อนุมัติ</label>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                if (Model.ApprovalReqStation.StatusCheckMail == StatusCheckMails.M12SentMail)
+                                {
+                                    <div>
+                                        <label class="col-sm col-form-label text-danger">รอผลการตรวจสอบทางเมล์</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <label class="col-sm col-form-label text-danger">รอส่งเมล์ตรวจสอบ</label>
+                                    </div>
+                                }
+
+                                @*<div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input select_approve_proposal"
+                                                   asp-for="ApproveProposal.Approve">
+                                            <label class="custom-control-label" for="ApproveProposal_Approve">อนุมัติ</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input select_approve_proposal"
+                                                   asp-for="ApproveProposal.UnApprove">
+                                            <label class="custom-control-label" for="ApproveProposal_UnApprove">ไม่อนุมัติ</label>
+                                            <div class="form-group col-md-8 mt-2 ">
+                                                <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                                                <div class="col-sm-8">
+                                                    <textarea cols="80" rows="5" asp-for="ApproveProposal.Remark"
+                                                              placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>

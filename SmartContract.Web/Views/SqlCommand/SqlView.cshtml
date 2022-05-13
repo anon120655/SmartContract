@@ -1,0 +1,32 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Share.CommandMain
+
+
+@{
+    ViewData["Title"] = "SqlView";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+<div class="container">
+    <div>
+        <p>ConnectionString : </p>
+        <p>@(Model.ConnectionString != null ? Model.ConnectionString : String.Empty)</p>
+    </div>
+    <form asp-controller="SqlCommand" asp-action="SqlView" method="post">
+        <h1>SqlView</h1>
+<textarea asp-for="StringSql" rows="5" cols="100"></textarea>
+        <br />
+        <br />
+        <div>
+            <p>Result : </p>
+            <p>@(Model.ResponseMessage != null ? Model.ResponseMessage : String.Empty)</p>
+        </div>
+        <div>
+            <p>Error : </p>
+            <p>@(Model.ErrorMessage != null ? Model.ErrorMessage : String.Empty)</p>
+        </div>
+        <input type="submit" name="name" value="Execute" />
+    </form>
+
+
+</div>

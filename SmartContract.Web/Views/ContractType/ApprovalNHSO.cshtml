@@ -1,0 +1,196 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+    var indata = Model.CheckListMain;
+}
+
+
+<style>
+    .modal {
+        padding: 0 !important;
+    }
+
+        .modal .modal-dialog {
+            width: 80%;
+            max-width: none;
+            height: 100%;
+            margin: auto;
+            margin-top: 1%;
+        }
+
+        .modal .modal-content {
+            height: 100%;
+            border: 0;
+            border-radius: 0;
+        }
+
+        .modal .modal-body {
+            overflow-y: auto;
+        }
+</style>
+<fieldset>
+    <div class="form-group">
+        <div class="container-fluid">
+            <table class="table table-bordered">
+                <thead class="thead_checklist">
+                    <tr>
+                        <th class="col-7">หัวข้อ</th>
+                        <th class="col-4">ผลตรวจเช็ค</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (indata != null && indata.ContractSbbCkl != null && indata.ContractSbbCkl.ContractSbbCklDetails.Count > 0)
+                    {
+                        int index = 0;
+                        foreach (var item in indata.ContractSbbCkl.ContractSbbCklDetails)
+                        {
+                            <tr>
+                                <td>@item.DetailItem</td>
+                                <td class="text-center">
+                                    @if (item.FCb != "N")
+                                    {
+                                        <div class="mb-1">
+                                            <input type="hidden" asp-for="CheckListMain.ContractSbbCkl.ContractSbbCklDetails[index].IdContractSbbCklHeading" value="@item.IdContractSbbCklHeading" />
+                                            <div class="form-check form-check-inline pl-2 pr-2">
+                                                <input class="form-check-input cb_group_checklist_@(index)" onchange="CBCheckListChange(@index,this)" type="checkbox"  checked
+                                                       asp-for="CheckListMain.ContractSbbCkl.ContractSbbCklDetails[index].C1">
+                                                <label class="form-check-label" for="inlineCheckbox1">มี/ถูกต้อง</label>
+                                            </div>
+                                            <div class="form-check form-check-inline pl-2 pr-2">
+                                                <input class="form-check-input cb_group_checklist_@(index)" onchange="CBCheckListChange(@index,this)" type="checkbox"
+                                                       asp-for="CheckListMain.ContractSbbCkl.ContractSbbCklDetails[index].C2">
+                                                <label class="form-check-label" for="inlineCheckbox2">ไม่มี/ไม่ถูกต้อง</label>
+                                            </div>
+                                            <div class="form-check form-check-inline pl-2 pr-2">
+                                                <input class="form-check-input cb_group_checklist_@(index)" onchange="CBCheckListChange(@index,this)" type="checkbox"
+                                                       asp-for="CheckListMain.ContractSbbCkl.ContractSbbCklDetails[index].C3">
+                                                <label class="form-check-label" for="inlineCheckbox2">ยกเว้น</label>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <textarea class="form-control" asp-for="CheckListMain.ContractSbbCkl.ContractSbbCklDetails[index].CDetail" rows="1"></textarea>
+                                        </div>
+                                        index++;
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group row">
+        <label class="col-md-1"></label>
+        <div class="col-md-5">ประวัติผลการตรวจสอบ</div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-1"></label>
+        <div class="col-md-10">
+            <table class="table table-bordered">
+                <thead class="thead_checklist">
+                    <tr class=" text-center">
+                        <th class="col-1">CheckListNo</th>
+                        <th class="col-2">ผลอนุมัติ</th>
+                        <th class="col-5">Comment</th>
+                        <th class="col-2">วันที่ตรวจสอบ</th>
+                        <th class="col-2">เจ้าหน้าที่ตรวจสอบ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (indata.ContractSbbCklHistory != null && indata.ContractSbbCklHistory.Count > 0)
+                    {
+                        foreach (var item in indata.ContractSbbCklHistory.OrderByDescending(x => x.EditDate))
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <a href="#" data-toggle="modal"
+                                       data-target="#ModalHistory"
+                                       data-checklistid="@(item.ChecklistId)">@item.ChecklistId</a>
+                                </td>
+                                <td class="text-center">
+                                    @(ContractUtils.ContractSations(ContractStationStatusAll.S6ContractNumber).SationItem.FirstOrDefault(x=>x.Status == item.Status)?.Name ?? String.Empty))
+                                </td>
+                                <td>@(!String.IsNullOrEmpty(item.Remark) ? item.Remark : "-")</td>
+                                <td class="text-center">
+                                    @(GeneralUtils.DateToThString(item.CreateDate)) @(GeneralUtils.DateToTimeString(item.CreateDate)) น.
+                                </td>
+                                <td class="text-center">
+                                    @(item.ChecklistUserFullname)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="lable_blue" for="">ผลการตรวจสอบนิติกรรมสัญญา</label>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input cb_group_approval_gencontract"
+                           asp-for="ApproveGenContract.Approve">
+                    <label class="custom-control-label" for="ApproveGenContract_Approve">อนุมัติ</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input cb_group_approval_gencontract"
+                           asp-for="ApproveGenContract.UnApproveVendor">
+                    <label class="custom-control-label" for="ApproveGenContract_UnApproveVendor">ไม่อนุมัติ (ตีกลับคู่สัญญา)</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input cb_group_approval_gencontract"
+                           asp-for="ApproveGenContract.UnApproveNhso">
+                    <label class="custom-control-label" for="ApproveGenContract_UnApproveNhso">ไม่อนุมัติ (ตีกลับ สปสช.เขต)</label>
+                </div>
+                <div class="form-group col-md-8 mt-2 ">
+                    <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                    <div class="col-sm-8">
+                        <textarea cols="80" rows="5" asp-for="ApproveGenContract.Remark"
+                                  placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal" id="ModalHistory">
+    <div class="modal-dialog modal-dialog-scrollable  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ประวัติผลการตรวจสอบ</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <h5 class="text-center">CheckListNo : <span id="CheckListNoHeader"></span></h5>
+                <table class="table table-bordered">
+                    <thead class="thead_checklist">
+                        <tr>
+                            <th class="col-7">หัวข้อ</th>
+                            <th class="col-4">ผลตรวจเช็ค</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Render_CheckListHistory">
+                    </tbody>
+                </table>
+                <h4 id="LoaddingHistory" class="text-center mt-4"><br /><br />Loadding...</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

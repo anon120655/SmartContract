@@ -1,0 +1,102 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+
+@{
+
+    ViewData["Title"] = "ReqCheck";
+    Layout = "~/Views/Shared/EmailTemplate/_LayoutEmail.cshtml";
+    var indataFM = Model.InfoFMPDF;
+    var infoContract = Model.InfoContract;
+    var InfoRequestForApproval = Model.InfoRequestForApproval;
+    var SendmailType = Model.ParameterCondition.SendmailType;
+    var ContractTypeId = Model.ParameterCondition.ContractTypeId;
+    var ContractTypeFullName = Model.ParameterCondition.ContractTypeFullName;
+    String UrlAppReqDetail = String.Empty;
+    String Title = "รายละเอียดการตรวจสอบข้อเสนอ(สำนัก/กองทุนย่อย/เขต)";
+    
+    UrlAppReqDetail = $"{Model.DomainName}/AuthorizeAllow/MailAppReqDetail?Style={Model.ParameterCondition.ContractStyleCode}" +
+                                            $"&IdSmctMaster={Model.ParameterCondition.IdSmctMaster}" +
+                                            $"&Station={Model.ParameterCondition.Station}" +
+                                            $"&StationEn={SecurityRepo.Encrypt(Model.ParameterCondition.Station)}" +
+                                            $"&ContractTypeId={Model.ParameterCondition.ContractTypeId}" +
+                                            $"&ContractTypeIdEn={SecurityRepo.Encrypt(Model.ParameterCondition.ContractTypeIdEn)}" +
+                                            $"&SigningTypeEn={SecurityRepo.Encrypt(Model.ParameterCondition.SigningType)}";
+
+}
+
+<div style="background-color: #f5f5f5;
+        margin: auto;
+        font-size: 13px;    ">
+    <div style="height:10px;">
+    </div>
+    <div style="margin: auto;
+        font-family: Arial, Helvetica;
+        padding: 10px;
+        width: 80%;
+        background-color: #ffffff;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;">
+
+        <div style="text-align:center; color: #4a4a4a;">
+            <h2> @(Title)</h2>
+        </div>
+        <br />
+        <div style="color: #4a4a4a;">
+            <h3>รายละเอียดนิติกรรมสัญญา</h3>
+        </div>
+        <div style="color: #4a4a4a;">
+            <p><b>เลขที่อ้างอิง</b> : @infoContract.RefId</p>
+            <p><b>วันที่เลขที่อ้างอิง</b> : @GeneralUtils.DateToThString(infoContract.RefDate)</p>
+            @*มีหนังสือขออนุมัติ*@
+            @if (ContractTypeId == "11" || ContractTypeId == "12" || ContractTypeId == "13" || ContractTypeId == "14")
+            {
+                <p><b>ชื่อโครงการ</b> : @InfoRequestForApproval.ContractName</p>
+                <p><b>วงเงินตั้งต้น</b> : @(infoContract.Budget > 0 ? infoContract.Budget.ToString("#,##0.00") : "") บาท.</p>
+            }
+            else
+            {
+                <p><b>ชื่อโครงการ</b> : @ContractTypeFullName</p>
+            }
+        </div>
+        <br />
+        <div style="text-align:center; color: #4a4a4a;">
+            <div style="text-align:center;">
+                @*<a href="@($"{Model.DomainName}/files/render?type=FM/FM_APPROVAL_REQ/{indataFM.SmctMasterFile_APPROVAL.PathFolder}&fileftp={indataFM.SmctMasterFile_APPROVAL.FileFtp}")" target="_blank"
+                       style="background-color: #007bff; line-height: 1.0; font-weight: 400; height: 38px; text-decoration: none; padding: 0.575rem 0.85rem; border-radius: 20px; color: #fff; border-color: #2bb785; ">
+                        <span> คลิกที่นี่เพื่อเปิดเอกสาร</span>
+                    </a>*@
+                <a href="@(UrlAppReqDetail)" target="_blank"
+                   style="background-color: #007bff; line-height: 1.0; font-weight: 400; height: 38px; text-decoration: none; padding: 0.575rem 0.85rem; border-radius: 20px; color: #fff; border-color: #2bb785; ">
+                    <span> คลิกที่นี่เพื่อดูรายละเอียด</span>
+                </a>
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <div style="height:10px;">
+    </div>
+
+    <div style="margin: auto;
+        font-family: Arial, Helvetica;
+        width: 82%; padding:10px;
+        text-align: right; ">
+
+        <table style="color: #515f7f;" width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <td style="padding: 10px;border-right: 0px; " width="95%">
+                        ติตต่อสอบถามเพิ่มเติมที่ <br />โทรศัพท์ 09999999
+                    </td>
+                    <td width="5%">
+                        @*<img src="@(Model.DomainName)/images/icon/nhsoicon.png" width="60">*@
+                        @*<img src="https://devweb049.nhso.go.th/smct/images/icon/nhsoicon.png" width="60">*@
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

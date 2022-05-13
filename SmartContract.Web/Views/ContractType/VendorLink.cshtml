@@ -1,0 +1,110 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    <div>
+        <form asp-controller="ContractType" asp-action="VendorLink" enctype="multipart/form-data" method="post"
+              data-ajax="true" data-ajax-method="post"
+              data-ajax-begin="onbeginForm"
+              data-ajax-complete="completedForm"
+              data-ajax-failure="failedForm">
+
+            <div>
+                <section>
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="form-group m-1">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>
+                                            <small><i class="fa fa-file-alt mr-1 x_title_before"></i>สร้างนิติกรรมสัญญา ></small>
+                                            <small><span class="text-primary"><u>ขอกำหนดรหัสคู่สัญญา </u></span></small>
+                                        </h4>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card mb-3"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div>
+                        <div class="col-md-12">
+                            <div class="form-group mt-md-3">
+                                <div class="row">
+                                    <div class="col-md-12 justify-content-center">
+                                        <div class="progressbar-wrapper bg-transparent">
+                                            <ul id="progressbar_vendorLink" class="progressbar">
+                                                <li style="width:24.5%" class="proposal2_tab11">สร้างข้อเสนอ</li>
+                                                <li style="width:24.5%" class="proposal2_tab12">ตรวจสอบ</li>
+                                                <li style="width:24.5%" class="proposal2_tab13">รหัสคู่สัญญา(สำเร็จ)</li>
+                                                <li style="width:24.5%" class="proposal2_tab14">ยกเลิก</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="card accordion-group">
+                    <div class="card-header" id="headingDetailT03_12">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_12" aria-expanded="true" aria-controls="collapseDetailT03_12">
+                                <i class="fas fa-file-alt"></i> หน่วยบริการ(สังกัด)
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseDetailT03_12" class="collapse show" aria-labelledby="headingDetailT03_12">
+                        <div class="card-body thead_tabsub1 bg-form">
+                            <partial name="/Views/Register/_PartialVendorView.cshtml" model="Model" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col text-center">
+                        <input type="hidden" asp-for="ObjectState" />
+                        <input type="hidden" asp-for="RegisterNhso.IdRegisterNhso" />
+                        <input type="hidden" asp-for="ParameterCondition.Idvl" />
+                        <input type="hidden" asp-for="ParameterCondition.IdSmctMaster" />
+                        <input type="hidden" asp-for="ParameterCondition.Style" />
+                        <input type="hidden" asp-for="ParameterCondition.ContractTypeIdEn" />
+                        <input type="hidden" asp-for="ParameterCondition.ItemStatusCurr" />
+                        <input type="hidden" asp-for="ParameterCondition.SigningTypeEn" />
+
+                        <a class="btn btn-secondary mr-2" asp-controller="Home" asp-action="IndexVendorLink"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+                        <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">อนุมัติส่งต่อ <i class="fa fa-angle-right align-middle"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/contracttype/VendorLink.js" asp-append-version="true"></script>
+}

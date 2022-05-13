@@ -1,0 +1,235 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Infrastructure.Resources.Share
+
+@{
+    ViewData["Title"] = "ตรวจสอบบันทึก";
+}
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    //string _Station = Model.ContractStation.StationStatusCurr;
+
+    <form asp-controller="ContractType" asp-action="CheckList" enctype="multipart/form-data" method="post"
+          data-ajax="true" data-ajax-method="post"
+          data-ajax-begin="onbeginForm"
+          data-ajax-complete="completedForm"
+          data-ajax-failure="failedForm">
+
+
+
+        <div class="container-fluid">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group m-1">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>
+                                    <small><i class="fa fa-file-alt mr-1 x_title_before"></i>สร้างนิติกรรมสัญญา ></small>
+                                    <small><span class="text-primary"><u>ใบผลการตรวจสอบ สบบ. </u></span></small>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row text-center">
+                <label for="" class="col-sm-6 col-form-label text-sm-right">เลขที่อ้างอิง</label>
+                <div class="col-sm-5">
+                    <input type="text" readonly class="form-control-plaintext text-primary" id="" value="REF6400025">
+                </div>
+            </div>
+            <div class="form-group row text-center">
+                <label for="" class="col-sm-6 col-form-label text-sm-right">CheckList No.</label>
+                <div class="col-sm-5">
+                    <input type="text" readonly class="form-control-plaintext text-primary" value="1658">
+                </div>
+                <hr class="mt-2 mb-3 width_75">
+            </div>
+
+            <div class="form-group">
+                <div class="container-fluid">
+                    <table class="table table-bordered">
+                        <thead class="thead_checklist">
+                            <tr>
+                                <th class="col-1">ลำดับ</th>
+                                <th class="col-7">หัวข้อ</th>
+                                <th class="col-4">ผลตรวจเช็ค</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>ข้อตกลงให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ</td>
+                                <td class="text-center">
+                                    <div class="mb-1">
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                            <label class="form-check-label" for="inlineCheckbox1">มี/ถูกต้อง</label>
+                                        </div>
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">ไม่มี/ไม่ถูกต้อง</label>
+                                        </div>
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">ยกเว้น</label>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <textarea class="form-control" id="" rows="2"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>
+                                    สำเนาหน้าบัญชีที่จะใช้สำหรับการโอนเงิน (แนบเฉพาะหน่วยบริการใหม่หรือมีการเปลี่ยนแปลงเลขที่บัญชี ซึ่งถ้ามีการเปลี่ยนแปลง
+                                    เลขที่บัญชี ให้แหนังสือขอเปลี่ยนแปลงเลขที่บัญชี และสำเนาหน้าบัญชีใหม่
+                                </td>
+                                <td class="text-center">
+                                    <div class="mb-1">
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                            <label class="form-check-label" for="inlineCheckbox1">มี/ถูกต้อง</label>
+                                        </div>
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">ไม่มี/ไม่ถูกต้อง</label>
+                                        </div>
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">ยกเว้น</label>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <textarea class="form-control" id="" rows="2"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>
+                                    คำสั่ง หรือ คำสั่งมอบอำนาจต่างๆ ในส่วนงานราชการอื่น เช่น กรุงเทพมหานคร กรมแพทย์ กรมอนามั้ย กระทรวง ทบวง กรม ในการ
+                                    ลงนาม (ซึ่งไม่ต้องติตอากรแสตมและเมื่อตำเนินการขอแล้วไม่นำส่งก็ได้โดยใช้การเกษียณท้ายหนังสือ)
+                                </td>
+                                <td class="text-center">
+                                    <div class="mb-1">
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                            <label class="form-check-label" for="inlineCheckbox1">มี/ถูกต้อง</label>
+                                        </div>
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">ไม่มี/ไม่ถูกต้อง</label>
+                                        </div>
+                                        <div class="form-check form-check-inline pl-2 pr-2">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                            <label class="form-check-label" for="inlineCheckbox2">ยกเว้น</label>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <textarea class="form-control" id="" rows="2"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group row">
+                <label class="col-md-1"></label>
+                <div class="col-md-5">ประวัติผลการตรวจสอบ</div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-1"></label>
+                <div class="col-md-10">
+                    <table class="table table-bordered">
+                        <thead class="thead_checklist">
+                            <tr class=" text-center">
+                                <th class="col-1">CheckListNo</th>
+                                <th class="col-1">ผลอนุมัติ</th>
+                                <th class="col-6">Comment</th>
+                                <th class="col-2">วันที่ตรวจสอบ</th>
+                                <th class="col-2">เจ้าหน้าที่ตรวจสอบ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    <a href="#">1658</a>
+                                </td>
+                                <td class="text-center">อนุมัติ</td>
+                                <td>-</td>
+                                <td class="text-center">
+                                    20/08/2564 10.00 น.
+                                </td>
+                                <td class="text-center">
+                                    patay.k
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <a href="#">1659</a>
+                                </td>
+                                <td class="text-center">ตีกลับแก้ไข</td>
+                                <td>
+                                    เพิ่มเติมผู้มีอำนาจลงนาม
+                                </td>
+                                <td class="text-center">
+                                    20/08/2564 10.00 น.
+                                </td>
+                                <td class="text-center">
+                                    patay.k
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label text-sm-right">ผลอนุมัติ :</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="">
+                        <option>---เลือก---</option>
+                        <option value="S0">ยกเลิก</option>
+                        <option value="S1">รอตรวจสอบ</option>
+                        <option value="S2">ตีกลับ</option>
+                        <option value="S3">อนุมัติ</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label text-sm-right">Comment :</label>
+                <div class="col-sm-3">
+                    <textarea class="form-control" id="" rows="4"></textarea>
+                </div>
+            </div>
+            <br />
+
+            <div class="col-md-12">
+                <div class="col text-center">
+                    <a class="btn btn-secondary mr-2" asp-controller="Home" asp-action="Index"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+                    <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกส่งต่อ <i class="fa fa-angle-right align-middle"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+}
+
+<partial name="/Views/Shared/JavaScript/JavascriptFileShare.cshtml" for="@Model.CTVendor.GetLookUp" />
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/contracttype/CheckList.js" asp-append-version="true"></script>
+}

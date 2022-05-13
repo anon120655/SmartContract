@@ -1,0 +1,68 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+    var lookUp = Model.GetLookUp;
+    var action = ViewContext.RouteData.Values["Action"];
+    var _Action = String.Empty;
+
+}
+
+<div class="card-body thead_tabsub1">
+    <div class="form-group">
+        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดผู้ขอลงทะเบียน</label>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label tltle ml-5">ประเภทผู้เข้าใช้งาน :</label>
+            <div class="col-12 col-md-3">
+                <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                        onchange="RoleCodeChange(this.value)"
+                        asp-for="UserSmct.UserRights.IdUserRole"
+                        asp-items="@(new SelectList((from s in lookUp.UserRoles select new {
+                                                            Code=s.IdUserRole,
+                                                            FullName = $" ({s.UserRoleCode}) {s.FullName}"}),
+                        "Code" ,
+                        "FullName" ,
+                        selectedValue: "" ))">
+                    <option value="00000">---เลือก---</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อเต็ม : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.UserFullname">
+            </div>
+        </div>
+        @*<div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.PositionName">
+            </div>
+        </div>*@
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">รหัสบัตรประชาชน : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.Cid">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">เกิดวันที่ : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.BirthdayStr">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">E-Mail : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.Email">
+            </div>
+        </div>
+        <hr class="my-4">
+    </div>
+</div>

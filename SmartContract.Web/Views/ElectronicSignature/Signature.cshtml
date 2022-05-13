@@ -1,0 +1,110 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Infrastructure.Resources.Enum
+@using SmartContract.Utils
+
+@{
+    Layout = "~/Views/Shared/_LayoutElectronicSignature.cshtml";
+    string _ItemStatusCurr = Model.ParameterCondition.ItemStatusCurr;
+    string _Station = Model.ParameterCondition.Station;
+
+}
+
+<style type="text/css">
+    #cnSignature {
+        border: 1px solid black;
+        height: 150px;
+        width: 500px;
+    }
+
+    #cnSignature2 {
+        border: 1px solid black;
+    }
+
+    #cnSignature3 {
+        border: 1px solid black;
+        height: 150px;
+        width: 500px;
+    }
+
+    .wb_100 {
+        width: 100px;
+    }
+</style>
+
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    //if (Model.ParameterCondition.ItemStatusCurr == ContractStationStatusItemAll.S51WaitSigning2 && Model.ParameterCondition.SendmailType == SendmailTypes.VendorWitness
+    //   || Model.ParameterCondition.ItemStatusCurr == ContractStationStatusItemAll.S51WaitSigning2 && Model.ParameterCondition.SendmailType == SendmailTypes.VendorAuthority)
+    //{
+    <form asp-controller="ElectronicSignature" asp-action="Signature" method="post"
+          data-ajax="true" data-ajax-method="post"
+          data-ajax-begin="onbeginForm"
+          data-ajax-complete="completedForm"
+          data-ajax-failure="failedForm">
+        <fieldset id="SignatureForm">
+            <div class="form-group  text-center">
+                <h2 id="overview">
+                    <span class="bd-content-title"><i class="fas fa-signature align-middle"></i> ลงนาม Electronic</span>
+                </h2>
+            </div>
+            <div class="form-group  text-center">
+                <div class="group_sing_pad">
+                    <div class="form-group row text-center ">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-10">
+                            <div id="signature-pad" class="signature-pad">
+                                <div class="signature-pad--body">
+                                    <canvas id="cnSignature2"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+                    <div class="form-group row  text-center">
+                        <div class="col-sm-12">
+                            <input type="hidden" asp-for="ParameterCondition.IdSmctMaster" />
+                            <input type="hidden" asp-for="ParameterCondition.Style" />
+                            <input type="hidden" asp-for="ParameterCondition.SigningType" />
+                            <input type="hidden" asp-for="ParameterCondition.SigningTypeEn" />
+                            <input type="hidden" asp-for="ParameterCondition.Station" />
+                            <input type="hidden" asp-for="ParameterCondition.ItemStatusCurr" />
+                            <input type="hidden" asp-for="ParameterCondition.ContractTypeId" />
+                            <input type="hidden" asp-for="ParameterCondition.ContractTypeIdEn" />
+                            <input type="hidden" asp-for="ParameterCondition.SendmailType" />
+                            <input type="hidden" asp-for="ParameterCondition.RefId" />
+                            <input type="hidden" asp-for="ParameterCondition.SignatureData" />
+                            <input type="hidden" asp-for="ParameterCondition.VendorWitnessStatus" />
+                            <button type="button" onclick="ClearSignature()" class="btn btn-dark fa-1x mr-2 w-20 wb_100">ล้าง</button>
+                            <button type="submit" onclick="showLoading();SubmitSign();" class="btn btn-success wb_100">บันทึก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+    </form>
+    @*}
+        else
+        {*@
+    <fieldset id="SignatureSuccess" hidden>
+        <div class="form-group  text-center">
+            <h2 id="overview" class="text-success mt-5">
+                <span class="bd-content-title"><i class="fas fa-signature align-middle"></i>   ลงนามเรียบร้อยแล้ว</span>
+            </h2>
+        </div>
+    </fieldset>
+    @*}*@
+}
+
+<partial name="/Views/Shared/JavaScript/JavascriptFileShare.cshtml" for="@Model.CTVendor.GetLookUp" />
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/signature/SignatureMaster.js" asp-append-version="true"></script>
+}

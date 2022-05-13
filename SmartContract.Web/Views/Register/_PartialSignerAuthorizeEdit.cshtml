@@ -1,0 +1,198 @@
+﻿@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+    var lookUp = Model.GetLookUp;
+}
+
+<div class="card-body thead_tabsub1">
+    <div class="form-group">
+        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดผู้มีอำนาจลงนาม</label>
+        <div class="form-group">
+            <fieldset class="form-group">
+                <div class="row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม :</label>
+                    <div class="col-sm-7">
+                        <div class="form-check mt-2" id="ele_SignerTypeS1">
+                            <input class="form-check-input DecisionMaker" type="radio" onchange="UserSignerChange()"
+                                   asp-for="UserSmct.UserSmctSigners.SignerType" value="S1">
+                            <label class="form-check-label">
+                                เป็นผู้มีอำนาจด้วยตัวเอง
+                            </label>
+                        </div>
+                        <div class="form-check mt-2" id="ele_SignerTypeS2">
+                            <input class="form-check-input DecisionMaker" type="radio" onchange="UserSignerChange()"
+                                   asp-for="UserSmct.UserSmctSigners.SignerType" value="S2">
+                            <label class="form-check-label">
+                                รับมอบอำนาจ
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr class="mt-2 mb-3 width_75">
+            <fieldset id="Group_SignerType_S1">
+                @*<div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจด้วยตัวเอง :</label>
+                    <div class="col-sm-3 pr-sm-0">
+                        <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                                asp-for="UserSmct.UserSmctSigners.Signer1User"
+                                asp-items="@(new SelectList((from s in lookUp.UserSmctSigner.Where(x=>x.SignerType == SignerTypes.AuthBySelf) select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"({s.SignerType}) {s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: ""))">
+                            <option value="">---เลือก---</option>
+                        </select>
+                    </div>
+                </div>*@
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ตามหนังสือ(ผู้มีอำนาจ) :</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control bg-focus" maxlength="50"
+                               asp-for="UserSmct.UserSmctSigners.Signer1DocName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือ(ผู้มีอำนาจ) :</label>
+                    <div class="col-sm-3 pr-sm-0">
+                        <input type="text" class="form-control bg-focus" maxlength="50"
+                               asp-for="UserSmct.UserSmctSigners.Signer1DocNo">
+                    </div>
+                    <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้มีอำนาจ) :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                               asp-for="UserSmct.UserSmctSigners.Signer1DocDateStr"
+                               placeholder="วว/ดด/ปปปป" autocomplete="off">
+                    </div>
+                </div>
+            </fieldset>
+            <hr class="mt-2 mb-3 width_75">
+            <fieldset id="Group_SignerType_S2">
+                <div id="DecisionMaker_Radios2_Deail">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">หนังสือมอบอำนาจเลขที่ :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" class="form-control bg-focus" maxlength="50"
+                                   asp-for="UserSmct.UserSmctSigners.Signer2PoaDocNo">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้รับมอบ) :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                                   asp-for="UserSmct.UserSmctSigners.Signer2PoaDocDateStr"
+                                   placeholder="วว/ดด/ปปปป" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">จากผู้มีอำนาจ :</label>
+                    <div class="col-sm-3 pr-sm-0">
+                        <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                                asp-for="UserSmct.UserSmctSigners.Signer2PoaSigner1User"
+                                asp-items="@(new SelectList((from s in lookUp.UserSmctSigner.Where(x=>x.SignerType == SignerTypes.AuthBySelf) select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"({s.SignerType}) {s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: ""))">
+                            <option value="">---เลือก---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ตามหนังสือ(ผู้รับมอบ) :</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control bg-focus" maxlength="50"
+                               asp-for="UserSmct.UserSmctSigners.Signer2DocName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือ(ผู้รับมอบ) :</label>
+                    <div class="col-sm-3 pr-sm-0">
+                        <input type="text" class="form-control bg-focus" maxlength="50"
+                               asp-for="UserSmct.UserSmctSigners.Signer2DocNo">
+                    </div>
+                    <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้รับมอบ) :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                               asp-for="UserSmct.UserSmctSigners.Signer2DocDateStr"
+                               placeholder="วว/ดด/ปปปป" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">วันที่เริ่มมอบอำนาจ :</label>
+                    <div class="col-sm-3 pr-sm-0">
+                        <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                               asp-for="UserSmct.UserSmctSigners.Signer2StartDateStr"
+                               placeholder="วว/ดด/ปปปป" autocomplete="off">
+                    </div>
+                    <label class="col-sm-2 col-form-label text-sm-right">วันที่สิ้นสุดมอบอำนาจ :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                               asp-for="UserSmct.UserSmctSigners.Signer2EndDateStr"
+                               placeholder="วว/ดด/ปปปป" autocomplete="off">
+                    </div>
+                </div>
+            </fieldset>
+            <hr class="my-4">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบ</label>
+        <fieldset>
+            <div id="AttachfileSigner_Rander">
+                @if (Model.UserSmct != null && Model.UserSmct.UserSmctSigners != null)
+                {
+                    var userSmctSigners = Model.UserSmct.UserSmctSigners;
+                    if (userSmctSigners.UserSmctSignerFiles != null && userSmctSigners.UserSmctSignerFiles.Count > 0)
+                    {
+                        int index_file = 0;
+                        foreach (var item_file in userSmctSigners.UserSmctSignerFiles)
+                        {
+                            <div class="AttachfileSigner_Sub form-row col-12 form_create">
+                                <div class="form-group form-group-file col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" title="@item_file.SignerFileName"
+                                               name="UserSmct.UserSmctSigners.UserSmctSignerFiles[@index_file].FormFile">
+                                        <input type="hidden"
+                                               name="UserSmct.UserSmctSigners.UserSmctSignerFiles[@index_file].IdUserSmctSignerFile" value="@item_file.IdUserSmctSignerFile">
+                                        <label class="custom-file-label" for="customFile">
+                                            @(!string.IsNullOrEmpty(item_file.SignerFileName) ? GeneralUtils.WappText(item_file.SignerFileName, 25) : "Choose file")
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2">
+                                    <input type="image" src="~/images/icon/close-2x.png"
+                                           onclick="remove_row_attachfileSigner(this); return false;" class="border-0 mt-2" width="17">
+                                </div>
+                                <div>
+                                    @if (!String.IsNullOrEmpty(item_file.IdUserSmctSignerFile))
+                                    {
+                                        <a asp-action="Render"
+                                           asp-controller="Files"
+                                           asp-route-fileftp="@(item_file.SignerFileFtp)"
+                                           asp-route-type="Signer"
+                                           target="_blank" class="ml-3">
+                                            <i class="fas fa-file-pdf fa-lg"></i> View
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                            index_file++;
+                        }
+                    }
+                }
+            </div>
+            <div class="form-row col-12">
+                <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                    <button class="btn btn_add_element btn_small btn_filter_w" type="button" onclick="insert_row_attachfileSigner()">
+                        <span class="button_fas_small"><i class="fas fa-plus"></i></span> เพิ่มไฟล์
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+        <hr class="my-4">
+    </div>
+</div>

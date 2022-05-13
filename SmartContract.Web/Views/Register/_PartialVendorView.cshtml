@@ -1,0 +1,148 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+
+}
+
+<div class="card-body thead_tabsub1 bg-form">
+    <div class="form-group form_view">
+        <label class="text-primary" for="">รายละเอียดหน่วยบริการ/คู่สัญญา</label>
+        @*<div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label font-weight ml-5">ชื่อหน่วยบริการ : </label>
+                <div class="col-sm-5">
+                    @if (!String.IsNullOrEmpty(Model.RegisterNhso.Hcode))
+                    {
+                        <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                               value="@(Model.RegisterNhso.VendorName) (@(Model.RegisterNhso.Hcode))">
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control-plaintext text-danger" readonly="readonly" value="-ไม่มี-">
+                    }
+
+                </div>
+            </div>*@
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">รหัสคู่สัญญา : </label>
+            <div class="col-sm-3">
+                @if (!String.IsNullOrEmpty(Model.RegisterNhso.VendorId))
+                {
+                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                           value="@(Model.RegisterNhso.VendorId)">
+                }
+                else
+                {
+                    <input type="text" class="form-control-plaintext text-danger" readonly="readonly" value="-ไม่มีรหัสคู่สัญญา-">
+                }
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ชื่อคู่สัญญา : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       value="@(Model.RegisterNhso.VendorName)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">จดทะเบียนเป็นนิติบุคคล ณ : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       value="@(Model.RegisterNhso.RegisterAt)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ชื่อบุคคล/นิติบุคคล เจ้าของสถานบริการ : </label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       value="@(Model.RegisterNhso.CompanyName)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">จังหวัดที่ตั้ง : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       value="@(Model.ProvinceNameLocation)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ตามใบอนุญาตฯเลขที่ (ส.พ.7)  : </label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       value="@(Model.RegisterNhso.Sp7)">
+            </div>
+            <label for="" class="col-sm-1 col-form-label font-weight ml-5">ลงวันที่ : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       value="@(GeneralUtils.DateToThString(Model.RegisterNhso.Sp7Date))">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ประเภท : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly" value="โรงพยาบาล">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ที่อยู่ : </label>
+            <div class="col-sm-8  text-primary">
+                <span> เลขที่ @(Model.RegisterNhso.VillageNo) </span>
+                <span> หมู่ @(Model.RegisterNhso.Moo) </span>
+                <span> ต. @(Model.CATMs.DistrictName) </span>
+                <span> อ. @(Model.CATMs.AmphurName) </span>
+                <span> จ. @(Model.CATMs.ProvinceName) </span>
+                <span> รหัสไปรษณีย์ @(Model.RegisterNhso.PostCode) </span>
+            </div>
+        </div>
+        <hr class="my-4">
+    </div>
+
+    <div class="form-group">
+        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบ</label>
+        <fieldset>
+            <div id="Attachfile_Rander">
+
+                <table class="table table-hover" style="width:50%">
+                    <tbody>
+                        @if (Model.RegisterNhso.RegisterNhsoFiles != null && Model.RegisterNhso.RegisterNhsoFiles.Count > 0)
+                        {
+                            int index_file = 0;
+                            foreach (var item_file in Model.RegisterNhso.RegisterNhsoFiles)
+                            {
+                                index_file++;
+                                String pathFolder = $"Register\\Vendor\\{item_file.PathFolder}";
+                                <tr>
+                                    <td>@(index_file)</td>
+                                    <td class="text-primary">@item_file.RegisterFileName</td>
+                                    <td>
+                                        <a asp-action="Render"
+                                           asp-controller="Files"
+                                           asp-route-type="@(pathFolder)"
+                                           asp-route-fileftp="@(item_file.RegisterFileFtp)"
+                                           target="_blank" class="ml-3">
+                                            <i class="fas fa-file-pdf fa-lg"></i> View
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <div class="ml-4">
+                                        -ไม่มี-
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </fieldset>
+        <hr class="my-4">
+    </div>
+
+</div>

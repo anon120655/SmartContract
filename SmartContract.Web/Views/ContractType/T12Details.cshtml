@@ -1,0 +1,167 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var indata = Model.InfoConDetail.ContractDetail12;
+}
+
+<section>
+    @*<div class="">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารภาคผนวกแนบท้ายสัญญาดังต่อไปนี้ ให้ถือเป็นส่วนหนึ่งของสัญญานี้</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.1 ผนวก 1 แผนงาน/โครงการ จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail12.P1">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-9 col-form-label text-sm-right">2.2 ผนวก 2 หลักเกณฑ์/วิธีการ/เงื่อนไข การจ่ายเงินสนับสนุน จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail12.P2">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">2.3 ผนวก 3  :</label>
+                    <div class="col-sm-5 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail12.P3">
+                    </div>
+                    <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail12.P4">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">2.4 ผนวก 4  :</label>
+                    <div class="col-sm-5 ">
+                        <input type="text" class="form-control " asp-for="InfoConDetail.ContractDetail12.P5">
+                    </div>
+                    <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+                    <div class="col-sm-1">
+                        <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail12.P6">
+                    </div>
+                    <label class="col-sm-1 col-form-label">หน้า</label>
+                </div>
+            </div>
+        </div>*@
+    <div class="col-md-12">
+        <div class="form-group row">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 1 สำนักงานตกลงให้และผู้ดำเนินงานตกลงรับดำเนินงาน </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">(ชื่อแผนงาน/โครงการ) :</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" readonly asp-for="InfoConDetail.ContractDetail12.A1">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">ในขณะทำสัญญานี้ ผู้ดำเนินงานตกลงรับดำเนินงานตามแผนงาน/โครงการรวม :</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail12.A2">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารภาคผนวกแนบท้ายสัญญาดังต่อไปนี้ ให้ถือเป็นส่วนหนึ่งของสัญญานี้ </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">2.1 ผนวก 1 แผนงาน/โครงการ :</label>
+            <div class="col-sm-3">
+                <textarea rows="2" class="form-control " asp-for="InfoConDetail.ContractDetail12.A3"></textarea>
+            </div>
+            <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+            <div class="col-sm-1">
+                <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail12.A4">
+            </div>
+            <label class="col-sm-1 col-form-label">หน้า</label>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">2.2 ผนวก 2 หลักเกณฑ์/วิธีการ/เงื่อนไข การจ่ายเงินสนับสนุน จำนวน :</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail12.A5">
+            </div>
+            <label class="col-sm-1 col-form-label">หน้า</label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">2.3 ผนวก 3 :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail12.A6">
+            </div>
+            <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+            <div class="col-sm-1">
+                <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail12.A7">
+            </div>
+            <label class="col-sm-1 col-form-label">หน้า</label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">2.4 ผนวก 4 :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail12.A8">
+            </div>
+            <label class="col-md-1 col-form-label text-sm-right">จำนวน :</label>
+            <div class="col-sm-1">
+                <input type="number" class="form-control " asp-for="InfoConDetail.ContractDetail12.A9">
+            </div>
+            <label class="col-sm-1 col-form-label">หน้า</label>
+        </div>
+
+        <div class="form-group row">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 3 สำนักงานตกลงให้เงินสนับสนุน และผู้ดำเนินงาน </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">ตกลงรับเงินสนับสนุนจำนวนทั้งสิ้นไม่เกิน :</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail12.A10">
+            </div>
+            <label class="col-sm-1 col-form-label">บาท</label>
+        </div>
+        <div class="form-group row">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 9 หากคู่สัญญาเปลี่ยนแปลงที่อยู่ </label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">ต้องแจ้งให้คู่สัญญาอีกฝ่ายหนึ่งทราบภายใน :</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" asp-for="InfoConDetail.ContractDetail12.A11">
+            </div>
+            <label class="col-sm-1 col-form-label">วัน</label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">รายละเอียดตามเงื่อนไขการจ่ายเงินสนับสนุน ตามผนวก :</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" readonly asp-for="InfoConDetail.ContractDetail12.A12">
+            </div>
+            <label class="col-sm-2 col-form-label">แนบท้ายสัญญานี้</label>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">บัญชีธนาคาร :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" readonly value="-" asp-for="InfoConDetail.ContractDetail12.A13">
+            </div>
+            <label class="col-md-1 col-form-label text-sm-right">สาขา</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail12.A14">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-5 col-form-label text-sm-right">ชื่อบัญชี :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" readonly value="-" asp-for="InfoConDetail.ContractDetail12.A15">
+            </div>
+            <label class="col-md-1 col-form-label text-sm-right">เลขที่บัญชี</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" readonly value="-" asp-for="InfoConDetail.ContractDetail12.A16">
+            </div>
+        </div>
+
+    </div>
+</section>

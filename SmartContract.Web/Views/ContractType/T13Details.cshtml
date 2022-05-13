@@ -1,0 +1,86 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var indata = Model.InfoConDetail.ContractDetail13;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <fieldset class="form-group">
+                <div class="row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ผู้ดำเนินการ :</label>
+                    <div class="col-sm-7">
+                        <div class="form-check">
+                            @*<input class="form-check-input OperatorRadios" type="radio" name="OperatorRadios" id="OperatorRadios1" value="option1">*@
+                            <input class="form-check-input OperatorRadios" type="radio" asp-for="InfoConDetail.ContractDetail13.P1" value="1">
+                            <label class="form-check-label" for="OperatorRadios1">
+                                กรณีดำเนินการจากส่วนกลาง
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            @*<input class="form-check-input OperatorRadios" type="radio" name="OperatorRadios" id="OperatorRadios2" value="option2">*@
+                            <input class="form-check-input OperatorRadios" type="radio" asp-for="InfoConDetail.ContractDetail13.P1" value="2">
+                            <label class="form-check-label" for="OperatorRadios2">
+                                กรณีดำเนินการกับเขต
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div id="OperatorRadios_Deail">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">สำนักงานหลักประกันสุขภาพแห่งชาติ ที่ สปสช :</label>
+                    <div class="col-sm-4 pr-sm-0">
+                        <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail13.P2">
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">ลงวันที่ :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                               asp-for="InfoConDetail.ContractDetail13.P3"
+                               placeholder="วว/ดด/ปปปป" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">แนวทาง :</label>
+                <div class="col-sm-4 pr-sm-0">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail13.P4">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ประจำปี :</label>
+                <div class="col-sm-4 pr-sm-0">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail13.P5">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 เอกสารอันเป็นส่วนหนึ่งของสัญญา</label>
+            </div>
+            <fieldset class="form-group">
+                <div class="row">
+                    <label class="col-sm-1 col-form-label text-sm-right"></label>
+                    <div class="col-sm-9">
+                        <div class="form-check">
+                            @*<input class="form-check-input CaseRadios" type="radio" name="CaseRadios" id="CaseRadios1" value="option1">*@
+                            <input class="form-check-input OperatorRadios" type="radio" asp-for="InfoConDetail.ContractDetail13.P6" value="1">
+                            <label class="form-check-label" for="CaseRadios1">
+                                เป็นกรณี เบิกจ่ายตาม กฏ ระเบียบ ข้อบังคับ ประกาศ ข้อบังคับ มติ คำสั่ง หลักเกณฑ์ หรือแนวทางปฏิบัติ ที่คณะกรรมการหรือสำนักงานกำหนด
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            @*<input class="form-check-input CaseRadios" type="radio" name="CaseRadios" id="CaseRadios2" value="option2">*@
+                            <input class="form-check-input OperatorRadios" type="radio" asp-for="InfoConDetail.ContractDetail13.P6" value="2">
+                            <label class="form-check-label" for="CaseRadios2">
+                                เป็นกรณี เบิกจ่ายตามแผนงาน/โครการ/แนวทาง
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</section>

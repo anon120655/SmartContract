@@ -1,0 +1,33 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Share.CommandMain
+
+@{
+    ViewData["Title"] = "SqlCreateUpdate";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+<div class="container">
+    <form asp-controller="SqlCommand" asp-action="SqlCreateUpdate" method="post">
+        <h1>SqlCreateUpdate</h1>
+<textarea asp-for="StringSql" rows="5" cols="100"></textarea>
+        <br />
+        <br />
+        <div>
+            <p>Affected rows : </p>
+            <p>@(Model.rowsUpdated)</p>
+        </div>
+        <div>
+            <p>Result : </p>
+            <p>@(Model.ResponseMessage != null ? Model.ResponseMessage : String.Empty)</p>
+        </div>
+        <div>
+            <p>Error : </p>
+            <p>@(Model.ErrorMessage != null ? Model.ErrorMessage : String.Empty)</p>
+        </div>
+        <input type="submit" name="name" value="Execute" />
+    </form>
+
+
+</div>
+
+

@@ -1,0 +1,54 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+
+@{
+    var _Model = Model;
+}
+
+<div class="card-body thead_tabsub1 bg-form">
+    <div class="form-group form_view">
+        <label class="text-primary" for="">รายละเอียดผู้เข้าใช้งาน</label>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ประเภทผู้เข้าใช้งาน : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.UserRoles.FullName">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ชื่อเต็ม : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.UserFullname">
+            </div>
+        </div>
+        @*<div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.PositionName">
+            </div>
+        </div>*@
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">รหัสบัตรประชาชน : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.Cid">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">เกิดวันที่ : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.BirthdayStr">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-3 col-form-label font-weight ml-5">E-Mail : </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.Email">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+}
+
+
+
+
+<section>
+    <div class="container mt-4 mb-4">
+        <form id="form1">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label class="ml-1">ชื่อ :</label>
+                    <label class="ml-1">นายนิคม วงสันต์</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="ml-1">ตำแหนง :</label>
+                    <label class="ml-1">ผู้อำนวยการ</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="ml-1">สังกัด :</label>
+                    <label class="ml-1">สํานักงานหลักประกันสุขภาพแห่งชาติ</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="ml-1">รหัสบัตรประชาชน :</label>
+                    <label class="ml-1">1234567890123</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="ml-1">ประเภทองค์กร :</label>
+                    <label class="ml-1">เอกชน</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="ml-1">ระยะเวลาเริมต้น :</label>
+                    <label class="ml-1">01/01/2564</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="ml-1">ระยะเวลาสิ้นสุด :</label>
+                    <label class="ml-1">01/01/2565</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="ml-1">E-Mail :</label>
+                    <label class="ml-1">1234@gmai.com</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="ml-1">หมายเลขโทรศัพท์ :</label>
+                    <label class="ml-1">0899999999</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="ml-1">ไฟล์แนบเอกสารสำคัญ :</label>
+                    <label class="ml-1">12345.pdf</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="ml-1">เหตุผลการลงนาม :</label>
+                    <label class="ml-1">เหตุผลการลงนาม</label>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+<section>
+    <div class="container mt-4 mb-4">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label class="ml-1" for="inputTitle">คำนำหน้า</label>
+                    <input type="text" class="form-control" id="inputTitle" placeholder="คำนำหน้า">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="ml-1" for="inputName">ชื่อ</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="ชื่อ">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="ml-1" for="inputLastName">นามสกุล</label>
+                    <input type="text" class="form-control" id="inputLastName" placeholder="นามสกุล">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label class="ml-1" for="inputTitle">คำนำหน้า</label>
+                    <input type="text" class="form-control" id="inputTitle" placeholder="คำนำหน้า">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="ml-1" for="inputName">ชื่อ</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="ชื่อ">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="ml-1" for="inputLastName">นามสกุล</label>
+                    <input type="text" class="form-control" id="inputLastName" placeholder="นามสกุล">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label class="ml-1" for="inputTitle">คำนำหน้า</label>
+                    <input type="text" class="form-control" id="inputTitle" placeholder="คำนำหน้า">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="ml-1" for="inputName">ชื่อ</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="ชื่อ">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="ml-1" for="inputLastName">นามสกุล</label>
+                    <input type="text" class="form-control" id="inputLastName" placeholder="นามสกุล">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</section>
+
+<section>
+    <div class="container mt-4 mb-4">
+        <div class="form-group" id="bt">
+            <button type="submit" class="btn btn-primary ml-1 mr-1">ตกลง</button>
+            <button type="submit" class="btn btn-secondary ml-1 mr-1">ยกเลิก</button>
+        </div>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+    </script>
+}

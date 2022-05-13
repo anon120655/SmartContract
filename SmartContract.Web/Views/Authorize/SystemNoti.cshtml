@@ -1,0 +1,27 @@
+﻿
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "SystemNoti";
+    Layout = "~/Views/Shared/_LayoutError.cshtml";
+}
+
+<h4 class="alert alert-info" role="alert">
+    System Notification
+</h4>
+
+<div id="accordion">
+    <div class="card">
+        <div class="">
+            <div class="card-body">
+                @if (Model.MessageError != null)
+                {
+                    <h3 class="text-danger text-center">
+                        @Model.MessageError
+                    </h3>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

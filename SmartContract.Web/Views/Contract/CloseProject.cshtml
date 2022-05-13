@@ -1,0 +1,267 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "ปิดโครงการ";
+    if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+        Layout = "_LayoutTemplatesVendor";
+    else
+        Layout = "_LayoutTemplates";
+}
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+        /*transition: 0.3s;*/
+    }
+
+        .cursor-pointer:hover {
+            text-decoration: underline;
+        }
+
+        .cursor-pointer:active {
+            opacity: 0.5;
+        }
+</style>
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small class="text-primary"><i class="fa fa-book mr-1"></i>ปิดโครงการ</small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group mb-1">
+                <div class="row">
+                    <div class="col-sm-6 mb-1">
+                        <i class="fas fa-hourglass-half text-warning mr-2 cursor-pointer"><a class="ml-1 " id="status2" onclick="status(2);">รอดำเนินการ (1)</a></i>
+                        <i class="fas fa-check text-success mr-2 cursor-pointer"><a class="ml-1" id="status3" onclick="status(3);">อนุมัติ (3)</a></i>
+                        <i class="fas fa-times text-danger mr-2 cursor-pointer"><a class="ml-1" id="status4" onclick="status(4);">ไม่อนุมัติ (1)</a></i>
+                        <i class="fas fa-indent fa-lg text-dark mr-2 cursor-pointer"><a class="ml-1" id="status1" onclick="status(1);">ทั้งหมด (5)</a></i>
+                    </div>
+                    <div class="col-sm-6 mb-1">
+                        <div class="text-sm-right">
+                            <a class="btn btn-success mr-2" onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="closeprojectContract"><i class="fa fa-file mr-1"></i>ขอปิดโครงการใหม่</a>
+                            @*<a class="btn btn-warning mr-2" onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="closeprojectTracking"><i class="fa fa-indent mr-1"></i>ติดตามสถานะ(Tracking)</a>*@
+                            <a class="btn btn-info" onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="closeprojectReport"><i class="fa fa-chart-bar mr-1"></i>รายงานปิดโครงการ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="">
+        <div class="col-md-12 table-responsive">
+            <table id="table1" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:12px;">
+                <thead style="background-color: rgb(255, 99, 132,0.8)">
+                    <tr>
+                        <th>ลำดับ</th>
+                        <th>เลขที่สัญญา</th>
+                        <th>วันที่ทำสัญญา</th>
+                        <th>รหัสสังกัด</th>
+                        <th>ชื่อสัญญา</th>
+                        <th>ประเภทนิติกรรมสัญญา</th>
+                        <th>คู่สัญญา</th>
+                        <th>ผู้ขอปิดโครงการ</th>
+                        <th>สถานะ</th>
+                        <th>ไฟล์แนบ</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                        <td>1</td>
+                        <td class="text-center col-md-1">
+                            65/B/00001
+                        </td>
+                        <td>10/10/2564</td>
+                        <td>5.36</td>
+                        <td>โครงการทดสอบ1</td>
+                        <td>ข้อตกลงดำเนินการตามโครงการ</td>
+                        <td>โรงพยาบาลเมืองพัทยา(28005)</td>
+                        <td>
+                            <b>
+                                ชื่อ
+                            </b> : นายxxx xxx
+                            <br />
+                            <b>
+                                วันที่ขอ
+                            </b> : 01/10/64
+                        </td>
+                        <td class="text-warning"><span class="badge badge-pill badge-warning fa-1x">รออนุมัติ</span></td>
+                        <td><a class="fas fa-file fa-2x"></a></td>
+                        <td class="text-center col-md-1">
+                            <a class="btn-outline-primary" onclick="showLoading()" asp-area="" asp-controller="" asp-action="">รายละเอียด</a>
+                        </td>
+                    </tr>
+                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                        <td>2</td>
+                        <td>65/B/00002</td>
+                        <td>12/10/2564</td>
+                        <td>5.31</td>
+                        <td>โครงการทดสอบ2</td>
+                        <td>ข้อตกลงให้บริการสาธารณสุขฯ</td>
+                        <td>โรงพยาบาลชุมชนพาน(PH018)</td>
+                        <td>
+                            <b>
+                                ชื่อ
+                            </b> : นายxxx xxx
+                            <br />
+                            <b>
+                                วันที่ขอ
+                            </b> : 01/10/64
+                        </td>
+                        <td class="text-success"><span class="badge badge-pill badge-success fa-1x">อนุมัติ</span></td>
+                        <td><a class="fas fa-file fa-2x"></a></td>
+                        <td class="text-center col-md-1">
+                            <a class="btn-outline-primary" onclick="showLoading()" asp-area="" asp-controller="" asp-action="">รายละเอียด</a>
+                        </td>
+                    </tr>
+                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                        <td>3</td>
+                        <td>65/B/00003</td>
+                        <td>12/10/2564</td>
+                        <td>5.39</td>
+                        <td>โครงการทดสอบ3</td>
+                        <td>ข้อตกลงให้บริการสาธารณสุขฯ</td>
+                        <td>สถานพยาบาลเรือนจำกลางบางขวาง(22754)</td>
+                        <td>
+                            <b>
+                                ชื่อ
+                            </b> : นายxxx xxx
+                            <br />
+                            <b>
+                                วันที่ขอ
+                            </b> : 01/10/64
+                        </td>
+                        <td class="text-success"><span class="badge badge-pill badge-success fa-1x">อนุมัติ</span></td>
+                        <td><a class="fas fa-file fa-2x"></a></td>
+                        <td class="text-center col-md-1">
+                            <a class="btn-outline-primary" onclick="showLoading()" asp-area="" asp-controller="" asp-action="">รายละเอียด</a>
+                        </td>
+                    </tr>
+                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                        <td>4</td>
+                        <td class="text-center col-md-1">
+                            65/B/00004
+                        </td>
+                        <td>12/10/2564</td>
+                        <td>5.39</td>
+                        <td>โครงการทดสอบ4</td>
+                        <td>ข้อตกลงให้บริการสาธารณสุขฯ</td>
+                        <td>สถานพยาบาลเรือนจำกลางบางขวาง(22754)</td>
+                        <td>
+                            <b>
+                                ชื่อ
+                            </b> : นายxxx xxx
+                            <br />
+                            <b>
+                                วันที่ขอ
+                            </b> : 01/10/64
+                        </td>
+                        <td class="text-danger"><span class="badge badge-pill badge-danger fa-1x">ไม่อนุมัติ</span></td>
+                        <td><a class="fas fa-file fa-2x"></a></td>
+                        <td class="text-center col-md-1">
+                            <a class="btn-outline-primary" onclick="showLoading()" asp-area="" asp-controller="" asp-action="">รายละเอียด</a>
+                        </td>
+                    </tr>
+                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                        <td>5</td>
+                        <td>65/B/00005</td>
+                        <td>12/10/2564</td>
+                        <td>5.39</td>
+                        <td>โครงการทดสอบ5</td>
+                        <td>ข้อตกลงให้บริการสาธารณสุขฯ</td>
+                        <td>สถานพยาบาลเรือนจำกลางบางขวาง(22754)</td>
+                        <td>
+                            <b>
+                                ชื่อ
+                            </b> : นายxxx xxx
+                            <br />
+                            <b>
+                                วันที่ขอ
+                            </b> : 01/10/64
+                        </td>
+                        <td class="text-success"><span class="badge badge-pill badge-success fa-1x">อนุมัติ</span></td>
+                        <td><a class="fas fa-file fa-2x"></a></td>
+                        <td class="text-center col-md-1">
+                            <a class="btn-outline-primary" onclick="showLoading()" asp-area="" asp-controller="" asp-action="">รายละเอียด</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br />
+            <br />
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            status(1);
+        });
+
+        function status(key) {
+            document.getElementById("status1").style.textDecoration = "";
+            document.getElementById("status1").style.color = "";
+            document.getElementById("status2").style.textDecoration = "";
+            document.getElementById("status2").style.color = "";
+            document.getElementById("status3").style.textDecoration = "";
+            document.getElementById("status3").style.color = "";
+            document.getElementById("status4").style.textDecoration = "";
+            document.getElementById("status4").style.color = "";
+            $('#table1').hide();
+            $('#table2').hide();
+            $('#table3').hide();
+            $('#table4').hide();
+            switch (key) {
+                case 1:
+                    document.getElementById("status1").style.textDecoration = "underline";
+                    document.getElementById("status1").style.color = "black";
+                    $('#table1').show();
+                    break;
+                case 2:
+                    document.getElementById("status2").style.textDecoration = "underline";
+                    document.getElementById("status2").style.color = "black";
+                    $('#table2').show();
+                    break;
+                case 3:
+                    document.getElementById("status3").style.textDecoration = "underline";
+                    document.getElementById("status3").style.color = "black";
+                    $('#table3').show();
+                    break;
+                case 4:
+                    document.getElementById("status4").style.textDecoration = "underline";
+                    document.getElementById("status4").style.color = "black";
+                    $('#table4').show();
+                    break;
+            }
+        }
+
+
+    </script>
+}

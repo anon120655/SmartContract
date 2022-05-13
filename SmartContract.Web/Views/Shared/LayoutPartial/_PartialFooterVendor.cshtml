@@ -1,0 +1,132 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using Microsoft.Extensions.Options;
+@using SmartContract.Infrastructure.Helpers;
+
+@inject IOptions<AppSettings> _mySet
+
+@{
+    Layout = null;
+
+    string Current = DateTime.Now.ToString("d MMMM yyyy เวลา HH:mm น", new System.Globalization.CultureInfo("th-TH"));
+}
+
+<style>
+    .blue-color {
+        color: blue;
+    }
+
+    .orangered-color {
+        color: orangered
+    }
+
+    .dodgerblue-color {
+        color: dodgerblue
+    }
+</style>
+
+<!-- Footer -->
+<footer class="page-footer font-small text-light">
+    @*pt-1*@
+    <div class="col-md-12 text-right">
+        <div class="text-primary font-weight-bold">
+            ข้อมูล ณ วันที่ @Current
+        </div>
+    </div>
+    <!-- online user count -->
+    <div class="col-md-12 text-right bg-dark">
+        <div class="m-0 p-0 mt-3  bg-dark">
+            <b>ผู้ออนไลน์ : </b>
+            <span id="countUser"></span> &nbsp;&nbsp;
+            <b>จำนวนผู้เข้าใช้งาน : </b>
+            @(UserService.CountlogUser())
+        </div>
+    </div>
+    <!-- Footer Links -->
+    <div class=" text-center text-md-left bg-dark">
+
+        <div class="container">
+            <!-- Footer links -->
+            <div class="row text-center text-md-left">
+                <!-- Grid column -->
+                <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mt-2">
+                    <h6 class="text-uppercase mb-2 font-weight-bold">สำนักงานหลักประกันสุขภาพแห่งชาติ</h6>
+                    <p>
+                        เลขที่ 120 หมู่ 3 ชั้น 2-4 อาคารรวมหน่วยงานราชการ ศูนย์ราชการเฉลิมพระเกียรติ 80 พรรษา 5 ธันวาคม 2550 ถนนแจ้งวัฒนะ แขวงทุ่งสองห้อง เขตหลักสี่ กรุงเทพมหานคร ฯ 10210
+                    </p>
+                </div>
+                <!-- Grid column -->
+                <hr class="w-100 clearfix d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-2">
+                    <h6 class="text-uppercase mb-2 font-weight-bold">ติดต่อเรา</h6>
+                    @*<p>
+                            <i class="fas fa-home mr-3"></i> GPS : 13.8828179,100.5652935
+                        </p>*@
+                    <p>
+                        <i class="fas fa-envelope mr-3"></i> www.nhso.go.th
+                    </p>
+                    <p>
+                        <i class="fas fa-phone mr-3"></i> 02-141-4000
+                    </p>
+                    <p>
+                        <i class="fas fa-print mr-3"></i> 02-143-9730-1
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+            </div>
+        </div>
+        <!-- Footer links -->
+
+        <hr class="mt-sm-0">
+
+        <!-- Grid row -->
+        <div class=" d-flex align-items-center">
+
+            <!-- Grid column -->
+            <div class="col-md-7 col-lg-8">
+
+                <!--Copyright-->
+                <p class="text-center text-md-left">
+                    © 2021 Copyright: Version @_mySet.Value.SiteUpdate
+                </p>
+
+            </div>
+            <!-- Grid column -->
+            <!-- Grid column -->
+            <div class="col-md-5 col-lg-4 ml-lg-0 ">
+
+                <!-- Social buttons -->
+                <div class="text-center text-md-right">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                <i class="fab fa-chrome fa-2x blue-color"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                <i class="fab fa-firefox fa-2x orangered-color"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                <i class="fab fa-edge fa-2x dodgerblue-color"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+</footer>
+<!-- Footer -->

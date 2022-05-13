@@ -1,0 +1,73 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+    var lookUp = Model.GetLookUp;
+    var action = ViewContext.RouteData.Values["Action"];
+    var _Action = String.Empty;
+
+    string _sEmail = String.Empty;
+    if (Context.Request.Query["email"].ToString() != null)
+    {
+        _sEmail = Context.Request.Query["email"].ToString();
+    }
+}
+
+<div class="card-body thead_tabsub1">
+    <div class="form-group">
+        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดผู้ขอลงทะเบียน</label>
+        <br />
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">ชื่อ : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control bg-focus" maxlength="100"
+                       asp-for="UserSmct.FirstName">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">นามสกุล : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control bg-focus" maxlength="100"
+                       asp-for="UserSmct.LastName">
+            </div>
+        </div>
+        @*<div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">ตำแหน่ง : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control bg-focus" maxlength="100"
+                       asp-for="UserSmct.PositionName">
+            </div>
+        </div>*@
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">รหัสบัตรประชาชน : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control bg-focus" maxlength="13"
+                       asp-for="UserSmct.Cid">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">เลขหลังบัตรประจำตัวประชาชน : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control bg-focus" maxlength="12"
+                       asp-for="UserSmct.Laser">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">เกิดวันที่ : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                       asp-for="UserSmct.BirthdayStr"
+                       placeholder="วว/ดด/ปปปป" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label font-weight ml-5">E-Mail : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control-plaintext text-primary" readonly="readonly"
+                       asp-for="UserSmct.Email" value="@_sEmail">
+            </div>
+        </div>
+        <hr class="my-4">
+    </div>
+</div>

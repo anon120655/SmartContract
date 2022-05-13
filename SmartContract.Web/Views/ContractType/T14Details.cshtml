@@ -1,0 +1,269 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indataAttach = Model.InfoAttachDraftContract;
+    var indata = Model.InfoConDetail.ContractDetail14;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้รับผิดชอบโครงการ :</label>
+                <div class="col-sm-4">
+                    <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true" onchange="ProjectResponsibleChange(this)"
+                            asp-for="InfoConDetail.ContractDetail14.P1"
+                            asp-items="@(new SelectList((from s in lookUp.NhsoSigner select new {
+                                                            Code=s.EmpId,
+                                                            FullName = $"{s.SignerFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.P1))">
+                        <option value="">---เลือก---</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ที่อยู่ที่สามารถติดต่อได้ :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail14.P5">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">จังหวัด :</label>
+                <div class="col-sm-3">
+                    <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                            onchange="ProvinceDetailChange(this.value)"
+                            asp-for="InfoConDetail.ContractDetail14.P6_ProvinceId_Catm"
+                            asp-items="@(new SelectList((from s in lookUp.LKProvinces select new {
+                                                            Code=s.ProvinceId.Substring(0,2),
+                                                            FullName = $" ({s.ProvinceId.Substring(0,2)}) {s.ProvinceName}"}),
+                                    "Code" ,
+                                    "FullName" ,
+                                    selectedValue: ""))">
+                        <option value="00000">---เลือก---</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 col-xl-1 pr-xl-0 pl-xl-0 col-form-label text-sm-right">เขต/อำเภอ :</label>
+                <div class="col-sm-2 col-xl-3">
+                    <input type="hidden" id="AmphurId_db" value="@indata.P6_AmphurId_Catm" />
+                    <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                            onchange="AmphurDetailChange(this.value)"
+                            asp-for="InfoConDetail.ContractDetail14.P6_AmphurId_Catm">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ตำบล/แขวง :</label>
+                <div class="col-sm-2 col-xl-3 ">
+                    <input type="hidden" id="DistrictId_db" value="@indata.P6_DistrictId_Catm" />
+                    <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true"
+                            asp-for="InfoConDetail.ContractDetail14.P6_DistrictId_Catm">
+                    </select>
+                </div>
+                <label class="col-sm-2 col-xl-1 pr-xl-0 pl-xl-0 col-form-label text-sm-right">รหัสไปรษณีย์ :</label>
+                <div class="col-sm-2 col-xl-3">
+                    <input type="text" class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P7">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">โทรศัพท์ :</label>
+                <div class="col-sm-2 col-xl-3">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail14.P8">
+                </div>
+                <label class="col-sm-2 col-xl-1 pr-xl-0 pl-xl-0 col-form-label text-sm-right">โทรสาร :</label>
+                <div class="col-sm-2 col-xl-3">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail14.P9">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">E-mail :</label>
+                <div class="col-sm-2 col-xl-3">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail14.P10">
+                </div>
+                <label class="col-sm-2 col-xl-1 pr-xl-0 pl-xl-0 col-form-label text-sm-right">Line ID :</label>
+                <div class="col-sm-2 col-xl-3">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail14.P11">
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ชื่อโครงการ :</label>
+                <div class="col-sm-7 ">
+                    <input type="text" class="form-control" asp-for="InfoConDetail.ContractDetail14.P12">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">1. หลักการและเหตุผล :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P13" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">2. วัตถุประสงค์ :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P14" rows="10"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">3. กลุ่มเป้าหมาย :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P15" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">4. รายบริการ :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P16" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">5. ระยะเวลาดำเนินการ :</label>
+                <label class="col-sm-1 col-form-label text-sm-right">เริ่มต้น</label>
+                <div class="col-sm-2 ">
+                    <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                           asp-for="InfoConDetail.ContractDetail14.P17"
+                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                </div>
+                <label class="col-sm-1 col-form-label text-sm-right">สิ้นสุด</label>
+                <div class="col-sm-2 ">
+                    <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                           asp-for="InfoConDetail.ContractDetail14.P18"
+                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">6. วิธีดำเนินการ :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P19" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">7. พื่นที่ดำเนินการ :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P20" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">8. งบประมาณ :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P21" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">9. การส่งผลงาน :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P22" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">10. เงื่อนไขการจ่ายเงิน :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P23" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">11. หน่วยงานที่รับผิดชอบ :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P24" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">12. ประโยชน์ที่คาดว่าจะได้รับ :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P25" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">13. การประเมินผลโครงกา :</label>
+                <div class="col-sm-7 ">
+                    <textarea class="form-control bg-focus" asp-for="InfoConDetail.ContractDetail14.P26" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">14. ผู้เห็นชอบโครงการ :</label>
+                <div class="col-sm-4">
+                    <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true" onchange="ProjectAgreeChange(this)"
+                            asp-for="InfoConDetail.ContractDetail14.P27"
+                            asp-items="@(new SelectList((from s in lookUp.NhsoSigner select new {
+                                                            Code=s.EmpId,
+                                                            FullName = $"{s.SignerFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.P27))">
+                        <option value="">---เลือก---</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ตำแหนง</label>
+                <div class="col-sm-6 ">
+                    <input type="hidden" asp-for="InfoConDetail.ContractDetail14.P29" readonly class="form-control-plaintext text-primary">
+                    <input type="text" asp-for="InfoConDetail.ContractDetail14.P31" readonly class="form-control-plaintext text-primary">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">15. ผู้อนุมัติโครงการ :</label>
+                <div class="col-sm-4">
+                    <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true" onchange="ProjectApprovalChange(this)"
+                            asp-for="InfoConDetail.ContractDetail14.P32"
+                            asp-items="@(new SelectList((from s in lookUp.NhsoSigner select new {
+                                                            Code=s.EmpId,
+                                                            FullName = $"{s.SignerFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.P32))">
+                        <option value="">---เลือก---</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ตำแหนง</label>
+                <div class="col-sm-6 ">
+                    <input type="hidden" asp-for="InfoConDetail.ContractDetail14.P34" readonly class="form-control-plaintext text-primary">
+                    <input type="text" asp-for="InfoConDetail.ContractDetail14.P36" readonly class="form-control-plaintext text-primary">
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เอกสารเพิ่มเติม :</label>
+                <div class="col-sm-4">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" title="" name="InfoConDetail.ContractDetail14.FormFile">
+                        <input type="hidden" name="InfoConDetail.ContractDetail14.IdSmctMasterFile" value="@indata.IdSmctMasterFile">
+                        <label class="custom-file-label" for="customFile">
+                            @(!string.IsNullOrEmpty(indata.FileName) ? GeneralUtils.WappText(indata.FileName, 25) : "Choose file")
+                        </label>
+                    </div>
+                </div>
+                @if (indata.FileFtp != null)
+                {
+                    if (indataAttach != null && indataAttach.SmctMasterFile != null)
+                    {
+                        var file = indataAttach.SmctMasterFile.FirstOrDefault(x => x.FileType == "F8");
+                        if (file != null)
+                        {
+                            String pathFolder = $"Attach/T14/{file.PathFolder}";
+                            <div class="col-sm-3 mt-2">
+                                <a asp-action="Render"
+                                   asp-controller="Files"
+                                   asp-route-fileftp="@(indata.FileFtp)"
+                                   asp-route-type="@(pathFolder)"
+                                   target="_blank" class="ml-3">
+                                    <i class="fas fa-file-pdf fa-lg"></i> View
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

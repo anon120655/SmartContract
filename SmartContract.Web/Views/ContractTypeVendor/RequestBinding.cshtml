@@ -1,0 +1,67 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoRequestBinding.SmctMasterFile;
+    string _Style = Model.ParameterCondition.Style;
+    string _ContractTypeId = Model.ParameterCondition.ContractTypeId;
+    string _Menu = Model.ParameterCondition.Menu;
+    string _ContractSuccessType = Model.ParameterCondition.ContractSuccessType;
+    var indataBinding = Model.InfoRequestBinding;
+}
+
+<div>
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์เอกสารขอ@(ContractUtils.BindingPropertite(_Menu).MenuFullName)</label>
+                    @if (indataBinding.ContractSuccessStatus == ContractStatusAll.S0Cancel || indataBinding.ContractSuccessStatus == ContractStatusAll.S2UnApprove || indataBinding.ContractSuccessStatus == ContractStatusAll.S3Approve)
+                    {
+                        indata.FileName = String.Empty;
+                        Model.InfoRequestBinding.ContractSuccessRemark = String.Empty;
+                    }
+                    <fieldset>
+                        <div id="Attachfile_Rander">
+                            <div class="Attachfile_Sub form-row col-12 form_create">
+                                <div class="form-group form-group-file col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" title="@indata.FileName"
+                                               name="InfoRequestBinding.SmctMasterFile.FormFile">
+                                        <input type="hidden" name="InfoRequestBinding.SmctMasterFile.IdSmctMasterFile" value="@indata.IdSmctMasterFile">
+                                        <label class="custom-file-label" for="customFile">
+                                            @(!string.IsNullOrEmpty(indata.FileName) ? GeneralUtils.WappText(indata.FileName, 25) : "Choose file")
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    @if (indata.IdSmctMasterFile != null)
+                                    {
+                                        <a asp-action="Render"
+                                           asp-controller="Files"
+                                           asp-route-fileftp="@(indata.FileFtp)"
+                                           asp-route-type="RequestBinding\T@(_ContractTypeId)"
+                                           target="_blank" class="ml-3">
+                                            <i class="fas fa-file-pdf fa-lg"></i> View
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-8 mt-2">
+                            <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                            <div class="col-sm-8">
+                                <textarea cols="80" rows="3" asp-for="InfoRequestBinding.ContractSuccessRemark"
+                                          placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

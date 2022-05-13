@@ -1,0 +1,224 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoPartnersOfContract;
+}
+
+
+<section>
+    <div class="col-md-12">
+        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดคู่สัญญา</label>
+        <div class="row col-md-12">
+            <div class="col-md-7">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right ml-5">รหัสคู่สัญญา :</label>
+                    <div class="col-sm-7">
+                        @if (!String.IsNullOrEmpty(indata.VendorId))
+                        {
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   value="@indata.VendorId">
+                        }
+                        else
+                        {
+                            <input type="text" readonly class="form-control-plaintext text-danger"
+                                   value="-ไม่มีรหัสคู่สัญญา-">
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right ml-5">จังหวัด :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@(indata.CATMs != null ? indata.CATMs.ProvinceName : String.Empty)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right ml-5">ตำบล :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@(indata.CATMs != null ? indata.CATMs.DistrictName : String.Empty)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right ml-5">รหัสไปรษณีย์ :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.ZipCpde">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right ml-5">เลขประจำตัวผู้เสียภาษี :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.TaxNumber">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ชื่อคู่สัญญา :</label>
+                    <div class="col-sm-9">
+                        <label class=" col-form-label text-primary">@indata.VendorName</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">อำเภอ :</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@(indata.CATMs != null ? indata.CATMs.AmphurName : String.Empty)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">หมู่ที่ :</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.Moo">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">เบอร์โทรศัพท์ :</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="@indata.TelephoneNumber">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        @*T14 โครงการ จะไม่มีส่วนนี้ *@
+        @if (Model.ParameterCondition.ContractTypeId != "14")
+        {
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดผู้มีอำนาจลงนาม</label>
+            <div class="form-group">
+                <fieldset class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม :</label>
+                        <div class="col-sm-7">
+                            <div class="form-check">
+                                <input class="form-check-input DecisionMaker" type="radio" onchange="UserSignerChange()"
+                                       asp-for="InfoPartnersOfContract.SmctMasterSigner.ContractSignerType" value="S1">
+                                <label class="form-check-label">
+                                    เป็นผู้มีอำนาจด้วยตัวเอง
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input DecisionMaker" type="radio" onchange="UserSignerChange()"
+                                       asp-for="InfoPartnersOfContract.SmctMasterSigner.ContractSignerType" value="S2">
+                                <label class="form-check-label">
+                                    รับมอบอำนาจ
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <hr class="mt-2 mb-3 width_75">
+                <fieldset id="Group_SignerType_S1">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจด้วยตัวเอง :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true" onchange="Signer1UserS1Change()"
+                                    asp-for="InfoPartnersOfContract.SmctMasterSigner.SmctMasterSignerDetail1.VendorSignerUser"
+                                    asp-items="@(new SelectList((from s in lookUp.UserSmctSigner.Where(x=>x.SignerType == SignerTypes.AuthBySelf) select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"({s.SignerType}) {s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: ""))">
+                                <option value="">---เลือก---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ตามหนังสือ(ผู้มีอำนาจ) :</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer1DocName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือ(ผู้มีอำนาจ) :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer1DocNo">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้มีอำนาจ) :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer1DocDateStr">
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="Group_SignerType_S2">
+                    <div id="DecisionMaker_Radios2_Deail">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">ผู้รับมอบอำนาจ :</label>
+                            <div class="col-sm-3 pr-sm-0">
+                                <select class="form-control bg-focus selectpicker" data-size="10" data-live-search="true" onchange="Signer1UserS2Change()"
+                                        asp-for="InfoPartnersOfContract.SmctMasterSigner.SmctMasterSignerDetail1.VendorSignerUser2"
+                                        asp-items="@(new SelectList((from s in lookUp.UserSmctSigner.Where(x=>x.SignerType == SignerTypes.AuthReceive) select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"({s.SignerType}) {s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: ""))">
+                                    <option value="">---เลือก---</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">หนังสือมอบอำนาจเลขที่ :</label>
+                            <div class="col-sm-3 pr-sm-0">
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       id="Signer2PoaDocNo">
+                            </div>
+                            <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้รับมอบ) :</label>
+                            <div class="col-sm-2 ">
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       id="Signer2PoaDocDateStr">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">จากผู้มีอำนาจ :</label>
+                            <div class="col-sm-3 pr-sm-0">
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       id="Signer2PoaSigner1Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ตามหนังสือ(ผู้รับมอบ) :</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer2DocName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือ(ผู้รับมอบ) :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer2DocNo">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้รับมอบ) :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer2DocDateStr">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">วันที่เริ่มมอบอำนาจ :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer2StartDateStr">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-sm-right">วันที่สิ้นสุดมอบอำนาจ :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   id="Signer2EndDateStr">
+                        </div>
+                    </div>
+                </fieldset>
+                <hr class="my-4">
+            </div>
+        }
+
+    </div>
+</section>

@@ -1,0 +1,255 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\file\**" />
+    <Compile Remove="wwwroot\Tempfiles\**" />
+    <Content Remove="wwwroot\file\**" />
+    <Content Remove="wwwroot\Tempfiles\**" />
+    <EmbeddedResource Remove="wwwroot\file\**" />
+    <EmbeddedResource Remove="wwwroot\Tempfiles\**" />
+    <None Remove="wwwroot\file\**" />
+    <None Remove="wwwroot\Tempfiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\ContractType\AProgressbarRequestApproval.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\ContractTypeVendor\AttachFiles.cshtml" />
+    <None Include="Views\ContractTypeVendor\Legal.cshtml" />
+    <None Include="Views\ContractTypeVendor\NHSO01.cshtml" />
+    <None Include="Views\ContractTypeVendor\NHSO02.cshtml" />
+    <None Include="Views\ContractTypeVendor\Payment.cshtml" />
+    <None Include="Views\ContractTypeVendor\RequestApproval.cshtml" />
+    <None Include="Views\ContractTypeVendor\SignNHSO.cshtml" />
+    <None Include="Views\ContractTypeVendor\T01.cshtml" />
+    <None Include="Views\ContractTypeVendor\T02.cshtml" />
+    <None Include="Views\ContractTypeVendor\T03.cshtml" />
+    <None Include="Views\ContractTypeVendor\T04.cshtml" />
+    <None Include="Views\ContractTypeVendor\Vendor.cshtml" />
+    <None Include="Views\ContractType\ApprovalNHSO.cshtml" />
+    <None Include="Views\ContractType\ApprovalNHSODept.cshtml" />
+    <None Include="Views\ContractType\AProgressbarRequestApproval.cshtml" />
+    <None Include="Views\ContractType\Legal01.cshtml" />
+    <None Include="Views\ContractType\Legal11.cshtml" />
+    <None Include="Views\ContractType\NHSO02.cshtml" />
+    <None Include="Views\ContractType\Payment.cshtml" />
+    <None Include="Views\ContractType\PDFFiles.cshtml" />
+    <None Include="Views\ContractType\RequestApproval.cshtml" />
+    <None Include="Views\ContractType\Signer.cshtml" />
+    <None Include="Views\ContractType\T01Details.cshtml" />
+    <None Include="Views\ContractType\T02Details.cshtml" />
+    <None Include="Views\ContractType\T11.cshtml" />
+    <None Include="Views\ContractType\T11Details.cshtml" />
+    <None Include="Views\ContractType\T04C.cshtml" />
+    <None Include="Views\ContractType\T04Details.cshtml" />
+    <None Include="Views\Contract\AttachFile.cshtml" />
+    <None Include="Views\Contract\AttachFileDocument.cshtml" />
+    <None Include="Views\Contract\AttachFileSuccess.cshtml" />
+    <None Include="Views\Contract\Cancel.cshtml" />
+    <None Include="Views\Contract\CancelContract.cshtml" />
+    <None Include="Views\Contract\CancelReport.cshtml" />
+    <None Include="Views\Contract\CancelReportDetail.cshtml" />
+    <None Include="Views\Contract\CancelTracking.cshtml" />
+    <None Include="Views\Contract\CloseProject.cshtml" />
+    <None Include="Views\Contract\CloseProjectContract.cshtml" />
+    <None Include="Views\Contract\CloseProjectReport.cshtml" />
+    <None Include="Views\Contract\CloseProjectReportDetail.cshtml" />
+    <None Include="Views\Contract\CloseProjectTracking.cshtml" />
+    <None Include="Views\Contract\Edit.cshtml" />
+    <None Include="Views\Contract\EditContract.cshtml" />
+    <None Include="Views\Contract\EditReport.cshtml" />
+    <None Include="Views\Contract\EditReportDetail.cshtml" />
+    <None Include="Views\Contract\EditTracking.cshtml" />
+    <None Include="Views\Contract\Extend.cshtml" />
+    <None Include="Views\Contract\ExtendContract.cshtml" />
+    <None Include="Views\Contract\ExtendReport.cshtml" />
+    <None Include="Views\Contract\ExtendReportDetail.cshtml" />
+    <None Include="Views\Contract\ExtendTracking.cshtml" />
+    <None Include="Views\Contract\Terminate.cshtml" />
+    <None Include="Views\Contract\TerminateContract.cshtml" />
+    <None Include="Views\Contract\TerminateReport.cshtml" />
+    <None Include="Views\Contract\TerminateReportDetail.cshtml" />
+    <None Include="Views\Contract\TerminateTracking.cshtml" />
+    <None Include="Views\Guarantee\GuaranteeClaim.cshtml" />
+    <None Include="Views\Guarantee\GuaranteeRenew.cshtml" />
+    <None Include="Views\Guarantee\GuaranteeReport.cshtml" />
+    <None Include="Views\Guarantee\GuaranteeReturn.cshtml" />
+    <None Include="Views\Guarantee\KTB_New.cshtml" />
+    <None Include="Views\HomeVendor\ContractApproveStation.cshtml" />
+    <None Include="Views\HomeVendor\ContractCondition.cshtml" />
+    <None Include="Views\HomeVendor\ContractCondition2.cshtml" />
+    <None Include="Views\HomeVendor\ContractCreate.cshtml" />
+    <None Include="Views\HomeVendor\ContractSign.cshtml" />
+    <None Include="Views\HomeVendor\Dashboard.cshtml" />
+    <None Include="Views\HomeVendor\Index.cshtml" />
+    <None Include="Views\HomeVendor\Index2.cshtml" />
+    <None Include="Views\HomeVendor\Privacy.cshtml" />
+    <None Include="Views\HomeVendor\Tracking.cshtml" />
+    <None Include="Views\HomeVendor\Tracking0.cshtml" />
+    <None Include="Views\HomeVendor\Tracking2.cshtml" />
+    <None Include="Views\Home\coming_soon.cshtml" />
+    <None Include="Views\Home\ContractApproveStation.cshtml" />
+    <None Include="Views\Home\ContractCondition.cshtml" />
+    <None Include="Views\Home\ContractCreate.cshtml" />
+    <None Include="Views\Home\Dashboard.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Home\Tracking.cshtml" />
+    <None Include="Views\Home\TrackingProposal.cshtml" />
+    <None Include="Views\Authorize\Local.cshtml" />
+    <None Include="Views\Authorize\DDOPA.cshtml" />
+    <None Include="Views\Authorize\LoginPassCode.cshtml" />
+    <None Include="Views\Other\Search.cshtml" />
+    <None Include="Views\Register\CheckMailPassCode.cshtml" />
+    <None Include="Views\Register\Manager.cshtml" />
+    <None Include="Views\Register\Profile.cshtml" />
+    <None Include="Views\Register\ProfileNHSO.cshtml" />
+    <None Include="Views\Register\Register.cshtml" />
+    <None Include="Views\Register\RegisterCheck.cshtml" />
+    <None Include="Views\Register\RegisterCheckUser.cshtml" />
+    <None Include="Views\Register\RegisterNHSO.cshtml" />
+    <None Include="Views\Register\RegisterUser.cshtml" />
+    <None Include="Views\Report\Report_01.cshtml" />
+    <None Include="Views\Report\Report_01_Detail.cshtml" />
+    <None Include="Views\Report\Report_02.cshtml" />
+    <None Include="Views\Report\Report_02_Detail.cshtml" />
+    <None Include="Views\Shared\LayoutLogin\_MenuLogin.cshtml" />
+    <None Include="Views\Shared\LayoutPartial\_PartialDataDate.cshtml" />
+    <None Include="Views\Shared\LayoutPartial\_PartialFooter.cshtml" />
+    <None Include="Views\Shared\LayoutPartial\_PartialFooterVendor.cshtml" />
+    <None Include="Views\Shared\LayoutPartial\_PartialHeader.cshtml" />
+    <None Include="Views\Shared\LayoutPartial\_PartialHeaderVendor.cshtml" />
+    <None Include="Views\Shared\LayoutPartial\_PartialMenu.cshtml" />
+    <None Include="Views\Shared\LayoutPartial\_PartialMenuVendor.cshtml" />
+    <None Include="Views\Shared\LayoutRegister\_HeaderNHSO.cshtml" />
+    <None Include="Views\Shared\LayoutRegister\_MenuRegister.cshtml" />
+    <None Include="Views\Shared\LayoutRegister\_MenuRegisterNHSO.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_LayoutError.cshtml" />
+    <None Include="Views\Shared\_LayoutLogin.cshtml" />
+    <None Include="Views\Shared\_LayoutRegister.cshtml" />
+    <None Include="Views\Shared\_LayoutRegisterNHSO.cshtml" />
+    <None Include="Views\Shared\_LayoutTemplates.cshtml" />
+    <None Include="Views\Shared\_LayoutTemplatesVendor.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="wwwroot\files\FM001.pdf" />
+    <None Include="wwwroot\files\FM008.pdf" />
+    <None Include="wwwroot\files\FM021.pdf" />
+    <None Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="5.21.1" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.8.*" />
+    <PackageReference Include="Winnovative.HtmlToPdf.NetCore" Version="15.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartContract.Infrastructure\SmartContract.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartContract.Utils\SmartContract.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Connected Services\" />
+    <Folder Include="wwwroot\files\FM\FM_APPROVAL_REQ\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T11\" />
+    <Folder Include="wwwroot\files\FM\FM_PAY_P1\" />
+    <Folder Include="wwwroot\files\FM\FM_PAY_P2\" />
+    <Folder Include="wwwroot\files\FM\FM_PAY_P3\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T01\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T04\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T06\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T08\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T02\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T05\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T07\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T09\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T10\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T12\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T13\" />
+    <Folder Include="wwwroot\files\FM\FM_CONTRACT_T14\" />
+    <Folder Include="wwwroot\files\Register\Signer\2564\" />
+    <Folder Include="wwwroot\files\RequestBinding\T14\" />
+    <Folder Include="wwwroot\files\RequestBinding\T13\" />
+    <Folder Include="wwwroot\files\RequestBinding\T12\" />
+    <Folder Include="wwwroot\files\RequestBinding\T11\" />
+    <Folder Include="wwwroot\files\RequestBinding\T10\" />
+    <Folder Include="wwwroot\files\RequestBinding\T09\" />
+    <Folder Include="wwwroot\files\RequestBinding\T08\" />
+    <Folder Include="wwwroot\files\RequestBinding\T07\" />
+    <Folder Include="wwwroot\files\RequestBinding\T06\" />
+    <Folder Include="wwwroot\files\RequestBinding\T05\" />
+    <Folder Include="wwwroot\files\RequestBinding\T04\" />
+    <Folder Include="wwwroot\files\RequestBinding\T03\" />
+    <Folder Include="wwwroot\files\RequestBinding\T02\" />
+    <Folder Include="wwwroot\files\RequestBinding\T01\" />
+    <Folder Include="wwwroot\files\Signature\T14\" />
+    <Folder Include="wwwroot\files\Signature\T13\" />
+    <Folder Include="wwwroot\files\Signature\T12\" />
+    <Folder Include="wwwroot\files\Signature\T10\" />
+    <Folder Include="wwwroot\files\Signature\T09\" />
+    <Folder Include="wwwroot\files\Signature\T08\" />
+    <Folder Include="wwwroot\files\Signature\T07\" />
+    <Folder Include="wwwroot\files\Signature\T06\" />
+    <Folder Include="wwwroot\files\Signature\T05\" />
+    <Folder Include="wwwroot\files\Signature\T04\" />
+    <Folder Include="wwwroot\files\Signature\T03\" />
+    <Folder Include="wwwroot\files\Signature\T02\" />
+    <Folder Include="wwwroot\files\Signature\T01\" />
+    <Folder Include="wwwroot\files\Attach\T14\" />
+    <Folder Include="wwwroot\files\Attach\T13\" />
+    <Folder Include="wwwroot\files\Attach\T12\" />
+    <Folder Include="wwwroot\files\Attach\T10\" />
+    <Folder Include="wwwroot\files\Attach\T09\" />
+    <Folder Include="wwwroot\files\Attach\T07\" />
+    <Folder Include="wwwroot\files\Attach\T05\" />
+    <Folder Include="wwwroot\files\Attach\T08\" />
+    <Folder Include="wwwroot\files\Attach\T06\" />
+    <Folder Include="wwwroot\files\Attach\T03\" />
+    <Folder Include="wwwroot\files\Attach\T04\" />
+    <Folder Include="wwwroot\files\Signature\T11\" />
+    <Folder Include="wwwroot\files\Attach\T11\" />
+    <Folder Include="wwwroot\files\Attach\T01\AttachDraft\" />
+    <Folder Include="wwwroot\files\Attach\T01\Signature\" />
+    <Folder Include="wwwroot\files\Attach\T02\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T01\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T02\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T03\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T04\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T05\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T06\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T07\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T08\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T09\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T10\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T11\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T12\" />
+    <Folder Include="wwwroot\files\Tempfiles\FM\FM_CONTRACT_T13\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings_PRO - Copy.Development.json">
+      <DependentUpon>appsettings_PRO.Development.json</DependentUpon>
+    </Content>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,292 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Share.IGeneralRepo _repoShare
+@model SmartContract.Infrastructure.Resources.ContractTypeBureau.TrackingContractMain
+@using SmartContract.Infrastructure.Resources.ContractTypeBureau
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "ขอกำหนดรหัสคู่สัญญา";
+    string _Station = Context.Request.Query["Station"].ToString();
+    DashboardsVendorLink _Dash = null;
+}
+
+<link href="~/css/home/progressbarcontract.css" rel="stylesheet" />
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    _Dash = Model.DashboardsVendorLink;
+    var _Items = (Model != null ? Model.TrackingVendorLinkResource.Items : null);
+    var _pager = (_Items != null ? Model.TrackingVendorLinkResource.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    <div>
+
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small class="text-primary"><i class="fa fa-file-alt mr-1"></i>ขอกำหนดรหัสคู่สัญญา</small>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <div class="col-md-12">
+                    <div class="form-group mt-md-3">
+                        <div class="row">
+                            <div class="x_title text-center col-md-12">
+                                <p class="text-center">
+                                    <h5><span class="x_title_before">ข้อมูลขอกำหนดรหัสคู่สัญญา ประจำปีงบประมาณ 2565</span></h5>
+                                </p>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <br />
+                            <div class="col-md-12 justify-content-center">
+                                <div class="progressbar-wrapper bg-transparent">
+                                    <ul id="progressbar" class="progressbar">
+                                        <li style="width:19.5%" class="progressbarall">ทั้งหมด</li>
+                                        <li style="width:19.5%" class="progressbar1">สร้างข้อเสนอ</li>
+                                        <li style="width:19.5%" class="progressbar2">ตรวจสอบ</li>
+                                        <li style="width:19.5%" class="progressbar3">รหัสคู่สัญญา(สำเร็จ)</li>
+                                        <li style="width:19.5%" class="progressbar4">ยกเลิก</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1 mb-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small><i class="fas fa-table mr-1"></i>รายละเอียดข้อเสนอขอกำหนดรหัสคู่สัญญา</small>
+                                </h4>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-right">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <section>
+                        <div class="">
+                            <div class="col-md-12">
+                                <div class="form-group m-1 mb-2">
+                                    <div class="row">
+                                        <div class="col-sm-12 mb-1">
+                                            <i class="fas fa-indent text-dark mr-2 cursor-pointer">
+                                                <a id="_S0" class="ml-1 text-dark" onclick="showLoading()"
+                                                   asp-controller="Home"
+                                                   asp-action="IndexVendorLink">
+                                                    ทั้งหมด (@_Dash.SumCount())
+                                                </a>
+                                            </i>
+                                            <i class="fas fa-file text-warning mr-2 cursor-pointer">
+                                                <a id="_S1" class="ml-1 text-warning" onclick="showLoading()"
+                                                   asp-controller="Home"
+                                                   asp-action="IndexVendorLink"
+                                                   asp-route-Station="S1">
+                                                    สร้างข้อเสนอ (@_Dash.S1CreateProposalCount)
+                                                </a>
+                                            </i>
+                                            <i class="fas fa-check text-info mr-2 cursor-pointer">
+                                                <a id="_S2" class="ml-1 text-info" onclick="showLoading()"
+                                                   asp-controller="Home"
+                                                   asp-action="IndexVendorLink"
+                                                   asp-route-Station="S2">
+                                                    ตรวจสอบ (@_Dash.S2CheckCount)
+                                                </a>
+                                            </i>
+                                            <i class="fas fa-check-circle text-success mr-2 cursor-pointer">
+                                                <a id="_S3" class="ml-1 text-success" onclick="showLoading()"
+                                                   asp-controller="Home"
+                                                   asp-action="IndexVendorLink"
+                                                   asp-route-Station="S3">
+                                                    รหัสคู่สัญญา(สำเร็จ) (@_Dash.S3VendorSuccessCount)
+                                                </a>
+                                            </i>
+                                            <i class="fas fa-times-circle text-danger mr-2 cursor-pointer">
+                                                <a id="_S4" class="ml-1 text-danger" onclick="showLoading()"
+                                                   asp-controller="Home"
+                                                   asp-action="IndexVendorLink"
+                                                   asp-route-Station="S5">
+                                                    ยกเลิก (@_Dash.S4CancelCount)
+                                                </a>
+                                            </i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="">
+                            <div id="div_table1" class="col-md-12 search-table-outter table-responsive">
+                                <table id="table1" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:13px;">
+                                    <thead style="background-color: rgb(255, 99, 132,0.8)">
+                                        <tr>
+                                            <th>ลำดับ</th>
+                                            <th>เลขที่อ้างอิง</th>
+                                            <th>วันที่ทำเอกสาร</th>
+                                            <th>เลขที่ขอกำหนดรหัสคู่สัญญา</th>
+                                            <th>ชื่อสัญญา</th>
+                                            <th>ประเภทนิติกรรมสัญญา</th>
+                                            <th>ผู้บันทึก</th>
+                                            <th>สถานะ</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (_Items != null && _Items.Count > 0)
+                                        {
+                                            foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                                            {
+                                                <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                                    <td class="text-center">@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
+                                                    <td class="text-center col-md-1">
+                                                        @item.Value.RefId
+                                                    </td>
+                                                    <td class="text-center">@GeneralUtils.DateToThString(item.Value.CreateDate)</td>
+                                                    <td>
+                                                        <b class="">
+                                                            เลขที่ขอกำหนดรหัสคู่สัญญา
+                                                        </b> : @item.Value.ApprovalReqId
+                                                        <br />
+                                                        <b>
+                                                            วันที่อนุมัติ
+                                                        </b> : @GeneralUtils.DateToThString(item.Value.ApprovalReqDate)
+                                                    </td>
+                                                    <td>@item.Value.ContractName</td>
+                                                    <td>@item.Value.ContractTypeName</td>
+                                                    <td>
+                                                        <b>
+                                                            ผู้สร้างเอกสาร
+                                                        </b> : @item.Value.CreateUserFullname
+                                                        <br />
+                                                        <b>
+                                                            ผู้บันทึกล่าสุด
+                                                        </b> : @item.Value.EditUserFullname
+                                                        <br />
+                                                        <b>
+                                                            วันที่บันทึกล่าสุด
+                                                        </b> :@GeneralUtils.DateToThString(item.Value.EditDate)
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="badge badge-pill p-2"
+                                                              style="min-width: 100px; color: #ffffff; background-color: @(ContractUtils.VendorLinkReqSations(item.Value.StationStatusCurr).Color)">
+                                                            @Html.Raw(ContractUtils.VendorLinkReqSations(item.Value.StationStatusCurr).Name)
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center col-md-1">
+                                                        @if (item.Value.StationStatusCurr == VendorLinkStationStatusAll.S2Check)
+                                                        {
+
+                                                            <a class="btn-outline-primary" onclick="showLoading()"
+                                                               asp-controller="ContractType"
+                                                               asp-action="VendorLink"
+                                                               asp-route-Style="@item.Value.ContractStyleCode"
+                                                               asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                                               asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)"
+                                                               asp-route-Idvl="@SecurityRepo.Encrypt(item.Value.CreateUser)">รายละเอียด</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>-</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="col-md-12">
+                        <div class="row mr-1">
+                            <div class="col-xl-4 col-md-4 mt-2 pagination_font font_bold">
+                                แสดงผล <span class="text_blue">@(Model.TrackingVendorLinkResource.Items.Count)</span> จากทั้งหมด <span class="text_blue">@(Model.TrackingVendorLinkResource.Pager.TotalItems)</span>
+                            </div>
+                            <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.TrackingVendorLinkResource.Pager" />
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <section>
+                        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>หมายเหตุ</label>
+                        <div class="form-group row col-md-12 align-top">
+                            <div class="col-md-2 text-left">
+                                รายละเอียด :
+                            </div>
+                            <div class="col-md-10 text-left">
+                                1.xxx<br />
+                                2.xxx
+                            </div>
+                        </div>
+                    </section>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            progressbar(1, @_Dash.SumCount());
+            progressbar(2, @_Dash.S1CreateProposalCount);
+            progressbar(3, @_Dash.S2CheckCount);
+            progressbar(4, @_Dash.S3VendorSuccessCount);
+            progressbar(5, @_Dash.S4CancelCount);
+
+            var _Station = '@(_Station)';
+            if (_Station == '') {
+                _Station = 'S0';
+            }
+
+            $(`#_${_Station}`).attr('style', 'text-decoration: underline !important; font-size: 15pt;');
+
+        });
+
+        function progressbar(index, value) {
+            setTimeout(function () { $(`#progressbar li:eq(${index - 1})`).attr('data-before', value); }, (100 * index) + 500);
+        }
+
+    </script>
+}

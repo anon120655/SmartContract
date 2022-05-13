@@ -1,0 +1,134 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoContract;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ฝ่าย สปสช.สำนัก/กองทุนย่อย/เขต</label>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">สำนัก/กองทุนย่อย/เขต :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.BureauSubFundCounty">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ประเภทนิติกรรมสัญญา :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.ContractTypeFullName">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">รูปแบบการลงนาม :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.SigningType">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เลขที่อ้างอิง :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.RefId">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">เลขที่สัญญา :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.ContractId" value="@(indata.ContractId !=null ? indata.ContractId : "-")">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">วันที่ทำสัญญา :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.ContractDate" value="@(indata.ContractDate.HasValue ?  GeneralUtils.DateToThString(indata.ContractDate) : "-")">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">รูปแบบนิติกรรมสัญญา :</label>
+                <div class="col-sm-7">
+                    @if (Model.InfoContract.PayVendorTypeD)
+                    {
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="จ่ายตรงคู่สัญา">
+                    }
+                    else
+                    {
+                        <input type="text" readonly class="form-control-plaintext text-primary" value="จ่ายไม่ตรงคู่สัญา">
+                    }
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">รหัสงบประมาณ :</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control-plaintext text-primary Select_Budgetcode" name="BudgetcodeSelectLeagl"
+                           value="@(lookUp.BudgetcodeList.FirstOrDefault(x => x.Budgetcode == indata.Budgetcodes.FirstOrDefault()?.Budgetcode)?.Budgetcode ?? String.Empty)">
+                </div>
+            </div>
+            <div id="Budgetcode_Render">
+                @if (indata.Budgetcodes != null && indata.Budgetcodes.Count > 0)
+                {
+                    foreach (var item in indata.Budgetcodes.Select((value, i) => (value, i)))
+                    {
+                        if (item.i > 0)
+                        {
+                            <div class="Budgetcode_Sub Budgetcode_Sub_@(item.i) ">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label text-sm-right"></label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control-plaintext text-primary Select_Budgetcode" name="BudgetcodeSelectLeagl"
+                                               value="@(lookUp.BudgetcodeList.FirstOrDefault(x => x.Budgetcode == item.value.Budgetcode)?.Budgetcode ?? String.Empty)">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">งบประมาณในการดำเนินการ :</label>
+                <div class="col-sm-5">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.Budget"
+                           value="@(indata.Budget > 0 ? indata.Budget.ToString("#,##0.00") : "")">
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">วันที่เริ่มต้นสัญญา :</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                           asp-for="InfoContract.StartDateStr"
+                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">วันที่สิ้นสุดสัญญา :</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                           asp-for="InfoContract.EndDateStr"
+                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ระยะเวลารับประกันผลงาน :</label>
+                <div class="col-sm-1">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           asp-for="InfoContract.GuaranteeDay">
+                </div>
+                <label class="col-sm-1 col-form-label">วัน</label>
+            </div>
+        </div>
+    </div>
+</section>

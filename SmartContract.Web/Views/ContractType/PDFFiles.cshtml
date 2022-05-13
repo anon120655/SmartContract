@@ -1,0 +1,121 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    var indataPara = Model.ParameterCondition;
+    var indata = Model.InfoFMPDF;
+    var infoFileReal = Model.InfoAttachFileRealVersion;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์นิติกรรมสัญญาจากระบบ(ฉบับจริง)</label>
+            <table class="table borderless">
+                @if (indataPara.Style == "S41" || indataPara.Style == "S42" || indataPara.Style == "S43")
+                {
+                    <tr>
+                        <td class="col-sm-1 pt-0"></td>
+                        <td>
+                            <div class="form-group row mb-0">
+                                <div class="col-sm-7 text-left">
+                                    <label class="tltle mt-1">หนังสือขออนุมัติ</label>
+                                </div>
+                                <div class="col-sm-3 text-right">
+                                    @if (indata.SmctMasterFile_APPROVAL != null)
+                                    {
+                                        var _File = indata.SmctMasterFile_APPROVAL;
+                                        String pathFolder = $"FM\\FM_APPROVAL_REQ\\{_File.PathFolder}";
+                                        <a class="btn-outline-primary" target="_blank"
+                                           asp-controller="Files"
+                                           asp-action="Render"
+                                           asp-route-type="@(pathFolder)"
+                                           asp-route-fileftp="@(_File.FileFtp)">
+                                            <i class="fas fa-file-pdf fa-2x"></i> View
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (indataPara.Station == ContractStationStatusAll.S5Signing2 || indataPara.Station == ContractStationStatusAll.S6ContractNumber || indataPara.Station == ContractStationStatusAll.S7Binding)
+                {
+                    if (indataPara.Style != "S43")
+                    {
+                        <tr>
+                            <td class="col-sm-1 pt-0"></td>
+                            <td>
+                                <div class="form-group row mb-0">
+                                    <div class="col-sm-7 text-left">
+                                        <label class="tltle mt-1">นิติกรรมสัญญา</label>
+                                    </div>
+                                    <div class="col-sm-3 text-right">
+                                        @if (infoFileReal.SmctMasterFile.Any(x => x.FileType == "F3"))
+                                        {
+                                            //ไฟล์แสกน นิติกรรมสัญญา(ฉบับจริง)
+                                            var _File = infoFileReal.SmctMasterFile.FirstOrDefault(x => x.FileType == "F3");
+                                            String pathFolder = $"Attach\\T{indataPara.ContractTypeId}\\{_File.PathFolder}";
+                                            <a class="btn-outline-primary" target="_blank"
+                                               asp-controller="Files"
+                                               asp-action="Render"
+                                               asp-route-type="@(pathFolder)"
+                                               asp-route-fileftp="@(_File.FileFtp)">
+                                                <i class="fas fa-file-pdf fa-2x"></i> View
+                                            </a>
+                                        }
+                                        else if (indata.SmctMasterFile_CONTRACT != null)
+                                        {
+                                            var _File = indata.SmctMasterFile_CONTRACT;
+                                            String pathFolder = $"FM\\FM_CONTRACT_T{indataPara.ContractTypeId}\\{_File.PathFolder}";
+                                            <a class="btn-outline-primary" target="_blank"
+                                               asp-controller="Files"
+                                               asp-action="Render"
+                                               asp-route-type="@(pathFolder)"
+                                               asp-route-fileftp="@(_File.FileFtp)">
+                                                <i class="fas fa-file-pdf fa-2x"></i> View
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                    @if (indataPara.Style == "S3" || indataPara.Style == "S41" || indataPara.Style == "S42" || indataPara.Style == "S43")
+                    {
+                        <tr>
+                            <td class="col-sm-1 pt-0"></td>
+                            <td>
+                                <div class="form-group row mb-0">
+                                    <div class="col-sm-7 text-left">
+                                        <label class="tltle mt-1">เงื่อนไขการจ่ายเงิน</label>
+                                    </div>
+                                    <div class="col-sm-3 text-right">
+                                        @if (indata.SmctMasterFile_PAY != null)
+                                        {
+                                            var _File = indata.SmctMasterFile_PAY;
+                                            String pathFolder = $"FM\\FM_PAY_{indataPara.PeriodType}\\{_File.PathFolder}";
+                                            <a class="btn-outline-primary" target="_blank"
+                                               asp-controller="Files"
+                                               asp-action="Render"
+                                               asp-route-type="@(pathFolder)"
+                                               asp-route-fileftp="@(_File.FileFtp)">
+                                                <i class="fas fa-file-pdf fa-2x"></i> View
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+
+</section>

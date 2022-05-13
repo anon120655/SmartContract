@@ -1,0 +1,401 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "สร้างนิติกรรมสัญญา";
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    PermissionRole roleCode = UserService.GetRoleRoleCode();
+    string _Station = Model.ContractStation.StationStatusCurr;
+    string _ItemStatusCurr = Model.ContractStation.ItemStatusCurr;
+    string _SigningType = SecurityRepo.Decrypt(Model.ParameterCondition.SigningTypeEn);
+    String _MenuCode = Model.ParameterCondition.MenuEn != null ? SecurityRepo.Decrypt(Model.ParameterCondition.MenuEn) : String.Empty;
+    var indataBinding = Model.InfoRequestBinding;
+    var infoFileReal = Model.InfoAttachFileRealVersion;
+
+    <form asp-controller="ContractType" asp-action="T05C" enctype="multipart/form-data" method="post"
+          data-ajax="true" data-ajax-method="post"
+          data-ajax-begin="onbeginForm"
+          data-ajax-complete="completedForm"
+          data-ajax-failure="failedForm">
+        <div>
+            <section>
+                <div class="">
+                    <div class="col-md-12">
+                        <div class="form-group m-1">
+                            <div class="row">
+                                <partial name="/Views/ContractType/_HeaderBarRu.cshtml" model="Model" />
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card mb-3"></div>
+                    </div>
+                </div>
+            </section>
+
+            <partial name="/Views/ContractTypeVendor/AProgressbarVendor.cshtml" model="Model" />
+
+            @if (_Station == ContractStationStatusAll.S4CreateContract || (_MenuCode == ContractSuccessTypes.T1_EDIT && indataBinding.ContractSuccessStatus == ContractStatusAll.S1WaitApprove))
+            {
+                <fieldset>
+                    <div class="card accordion-group " style="background-color:snow">
+                        <div class="card-header" id="headingDetailT01_1">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT01_1" aria-expanded="true" aria-controls="collapseDetailT01_1">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลนิติกรรมสัญญา
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT01_1" class="collapse show" aria-labelledby="headingDetailT01_1">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/Legal01.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT01_2">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT01_2" aria-expanded="true" aria-controls="collapseDetailT01_2">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลฝ่าย สปสช.
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT01_2" class="collapse show" aria-labelledby="headingDetailT01_2">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/NHSO02.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT01_3">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT01_3" aria-expanded="true" aria-controls="collapseDetailT01_3">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลฝ่ายคู่สัญญา
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT01_3" class="collapse show" aria-labelledby="headingDetailT01_3">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractTypeVendor/VendorView.cshtml" model="Model" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT01_4">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT01_4" aria-expanded="true" aria-controls="collapseDetailT01_4">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลรายละเอียดนิติกรรมสัญญา
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT01_4" class="collapse show" aria-labelledby="headingDetailT01_4">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/T05Details.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_6">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_6" aria-expanded="true" aria-controls="collapseDetailT03_6">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลผู้ลงนาม
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_6" class="collapse show" aria-labelledby="headingDetailT03_6">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                @if (_Station == ContractStationStatusAll.S5Signing2)
+                                {
+                                    <partial name="/Views/ContractType/SignerView.cshtml" />
+                                }
+                                else
+                                {
+                                    <partial name="/Views/ContractType/Signer.cshtml" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT01_4">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT01_4" aria-expanded="true" aria-controls="collapseDetailT01_4">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลไฟล์แนบท้ายนิติกรรม
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT01_4" class="collapse show" aria-labelledby="headingDetailT01_4">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/AttachFilesProposal.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+                    @if (_MenuCode != ContractSuccessTypes.T1_EDIT)
+                    {
+                        <div class="card accordion-group">
+                            <div class="card-header" id="headingDetailT03_8">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_8" aria-expanded="true" aria-controls="collapseDetailT03_8">
+                                        <i class="fas fa-pencil-alt"></i> รายละเอียดการตรวจสอบนิติกรรมสัญญา(สำนัก/กองทุนย่อย/เขต)
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseDetailT03_8" class="collapse show" aria-labelledby="headingDetailT03_8">
+                                <div class="card-body thead_tabsub1 bg-form">
+                                    <partial name="/Views/ContractType/ApprovalNHSODept.cshtml" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </fieldset>
+            }
+            else if (_Station == ContractStationStatusAll.S5Signing2 || Model.ParameterCondition.IsShowSign)
+            {
+                <fieldset>
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_12">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_12" aria-expanded="true" aria-controls="collapseDetailT03_12">
+                                    <i class="fas fa-file-alt"></i> รายละเอียดไฟล์นิติกรรมสัญญาจากระบบ(ฉบับจริง)
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_12" class="collapse show" aria-labelledby="headingDetailT03_12">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/PDFFiles.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_11">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_11" aria-expanded="true" aria-controls="collapseDetailT03_11">
+                                    <i class="fas fa-pencil-alt"></i> รายละเอียดลงนามนิติกรรมสัญญาฝ่ายคู่สัญญา
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_11" class="collapse show" aria-labelledby="headingDetailT03_11">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/SignVendor2.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_10">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_10" aria-expanded="true" aria-controls="collapseDetailT03_10">
+                                    <i class="fas fa-pencil-alt"></i> รายละเอียดลงนามนิติกรรมสัญญาฝ่าย สปสช.
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_10" class="collapse show" aria-labelledby="headingDetailT03_10">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/SignNHSO2.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+                    @if (_SigningType == SigningTypes.Paper)
+                    {
+                        <div class="card accordion-group">
+                            <div class="card-header" id="headingAttachfileReal">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseAttachfileReal" aria-expanded="true" aria-controls="collapseAttachfileReal">
+                                        <i class="fas fa-pencil-alt"></i> รายละเอียดแนบไฟล์แสกน นิติกรรมสัญญา(ฉบับจริง)
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseAttachfileReal" class="collapse show" aria-labelledby="headingAttachfileReal">
+                                <div class="card-body thead_tabsub1 bg-form">
+                                    @if (!infoFileReal.SmctMasterFile.Any(x => x.FileType == "F3"))
+                                    {
+                                        <partial name="/Views/ContractType/AttachFileRealVersion.cshtml" />
+                                    }
+                                    else
+                                    {
+                                        <partial name="/Views/ContractType/AttachFileRealVersionView.cshtml" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </fieldset>
+            }
+            else
+            {
+                <fieldset>
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_12">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_12" aria-expanded="true" aria-controls="collapseDetailT03_12">
+                                    <i class="fas fa-file-alt"></i> รายละเอียดไฟล์นิติกรรมสัญญาจากระบบ(ฉบับจริง)
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_12" class="collapse show" aria-labelledby="headingDetailT03_12">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/PDFFiles.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card accordion-group " style="background-color:snow">
+                        <div class="card-header" id="headingDetailT03_1">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_1" aria-expanded="true" aria-controls="collapseDetailT03_1">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลนิติกรรมสัญญา
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_1" class="collapse show" aria-labelledby="headingDetailT03_1">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                @if ((_MenuCode == ContractSuccessTypes.T3_EXPAND && indataBinding.ContractSuccessStatus == ContractStatusAll.S1WaitApprove))
+                                {
+                                    <partial name="/Views/ContractType/Legal01.cshtml" />
+                                }
+                                else
+                                {
+                                    <partial name="/Views/ContractType/Legal01View.cshtml" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_3">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_3" aria-expanded="true" aria-controls="collapseDetailT03_3">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลฝ่าย สปสช.
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_3" class="collapse show" aria-labelledby="headingDetailT03_3">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/NHSO02View.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_4">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_4" aria-expanded="true" aria-controls="collapseDetailT03_4">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลฝ่ายคู่สัญญา
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_4" class="collapse show" aria-labelledby="headingDetailT03_4">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractTypeVendor/VendorView.cshtml" model="Model" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_5">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_5" aria-expanded="true" aria-controls="collapseDetailT03_5">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลรายละเอียดนิติกรรมสัญญา
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_5" class="collapse show" aria-labelledby="headingDetailT03_5">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <fieldset disabled>
+                                    <partial name="/Views/ContractType/T05Details.cshtml" model="Model" />
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT03_6">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_6" aria-expanded="true" aria-controls="collapseDetailT03_6">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลผู้ลงนาม
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT03_6" class="collapse show" aria-labelledby="headingDetailT03_6">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/SignerView.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card accordion-group">
+                        <div class="card-header" id="headingDetailT01_4">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT01_4" aria-expanded="true" aria-controls="collapseDetailT01_4">
+                                    <i class="fas fa-pencil-alt"></i> ข้อมูลไฟล์แนบท้ายนิติกรรม
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseDetailT01_4" class="collapse show" aria-labelledby="headingDetailT01_4">
+                            <div class="card-body thead_tabsub1 bg-form">
+                                <partial name="/Views/ContractType/AttachFilesProposalView.cshtml" />
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (_Station == ContractStationStatusAll.S6ContractNumber)
+                    {
+                        if (roleCode == PermissionRole.SystemAdmin || roleCode == PermissionRole.CentralAdmin)
+                        {
+                            <div class="card accordion-group">
+                                <div class="card-header" id="headingDetailT03_8">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_8" aria-expanded="true" aria-controls="collapseDetailT03_8">
+                                            <i class="fas fa-pencil-alt"></i> รายละเอียดการตรวจสอบนิติกรรมสัญญา(ส่วนกลาง)
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseDetailT03_8" class="collapse show" aria-labelledby="headingDetailT03_8">
+                                    <div class="card-body thead_tabsub1 bg-form">
+                                        <partial name="/Views/ContractType/ApprovalNHSO.cshtml" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </fieldset>
+            }
+
+            @*แก้ไขหลังผูกพัน*@
+            <partial name="/Views/ContractType/_RequestBindingApproveTabCollap.cshtml" />
+
+            <div class="col-md-12">
+                <partial name="/Views/ContractType/_ButtonSubmitTc.cshtml" />
+            </div>
+        </div>
+    </form>
+
+}
+<partial name="/Views/Shared/JavaScript/JavascriptFileShare.cshtml" for="@Model.CTVendor.GetLookUp" />
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/contracttype/Contract_MasterRu.js" asp-append-version="true"></script>
+    <script src="~/js/contracttypevendor/SignerMasters.js" asp-append-version="true"></script>
+    <script src="~/js/contracttypevendor/TMaster/GuaranteeContract.js" asp-append-version="true"></script>
+    <script src="~/js/contracttype/TMaster/T05.js" asp-append-version="true"></script>
+}
+

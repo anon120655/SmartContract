@@ -1,0 +1,133 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "เครม/ยึด";
+}
+
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-book mr-1"></i>หลักประกันสัญญา > </small>
+                                <small><span class="text-primary">เครม/ยึด</span></small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3"></div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <form asp-controller="Guarantee" asp-action="GuaranteeReturn" enctype="multipart/form-data" method="post"
+              data-ajax="true" data-ajax-method="post"
+              data-ajax-begin="onbeginForm"
+              data-ajax-complete="completedForm"
+              data-ajax-failure="failedForm">
+
+            <fieldset>
+                <div class="card accordion-group">
+                    <div class="card-header" id="headingDetailT03_12">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_12" aria-expanded="true" aria-controls="collapseDetailT03_12">
+                                <i class="fas fa-file-alt"></i> รายละเอียดไฟล์นิติกรรมสัญญาจากระบบ(ฉบับจริง)
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseDetailT03_12" class="collapse show" aria-labelledby="headingDetailT03_12">
+                        <div class="card-body thead_tabsub1 bg-form">
+                            <partial name="/Views/ContractType/PDFFiles.cshtml" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card accordion-group " style="background-color:snow">
+                    <div class="card-header" id="headingDetailT03_1">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_1" aria-expanded="true" aria-controls="collapseDetailT03_1">
+                                <i class="fas fa-pencil-alt"></i> ข้อมูลนิติกรรมสัญญา
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseDetailT03_1" class="collapse show" aria-labelledby="headingDetailT03_1">
+                        <div class="card-body thead_tabsub1 bg-form">
+                            <partial name="/Views/ContractType/Legal01View.cshtml" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card accordion-group">
+                    <div class="card-header" id="headingPerformanceBond">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapsePerformanceBond" aria-expanded="true" aria-controls="collapsePerformanceBond">
+                                <i class="fas fa-pencil-alt"></i> ข้อมูลหลักประกันสัญญา
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapsePerformanceBond" class="collapse show" aria-labelledby="headingPerformanceBond">
+                        <div class="card-body thead_tabsub1 bg-form">
+                            <partial name="/Views/ContractTypeVendor/PerformanceBond.cshtml" model="Model" />
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+            <div>
+                <div class="col text-center">
+                    <input type="hidden" asp-for="ObjectState" />
+                    <input type="hidden" asp-for="ParameterCondition.Menu" />
+                    <input type="hidden" asp-for="ParameterCondition.MenuEn" />
+                    <input type="hidden" asp-for="ParameterCondition.IdSmctMaster" />
+                    <input type="hidden" asp-for="ParameterCondition.Style" />
+                    <input type="hidden" asp-for="ParameterCondition.IdContract" />
+                    <input type="hidden" asp-for="ParameterCondition.ContractTypeId" />
+                    <input type="hidden" asp-for="ParameterCondition.ContractTypeIdEn" />
+                    <input type="hidden" asp-for="ParameterCondition.IdContractType" />
+                    <input type="hidden" asp-for="ParameterCondition.ItemStatusCurr" />
+                    <input type="hidden" asp-for="ParameterCondition.IdUserSmctCurr" />
+                    <input type="hidden" asp-for="ParameterCondition.Station" />
+                    <input type="hidden" asp-for="ParameterCondition.StationEn" />
+                    <input type="hidden" asp-for="ParameterCondition.SigningType" />
+                    <input type="hidden" asp-for="ParameterCondition.SigningTypeEn" />
+                    <input type="hidden" asp-for="ParameterCondition.ContractGuaranteeType" />
+                    <input type="hidden" asp-for="ParameterCondition.ContractGuaranteeTypeEn" />
+                    <input type="hidden" asp-for="ApprovalReqStation.StationStatusCurr" />
+                    <input type="hidden" asp-for="ParameterCondition.RefId" />
+
+                    <a class="btn btn-secondary mr-2"
+                       asp-controller="Guarantee"
+                       asp-action="Tracking"
+                       asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T1_NEW))"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+                    <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกเครม/ยึด <i class="fa fa-angle-right align-middle"></i></button>
+                </div>
+            </div>
+
+        </form>
+
+    </section>
+}
+
+<partial name="/Views/Shared/JavaScript/JavascriptFileShare.cshtml" for="@Model.CTVendor.GetLookUp" />
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/contracttype/Contract_MasterRu.js" asp-append-version="true"></script>
+    <script src="~/js/contracttypevendor/TMaster/GuaranteeContract.js" asp-append-version="true"></script>
+    <script src="~/js/contracttype/MenuGuarantee/GuaranteeClaim.js" asp-append-version="true"></script>
+}

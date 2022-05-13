@@ -1,0 +1,236 @@
+﻿@{
+    ViewData["Title"] = "สร้างข้อมูลนิติกรรม";
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>สร้างนิติกรรมสัญญา > สร้างนิติกรรมสัญญา > </small>
+                            <small><span class="text-primary"><u>ลงนาม</u></span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailContract">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailContract" aria-expanded="true" aria-controls="collapseDetailContract">
+                <i class="fas fa-pencil-alt"></i> รายละเอียดนิติกรรมสัญญา
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailContract" class="collapse show" aria-labelledby="headingDetailContract">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">เงื่อนไขนิติกรรมสัญญา</label>
+                <div class="list-group text-center">รายละเอียดเงื่อนไขข้อมูลนิติกรรมสัญญา</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailVendor">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendor" aria-expanded="true" aria-controls="collapseDetailVendor">
+                <i class="fas fa-pencil-alt"></i> รายละเอียดคู่สัญญา
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailVendor" class="collapse show" aria-labelledby="headingDetailVendor">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">คู่สัญญา</label>
+                <div class="list-group text-center">รายละเอียดข้อมูลคู่สัญญา</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailRequestApprove">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailRequestApprove" aria-expanded="true" aria-controls="collapseDetailRequestApprove">
+                <i class="fas fa-pencil-alt"></i> แบบฟอร์มหนังสือขออนุมัติ
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailRequestApprove" class="collapse show" aria-labelledby="headingDetailRequestApprove">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">หนังสือขออนุมัติ</label>
+                <div class="list-group text-center">รายละเอียดหนังสือขออนุมัติ</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailContractT03">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailContractT03" aria-expanded="true" aria-controls="collapseDetailContractT03">
+                <i class="fas fa-pencil-alt"></i> แบบฟอร์มสัญญาดำเนินงานตามโครงการ
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailContractT03" class="collapse show" aria-labelledby="headingDetailContractT03">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">สัญญาดำเนินงานตามโครงการ</label>
+                <div class="list-group text-center">รายละเอียดสัญญาดำเนินงานตามโครงการ</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailAttachFile">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailAttachFile" aria-expanded="true" aria-controls="collapseDetailAttachFile">
+                <i class="fas fa-file"></i> รายละเอียดไฟล์แนบท้ายสัญญา
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailAttachFile" class="collapse show" aria-labelledby="headingDetailAttachFile">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">ไฟล์แนบท้ายสัญญา</label>
+                <div class="list-group text-center">รายละเอียดข้อมูลไฟล์แนบท้ายสัญญา</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailNHSODepartment">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailNHSODepartment" aria-expanded="true" aria-controls="collapseDetailNHSODepartment">
+                <i class="fas fa-file-alt"></i> รายละเอียดการอนุมัติ สปสช.เขต
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailNHSODepartment" class="collapse show" aria-labelledby="headingDetailNHSODepartment">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">การอนุมัติ สปสช.เขต</label>
+                <div class="list-group text-center">รายละเอียดการอนุมัติ สปสช.เขต</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailNHSOApprove">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailNHSOApprove" aria-expanded="true" aria-controls="collapseDetailNHSOApprove">
+                <i class="fas fa-file-alt"></i> รายละเอียดการอนุมัติ สปสช.ส่วนกลาง
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailNHSOApprove" class="collapse show" aria-labelledby="headingDetailNHSOApprove">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">การอนุมัติ สปสช.เขต</label>
+                <div class="list-group text-center">รายละเอียดการอนุมัติ สปสช.ส่วนกลาง</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailVendorApprove">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendorApprove" aria-expanded="true" aria-controls="collapseDetailVendorApprove">
+                <i class="fas fa-file-alt"></i> รายละเอียดการลงนามคู่สัญญา(ผู้มีอำนาจลงนาม)
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailVendorApprove" class="collapse show" aria-labelledby="headingDetailVendorApprove">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">การลงนามคู่สัญญา(ผู้มีอำนาจลงนาม)</label>
+                <div class="list-group text-center">รายละเอียดการลงนามคู่สัญญา(ผู้มีอำนาจลงนาม)</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailNhsoApprove">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailNhsoApprove" aria-expanded="true" aria-controls="collapseDetailNhsoApprove">
+                <i class="fas fa-file-alt"></i> รายละเอียดการลงนาม สปสช.(ผู้มีอำนาจลงนาม)
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailNhsoApprove" class="collapse show" aria-labelledby="headingDetailNhsoApprove">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">การลงนาม สปสช.(ผู้มีอำนาจลงนาม)</label>
+                <div class="list-group text-center">รายละเอียดการลงนาม สปสช.(ผู้มีอำนาจลงนาม)</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailContractFileSuccess">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailContractFileSuccess" aria-expanded="true" aria-controls="collapseDetailAttachFileSuccess">
+                <i class="fas fa-file-alt"></i> รายละเอียดไฟล์สัญญา(ฉบับจริง)
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailContractFileSuccess" class="collapse show" aria-labelledby="headingDetailContractFileSuccess">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">ไฟล์สัญญา(ฉบับจริง)</label>
+                <div class="list-group text-center">รายละเอียดไฟล์สัญญา(ฉบับจริง)</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="col-md-12">
+    <div class="col text-center">
+        @*<button type="button" class="btn btn-warning">บันทึกร่าง</button>&nbsp;*@
+        <button type="button" class="btn btn-success">บันทึกส่งต่อ <i class="fa fa-angle-right align-middle"></i></button>&nbsp;
+        <button type="button" class="btn btn-dark"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</button>
+    </div>
+</div>
+<br />
+<br />

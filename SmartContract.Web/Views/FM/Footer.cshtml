@@ -1,0 +1,27 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    ViewData["Title"] = "Footer";
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indataCon = Model.InfoContract;
+    var indataSign = Model.InfoSignerPartnersOfContract;
+}
+
+<link rel="stylesheet" href="~/css/font.css" />
+<link rel="stylesheet" href="~/css/FM.css" asp-append-version="true" />
+
+<div class="text-center size-14">
+    <span class="footer_sign_top">(ลงชื่อ)......................................................สำนักงานหรือพยาน</span> <span>(ลงชื่อ).......................................................คู่สัญญาหรือพยาน</span>
+</div>
+<div class="text-left size-14 ">
+    <span class="footer_sign_buttom1">@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indataSign.NhsoSignerUser)?.SignerFullname ?? String.Empty)</span>
+    <span class="footer_sign_buttom2">@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indataSign.VendorSignerUser)?.UserFullname ?? String.Empty)</span>
+</div>
+
+<div class="text-center size-13">
+    <p class="font_bold">แบบ@(indataCon.ContractTypeFullName) สำนักกฎหมาย สำนักงานหลักประกันสุขภาพแห่งชาติ</p>
+</div>
+
+

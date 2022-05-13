@@ -1,0 +1,75 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+
+@{
+    ViewData["Title"] = "UserCheck";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+    String TypeName = "ลงทะเบียนใหม่";
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<form asp-controller="Register" asp-action="UserCheck" enctype="multipart/form-data" method="post"
+      data-ajax="true" data-ajax-method="post"
+      data-ajax-begin="onbeginForm"
+      data-ajax-complete="completedForm"
+      data-ajax-failure="failedForm">
+    <div>
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small><i class="fa fa-book mr-1"></i>หน่วยบริการ > </small>
+                                    <small><span class="text-primary"><u>@TypeName</u></span></small>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+
+        @*ผู้ขอลงทะเบียน*@
+        <div class="card accordion-group">
+            <div class="card-header" id="headingDetailUser">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailUser" aria-expanded="true" aria-controls="collapseDetailUser">
+                        <i class="fas fa-file-archive"></i> ผู้ขอลงทะเบียน
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseDetailUser" class="collapse show" aria-labelledby="headingDetailUser">
+                <partial name="_PartialUserEdit.cshtml" model="Model" />
+            </div>
+        </div>
+
+        <br />
+        <div class="col-md-12">
+            <div class="col text-center">
+                <a class="btn btn-dark mr-2" onclick="showLoading()"
+                   asp-controller="Authorize" asp-action="LogOut"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+
+                <input type="hidden" asp-for="ObjectState" />
+                <button type="submit" class="btn btn-success mr-2" onclick="showLoading()"
+                        name="BtnSubmit" value="0">
+                    ตรวจสอบข้อมูล <i class="fa fa-angle-right align-middle"></i>
+                </button>
+            </div>
+        </div>
+        <br />
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/authorize/UserCheck.js" asp-append-version="true"></script>
+}

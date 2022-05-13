@@ -1,0 +1,157 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+    ViewData["Title"] = "Verify";
+    Layout = "~/Views/Shared/EmailTemplate/_LayoutEmail.cshtml";
+    String TypeName = Model.Approvetype == "U" ? "ผู้เข้าใช้งาน" : "หน่วยบริการ";
+    String _Status = Model.Approvetype == "U" ? Model.UserSmct.Status : Model.RegisterNhso.Status;
+}
+
+<div style="background-color: #f5f5f5;
+        margin: auto;
+        font-size: 13px;    ">
+    <div style="height:10px;">
+    </div>
+    <div style="margin: auto;
+        font-family: Arial, Helvetica;
+        padding: 10px;
+        width: 80%;
+        background-color: #ffffff;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;">
+
+        <div style="text-align:center; color: #4a4a4a;">
+            <h2>ผลการตรวจสอบ(@TypeName)</h2>
+        </div>
+        <div style="text-align:center; color: #4a4a4a;">
+            <div class="col-6 text-right">
+                <div style="font-size: 15px; ">
+                    <b>สถานะ : </b>
+                    @if (_Status == UserSmctStatus.Cancel)
+                    {
+                        <span style="color:green">
+                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.Cancel).Name)
+                        </span>
+                    }
+                    else if (_Status == UserSmctStatus.WaitUse)
+                    {
+                        <span style="color:green">
+                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.WaitUse).Name)
+                        </span>
+                    }
+                    else if (_Status == UserSmctStatus.NotUse)
+                    {
+                        <span style="color:red">
+                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.NotUse).Name)
+                        </span>
+                        @if (!String.IsNullOrEmpty(Model.UserSmct.UserRights.Remark))
+                        {
+                            <div><b>เหตุผล  : </b> @Model.UserSmct.UserRights.Remark</div>
+                        }
+                        <div>
+                            <br />
+                            <a href="@(Model.DomainName)/register/register?IdUserSmct=@(Model.UserSmct.IdUserSmct)&State=@(SecurityRepo.Encrypt("2"))&Verify=@(SecurityRepo.Encrypt("true"))&Approvetype=@(SecurityRepo.Encrypt(Model.Approvetype))" target="_blank"
+                               style="background-color: #007bff; line-height: 1.0; font-weight: 400; height: 38px; text-decoration: none; padding: 0.575rem 0.85rem; border-radius: 20px; color: #fff; border-color: #2bb785; ">
+                                แก้ไขข้อมูลและขออนุมัติใหม่
+                            </a>
+                        </div>
+                    }
+                    else if (_Status == UserSmctStatus.Used)
+                    {
+                        <span style="color:green">
+                            @(ContractUtils.SmctStatusProperties(UserSmctStatus.Used).Name)
+                        </span>
+                        <br />
+                    }
+                </div>
+            </div>
+        </div>
+        <div>
+            @if (Model.Approvetype == "U" && _Status == UserSmctStatus.Used)
+            {
+                <br />
+                <br />
+                <div style="color: #4a4a4a;">
+                    กรุณาใช้รหัสผ่านชั่วคราวด้านล่างเพื่อเข้าสู่ระบบ
+                </div>
+                <div style="color: #4a4a4a;">
+                    <p style="font-size: 17px;"><b style="margin-right: 26px;">อีเมล</b> : @Model.UserSmct.Email</p>
+                    <p style="font-size: 17px;"><b>รหัสผ่าน</b> : @Model.UserSmct.Password</p>
+                </div>
+                <div style="text-align:center;">
+                    <a href="@(Model.DomainName)/Authorize/Local" target="_blank"
+                       style="background-color: #007bff; line-height: 1.0; font-weight: 400; height: 38px; text-decoration: none; padding: 0.575rem 0.85rem; border-radius: 20px; color: #fff; border-color: #2bb785; ">
+                        คลิกที่นี่เพื่อเข้าสู่ระบบ
+                    </a>
+                </div>
+
+            }
+        </div>
+        <br />
+        <div style="color: #4a4a4a;">
+            <h3>รายละเอียดหน่วยบริการ(สังกัด)</h3>
+        </div>
+        <div style="color: #4a4a4a;">
+            <p>
+                <b>ชื่อหน่วยบริการ</b> :
+                @if (!String.IsNullOrEmpty(Model.RegisterNhso.Hcode))
+                {
+                    <span class="">@Model.RegisterNhso.VendorName (@(Model.RegisterNhso.Hcode))</span>
+                }
+                else
+                {
+                    <span class="text-danger">-ไม่มี-</span>
+                }
+            </p>
+            <p>
+                <b>รหัสคู่สัญญา</b> :
+                @if (!String.IsNullOrEmpty(Model.RegisterNhso.VendorId))
+                {
+                    <span class="">@Model.RegisterNhso.VendorId</span>
+                }
+                else
+                {
+                    <span class="text-danger">-ไม่มี-</span>
+                }
+            </p>
+        </div>
+        <br />
+        <div style="color: #4a4a4a;">
+            <h3>รายละเอียดรายละเอียดผู้เข้าใช้งาน</h3>
+        </div>
+        <div style="color: #4a4a4a;">
+            <p><b>ประเภทผู้เข้าใช้งาน</b> : @Model.UserSmct.UserRoles.FullName</p>
+            <p><b>ชื่อเต็ม</b> : @Model.UserSmct.UserFullname</p>
+            <p><b>ตำแหน่ง</b> : @Model.UserSmct.PositionName</p>
+            <p><b>รหัสบัตรประชาชน</b> : @Model.UserSmct.Cid</p>
+        </div>
+    </div>
+
+    <div style="height:10px;">
+    </div>
+
+    <div style="margin: auto;
+        font-family: Arial, Helvetica;
+        width: 82%; padding:10px;
+        text-align: right; ">
+
+        <table style="color: #515f7f;" width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <td style="padding: 10px;border-right: 0px; " width="95%">
+                        ติตต่อสอบถามเพิ่มเติมที่ <br />โทรศัพท์ 09999999
+                    </td>
+                    <td width="5%">
+                        <img src="cid:{0}" width="60">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,188 @@
+﻿@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoGuaranteeContract;
+
+    var _Action = String.Empty;
+    if (ViewContext.RouteData.Values["action"] != null)
+    {
+        _Action = ViewContext.RouteData.Values["action"].ToString();
+    }
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <label class="lable_blue mr-5" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดหักหลักประกัน</label>  
+            Link : <a style="text-decoration: underline;" href="https://kccp.krungthai.com/elg-portal/#/" target="_blank">หลักประกันสัญญา KTB</a>
+          
+            @* 20211208
+        -สัญญาดำเนินงานตามโครงการ
+          >แสดงเฉพาะหักงวดที่ 1 (ที่เหลือ Hide)
+        -สัญญาให้บริการสาธาณสุขฯ
+          >Hide แคชเชียร์เช็ค ที่เหลือแสดงเหมือนเดิม*@
+            @if (_Action.StartsWith("T11") && indata.GuaranteeType4)
+            {
+                <div class="form-group row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2 form-check mt-sm-2">
+                        <input class="form-check-input" type="checkbox" onclick="return false;" checked>
+                        <label class="form-check-label">
+                            หักจากเงินโอนงวดที่ 1
+                        </label>
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">จำนวนเงิน :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" readonly class="form-control-plaintext text-primary"
+                               value="@(indata.DeductedAmountMoney.HasValue ? indata.DeductedAmountMoney.Value.ToString("#,##0.00") : "")">
+                    </div>
+                    <label class="col-sm-1 col-form-label">บาท</label>
+                </div>
+            }
+            else
+            {
+
+                if (indata.GuaranteeType1)
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2 form-check mt-sm-2">
+                            <input class="form-check-input" type="checkbox" onclick="return false;" checked>
+                            <label class="form-check-label">
+                                เงินสด
+                            </label>
+                        </div>
+                        <label class="col-sm-1 col-form-label text-sm-right">จำนวนเงิน :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   value="@(indata.AmountMoney.HasValue ? indata.AmountMoney.Value.ToString("#,##0.00") : "")">
+                        </div>
+                        <label class="col-sm-1 col-form-label">บาท</label>
+                    </div>
+                }
+
+                if (indata.GuaranteeType2)
+                {
+                    if (!_Action.StartsWith("T01"))
+                    {
+                        <div>
+                            <div class="form-group row">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-2 form-check mt-sm-2">
+                                    <input class="form-check-input" type="checkbox" onclick="return false;" checked>
+                                    <label class="form-check-label">
+                                        แคชเชียร์เช็ค
+                                    </label>
+                                </div>
+                            </div>
+                            <fieldset id="CashierCheck_Render" class="Group_CashierCheck">
+                                @if (indata != null && indata.CashierChequeDesc != null && indata.CashierChequeDesc.Count() > 0)
+                                {
+                                    foreach (var item in indata.CashierChequeDesc.Select((value, i) => (value, i)))
+                                    {
+                                        <div class="Cashiercheck_Sub Cashiercheck_Sub_@(item.i)">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3"></div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">ธนาคาร :</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" readonly class="form-control-plaintext text-primary"
+                                                           value="@(lookUp.BankInfos.FirstOrDefault(x => x.BankId == item.value.BankCode)?.BankName ?? String.Empty)">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">เลขที่เช็ค :</label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" readonly class="form-control-plaintext text-primary" value="@item.value.CheckNumber">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-sm-right">วันที่ :</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" readonly class="form-control-plaintext text-primary"
+                                                           value="@item.value.DateStr">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">จำนวนเงิน :</label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" readonly class="form-control-plaintext text-primary"
+                                                           value="@(item.value.AmountMoney.HasValue ? item.value.AmountMoney.Value.ToString("#,##0.00") : "")">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label">บาท</label>
+                                            </div>
+                                            <hr class="mt-2 mb-3 width_75" />
+                                        </div>
+                                    }
+                                }
+                            </fieldset>
+                        </div>
+                    }
+                }
+
+                if (indata.GuaranteeType3)
+                {
+                    <div>
+                        <div class="form-group row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2 form-check mt-sm-2">
+                                <input class="form-check-input" type="checkbox" onclick="return false;" checked>
+                                <label class="form-check-label">
+                                    หนังสือค้ำประกัน
+                                </label>
+                            </div>
+                        </div>
+                        <fieldset id="BookGuarantee_Render" class="Group_BookGuarantee">
+                            @if (indata != null && indata.BookGuaranteeDesc != null && indata.BookGuaranteeDesc.Count() > 0)
+                            {
+                                foreach (var item in indata.BookGuaranteeDesc.Select((value, i) => (value, i)))
+                                {
+                                    <div class="BookGuarantee_Sub BookGuarantee_Sub_@(item.i)">
+                                        <div class="form-group row">
+                                            <div class="col-sm-3"></div>
+                                            <label class="col-sm-1 col-form-label text-sm-right">ธนาคาร :</label>
+                                            <fieldset class="col-sm-3 Group_BookGuarantee">
+                                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                                       value="@(lookUp.BankInfos.FirstOrDefault(x=>x.BankId == item.value.BankCode)?.BankName ?? String.Empty)">
+                                            </fieldset>
+                                            <label class="col-sm-1 col-form-label text-sm-right pl-sm-0">เลขที่หนังสือ :</label>
+                                            <fieldset class="col-sm-2 Group_BookGuarantee">
+                                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                                       value="@item.value.BookNumber"
+                                                       placeholder="">
+                                            </fieldset>
+                                        </div>
+                                        <fieldset class="Group_BookGuarantee">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-sm-right">วันที่เริ่มต้น :</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" readonly class="form-control-plaintext text-primary"
+                                                           value="@item.value.StartDateStr"
+                                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">วันที่สิ้นสุด :</label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" readonly class="form-control-plaintext text-primary"
+                                                           value="@item.value.EndDateStr"
+                                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-sm-right">จำนวนเงิน :</label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" readonly class="form-control-plaintext text-primary"
+                                                           value="@(item.value.AmountMoney.HasValue ? item.value.AmountMoney.Value.ToString("#,##0.00") : "")"
+                                                           placeholder="0.00">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label">บาท</label>
+                                            </div>
+                                        </fieldset>
+                                        <hr class="mt-2 mb-3 width_75" />
+                                    </div>
+                                }
+                            }
+                        </fieldset>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</section>

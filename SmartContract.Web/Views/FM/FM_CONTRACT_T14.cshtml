@@ -1,0 +1,42 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "FM_CONTRACT_T14";
+    Layout = "~/Views/Shared/_LayoutFM.cshtml";
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indataCon = Model.InfoContract;
+    var indataNhso = Model.InfoContractNhso;
+    var indataVendor = Model.InfoPartnersOfContract;
+    var indataConstation = Model.ContractStation;
+    var ConDetail = Model.InfoConDetail.ContractDetail14;
+    var indataReqApp = Model.InfoRequestForApproval;
+}
+
+<link rel="stylesheet" href="~/css/font.css" />
+<link rel="stylesheet" href="~/css/FM.css" asp-append-version="true" />
+
+<section>
+    <div class="main-page size-15">
+        <div class="content-page ">
+            <div class="text-right ">เลขที่อ้างอิง <span class="para">@indataCon.RefId</span></div>
+            <div class="text-center">
+                <img src="../images/logo/NHSO.png" />
+            </div>
+            <h3 class="text-center size-17 mt-1">โครงการ </h3>
+
+        </div>
+    </div>
+</section>
+
+<section>
+    <partial name="/Views/FM/SignatureLast.cshtml" model="Model" />
+</section>
+
+@section Scripts {
+    <script src="~/js/FM.js" asp-append-version="true"></script>
+}
+
+
+

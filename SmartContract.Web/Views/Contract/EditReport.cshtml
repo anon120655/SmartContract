@@ -1,0 +1,206 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "รายงานขอแก้ไขข้อมูลสัญญา";
+    if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+        Layout = "_LayoutTemplatesVendor";
+    else
+        Layout = "_LayoutTemplates";
+}
+
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>แก้ไขข้อมูลสัญญา > </small>
+                            <small><span class="text-primary">รายงานขอแก้ไขข้อมูลสัญญา</span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-5">
+                <fieldset class="form-group border p-3" style="height:90%;">
+                    <legend class="col-auto px-2 h6">ค้นหา</legend>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="inputYY">ประจำปี</label>
+                            <select id="inputYY" class="form-control">
+                                <option>2564</option>
+                                <option>2563</option>
+                                <option>2562</option>
+                                <option>2561</option>
+                                <option>2560</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="inputStatus">สำนัก/กองทุนย่อย/เขต</label>
+                            <select id="inputStatus" class="form-control">
+                                <option>ทั้งหมด</option>
+                                <option>สำนักบริหารทั่วไป</option>
+                                <option>สำนักบริหารแผนและงบประมาณ</option>
+                                <option>สำนักการเงินและบัญชีบริหาร</option>
+                                <option>สำนักกฏหมาย</option>
+                                <option>สำนักพัฒนานโยบายและยุทธศาสตร์</option>
+                                <option>สำนักบริหารสารสนเทศการประกัน</option>
+                                <option>สำนักบริการประชาชนและคุ้มครองสิทธิ</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 1 เชียงใหม่</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 3 นครสวรรค์</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 12 สงขลา</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 9 นครราชสีมา</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 2 พิษณุโลก</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 6 ระยอง</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 5 ราชบุรี</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 8 อุดรธานี</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 4 สระบุรี</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 11 สุราษฎร์ธานี</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 10 อุบลราชธานี</option>
+                                <option>สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 13 กรุงเทพมหานคร</option>
+                                <option>สำนักบริหารงานทะเบียน</option>
+                            </select>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="inputYear">รหัสผู้ใช้งาน</label>
+                                <input type="text" class="form-control" id="inputidname" placeholder="รหัสคู่สัญญา">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputYear">ชื่อผู้ใช้งาน</label>
+                                <input type="text" class="form-control" id="inputname" placeholder="รหัสงบประมาณ">
+                            </div>
+                        </div>*@
+
+                    <div class="row justify-content-md-center">
+                        <div class="col-auto mt-2 mb-3">
+                            <button class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
+                            <button class="btn btn-secondary loadding text-white" style="width:120px"> ยกเลิก </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-7">
+                <div><canvas id="myChart"></canvas></div>
+                <br />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-bordered table-sm justify-content-center bg-white" style="font-size:14px;">
+                    <thead class="thead_green">
+                        <tr>
+                            <th rowspan="2" class="align-middle text-center">สำนัก/กองทุนย่อย/เขต ที่ขอแก้ไขสัญญา</th>
+                            <th class="align-middle text-center">รอดำเนินการ</th>
+                            <th class="align-middle text-center">อนุมัติ</th>
+                            <th class="align-middle text-center">ไม่อนุมัติ</th>
+                            <th class="align-middle text-center">ทั้งหมด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">1</a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                            <td>0</td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">03100_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 1 เชียงใหม่</td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                            <td>0</td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">03300_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 12 สงขลา</td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">1</a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">1</a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">03400_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 9 นครราชสีมา</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">1</a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="thead_yellow">
+                        <tr class="align-middle text-center">
+                            <td>รวม</td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail"><b>7</b></a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail"><b>15</b></a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail"><b>2</b></a></td>
+                            <td><a onclick="showLoading()" asp-area="" asp-controller="Contract" asp-action="edit_Report_Detail">5</a></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="/Views/Shared/Layout/_DataDate.cshtml" />
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+
+        var ctxdata1 = {
+            labels: [
+                'รอดำเนินการ',
+                'อนุมัติ',
+                'ไม่อนุมัติ'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [7, 20, 5,],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)'
+                ],
+                hoverOffset: 4
+            }]
+
+        }
+
+        window.onload = function () {
+            var ctx1 = document.getElementById('myChart').getContext('2d');
+            window.mybar = new Chart(ctx1, {
+                type: 'doughnut',
+                data: ctxdata1,
+            });
+        }
+
+    </script>
+}

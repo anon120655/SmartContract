@@ -1,0 +1,102 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@using SmartContract.Utils
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoAttachDraftContract;
+    string _Style = Model.ParameterCondition.Style;
+    string _ContractTypeId = Model.ParameterCondition.ContractTypeId;
+}
+
+<div>
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์เอกสารจากระบบสมัคร</label>
+                    @*<div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 1 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/file/fm_formcashpay/attach/1">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 2 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/file/fm_formcashpay/attach/1">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 3 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/file/fm_formcashpay/attach/1">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>*@
+                </div>
+                <div class="form-group">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบท้าย(ร่าง)นิติกรรม(คู่สัญญา)</label>
+                    <fieldset>
+                        <div id="Attachfile_Rander">
+                            @if (indata != null && indata.SmctMasterFile != null && indata.SmctMasterFile.Count > 0)
+                            {
+                                int index_file = 0;
+                                foreach (var item_file in indata.SmctMasterFile)
+                                {
+                                    <div class="Attachfile_Sub form-row col-12 form_create">
+                                        <div class="form-group form-group-file col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" title="@item_file.FileName"
+                                                       name="InfoAttachDraftContract.SmctMasterFile[@index_file].FormFile">
+                                                <input type="hidden" name="InfoAttachDraftContract.SmctMasterFile[@index_file].IdSmctMasterFile" value="@item_file.IdSmctMasterFile">
+                                                <label class="custom-file-label" for="customFile">
+                                                    @(!string.IsNullOrEmpty(item_file.FileName) ? GeneralUtils.WappText(item_file.FileName, 25) : "Choose file")
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1">
+                                            <input type="image" src="~/images/icon/close-2x.png"
+                                                   onclick="remove_row_attachfile(this); return false;" class="border-0 mt-2" width="17">
+                                        </div>
+                                        <div>
+                                            @if (item_file.IdSmctMasterFile != null)
+                                            {
+                                                String pathFolder = $"Attach\\T{_ContractTypeId}\\{item_file.PathFolder}";
+                                                <a asp-action="Render"
+                                                   asp-controller="Files"
+                                                   asp-route-fileftp="@(item_file.FileFtp)"
+                                                   asp-route-type="@(pathFolder)"
+                                                   target="_blank" class="ml-3">
+                                                    <i class="fas fa-file-pdf fa-lg"></i> View
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                    index_file++;
+                                }
+                            }
+
+                        </div>
+                        <div class="form-row col-12">
+                            <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                                <button class="btn btn_add_element btn_small btn_filter_w" type="button" onclick="insert_row_attachfile()">
+                                    <span class="button_fas_small"><i class="fas fa-plus"></i></span> เพิ่มไฟล์
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

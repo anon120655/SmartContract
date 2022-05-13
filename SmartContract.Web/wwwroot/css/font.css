@@ -1,0 +1,54 @@
+﻿
+/*kwamsookitalic*/
+@font-face {
+    font-family: 'kwamsookitalic';
+    src: url('../font/kwamsookitalic.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'kwamsookbold';
+    src: url('../font/kwamsookbold.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'kwamsooklight';
+    src: url('../font/kwamsooklight.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'kwamsookregular';
+    src: url('../font/kwamsookregular.otf') format('opentype');
+}
+
+/*TH SarabunPSK*/
+@font-face {
+    font-family: 'TH SarabunPSK Bold Italic';
+    src: url('../font/THSarabun Bold Italic.ttf') format('opentype');
+}
+
+@font-face {
+    font-family: 'TH SarabunPSK Bold';
+    src: url('../font/THSarabun Bold.ttf') format('opentype');
+}
+
+@font-face {
+    font-family: 'TH SarabunPSK Italic';
+    src: url('../font/THSarabun Italic.ttf') format('opentype');
+}
+
+@font-face {
+    font-family: 'TH SarabunPSK';
+    src: url('../font/THSarabun.ttf') format('opentype');
+}
+
+/*Font BarCode*/
+@font-face {
+    font-family: 'Fre 3 of 9x';
+    src: url('../font/fre3of9x.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Free 3 of 9';
+    src: url('../font/free3of9.ttf') format('truetype');
+}
+

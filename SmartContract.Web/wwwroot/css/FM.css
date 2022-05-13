@@ -1,0 +1,247 @@
+body {
+    /* width: 230mm;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 12pt;*/
+    /*background: rgb(204,204,204);*/
+}
+
+* {
+    font-family: TH SarabunPSK;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.after_always {
+    page-break-before: always;
+}
+
+.font_bold {
+    font-family: 'TH SarabunPSK Bold';
+}
+
+.footer_sign_top {
+    margin-right : 300px;
+}
+.footer_sign_buttom1 {
+    margin-left: 130px;
+}
+
+.footer_sign_buttom2 {
+    margin-left: 480px;
+}
+
+
+.para {
+    /*color: red;*/
+}
+
+.lh_NHSO02 {
+    line-height: 23px !important;
+}
+
+.main-page {
+    /*width: 210mm;*/
+    /*height: 297mm;*/
+    /*height:auto;
+    margin: 0cm auto;
+    background: white;*/
+    /*box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);*/
+}
+
+.content-page {
+    /*height:89%;*/
+    /*padding-top: 10mm;*/
+    /* padding-left: 25mm;
+    padding-right: 25mm;*/
+    /*padding-bottom: 10mm;*/
+    /*height: 297mm;*/
+}
+
+.header-page {
+    height: 5%;
+    padding-top: 1mm;
+    padding-left: 25mm;
+    padding-right: 25mm;
+    /*padding-bottom: 10mm;*/
+    /*height: 297mm;*/
+}
+
+.footer-page {
+    height: 6%;
+    /*padding-top: 10mm;*/
+    padding-left: 25mm;
+    padding-right: 25mm;
+    padding-bottom: 1mm;
+    /*height: 297mm;*/
+}
+
+@page {
+    /*size: A4;*/
+    /*margin: 20mm 0 10mm 0;*/
+}
+
+/*@media print {
+    html, body {
+        width: 210mm;
+        height: 297mm;
+    }
+
+    .main-page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    }
+}*/
+.text {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.text-1 {
+    text-indent: 2.5em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.text-2 {
+    text-indent: 3.5em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.text-3 {
+    text-indent: 4.5em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.text-4 {
+    text-indent: 5.5em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.text-5 {
+    text-indent: 6.5em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.size-10 {
+    font-size: 10pt;
+}
+
+.size-11 {
+    font-size: 11pt;
+}
+
+.size-12 {
+    font-size: 12pt;
+}
+
+.size-13 {
+    font-size: 13pt;
+}
+
+.size-14 {
+    font-size: 14pt;
+}
+
+.size-15 {
+    font-size: 15pt;
+}
+
+.size-16 {
+    font-size: 16pt;
+}
+
+.size-17 {
+    font-size: 17pt;
+}
+
+.size-18 {
+    font-size: 18pt;
+}
+
+.size-19 {
+    font-size: 19pt;
+}
+
+.size-20 {
+    font-size: 20pt;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.w-33 {
+    width: 33.3%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-25 {
+    width: 25%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding-left: 10px;
+    padding-right: 10px;
+}

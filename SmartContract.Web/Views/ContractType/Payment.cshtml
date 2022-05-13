@@ -1,0 +1,244 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoConditionPayment;
+    var indataCon = Model.InfoContract;
+    var indataBinding = Model.InfoRequestBinding;
+    string _Station = Model.ContractStation.StationStatusCurr;
+    String IsDisabled = "";
+    @if (_Station == ContractStationStatusAll.S5Signing2
+     || _Station == ContractStationStatusAll.S6ContractNumber
+     || _Station == ContractStationStatusAll.S7Binding
+     && Model.ParameterCondition.Menu != ContractSuccessTypes.T1_EDIT && Model.ParameterCondition.Menu != ContractSuccessTypes.T3_EXPAND)
+    {
+
+        IsDisabled = "disabled";
+    }
+
+    if ((Model.ParameterCondition.Menu == ContractSuccessTypes.T3_EXPAND && indataBinding.ContractSuccessStatus != ContractStatusAll.S1WaitApprove))
+    {
+        IsDisabled = "disabled";
+    }
+}
+
+<input type="hidden" asp-for="InfoRequestBinding.ContractSuccessStatus" />
+<fieldset @(IsDisabled)>
+    <input type="hidden" id="StationStatusCurr" value="@_Station" />
+
+    <div class="form-group row">
+        <label class="col-sm-5 col-form-label text-sm-right">งบประมาณในการดำเนินการ :</label>
+        <div class="col-sm-5">
+            <input type="text" readonly class="form-control-plaintext text-primary"
+                   asp-for="InfoContract.Budget"
+                   value="@(indataCon.Budget > 0 ? indataCon.Budget.ToString("#,##0.00") : "")">
+
+        </div>
+    </div>
+    <section>
+        <div class="mb-3">
+            <div class="col-md-12">
+                <div class="form-check">
+                    <input class="form-check-input PaymentRadios" type="radio" asp-for="InfoConditionPayment.PeriodType" id="PaymentRadios1" value="P1">
+                    <label class="form-check-label" for="PaymentRadios1">
+                        กรณีเงินงวดเดียวจ่ายครั้งเดียว 100%
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input PaymentRadios" type="radio" asp-for="InfoConditionPayment.PeriodType" id="PaymentRadios2" value="P2">
+                    <label class="form-check-label" for="PaymentRadios2">
+                        กรณีแบ่งจ่ายหลายงวด
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="" id="Payment1">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">วงเงินทั้งหมด :</label>
+                    <div class="col-sm-7">
+                        <input type="text" readonly class="form-control-plaintext text-primary"
+                               asp-for="InfoConditionPayment.PeriodPercent"
+                               value="@(indata != null && indata.PeriodPercent.HasValue && indata.PeriodPercent > 0 ? indata.PeriodPercent.Value.ToString("#,##0.00") : "")">
+                    </div>
+                </div>
+                <div id="P1Budgetcode_Render">
+                    @if (Model.InfoConditionPayment.P1Budgetcode != null && Model.InfoConditionPayment.P1Budgetcode.Count > 1)
+                    {
+                        foreach (var item in Model.InfoConditionPayment.P1Budgetcode.Select((value, i) => (value, i)))
+                        {
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">@(item.i == 0 ? "รหัสงบประมาณ :" : "")</label>
+                                <div class="col-sm-2">
+                                    <input type="text" readonly class="form-control-plaintext"
+                                           name="InfoConditionPayment.P1Budgetcode[@item.i].PeriodBudgetcode"
+                                           value="@item.value.PeriodBudgetcode">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control moneyformat"
+                                           name="InfoConditionPayment.P1Budgetcode[@item.i].PeriodPercent"
+                                           value="@(item.value.PeriodPercent.HasValue ? item.value.PeriodPercent.Value.ToString("#,##0.00") : "")">
+                                </div>
+                                <label class="col-sm-3 col-form-label text-sm-left">ระบุยอดเงิน</label>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right ">จ่ายงวดเดียว 100% เนื่องจาก</label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control bg-focus" asp-for="InfoConditionPayment.PeriodP1Detail" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">ผลการดำเนินงานที่ส่งมอบ :</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control bg-focus" asp-for="InfoConditionPayment.ContractPeriodDetail1" placeholder="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="" id="Payment2">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">แบ่งจ่ายเงินเป็นจำนวน :</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" asp-for="InfoConditionPayment.PaymentSelect">
+                            <option value="0">---เลือก--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-3 col-form-label text-sm-left">มีรายละเอียดดังนี้</label>
+                </div>
+                <div id="PaymentPeriod_Render">
+                    @if (indata.PeriodList != null && indata.PeriodList.Count > 0)
+                    {
+                        foreach (var item_period in indata.PeriodList.Select((value, i) => (value, i)))
+                        {
+                            <fieldset class="PaymentPeriod_Sub form-group border p-3" id="Period_@(item_period.value.PeriodNo)" style="background-color:rgba(50, 255, 50, 0.1);">
+                                <input type="hidden" name="InfoConditionPayment.PeriodList[@(item_period.i)].PeriodNo" value="@(item_period.value.PeriodNo)" />
+                                <legend class="col-auto px-2 h6">งวดที่ @(item_period.value.PeriodNo)</legend>
+                                <table class="table table-bordered table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th style="width:5%" class="text-center align-middle">#</th>
+                                            <th style="width:50%" class="align-middle">รหัสงบประมาณ</th>
+                                            <th style="width:20%" class="align-middle">วงเงินในงวด</th>
+                                            <th style="width:15%" class="align-middle">รหัสคู่สัญญา</th>
+                                            <th style="width:10%" class="text-center align-middle">
+                                                <i class="fa fa-plus-circle fa-2x cursor-pointer" onclick="InsertBudgetCode(@(item_period.value.PeriodNo),@(item_period.i))"></i>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="BudgetCode_Render_@(item_period.value.PeriodNo)" class="bg-light">
+                                        @if (item_period.value.ContractPeriod != null && item_period.value.ContractPeriod.Count > 0)
+                                        {
+                                            foreach (var con_Period in item_period.value.ContractPeriod.Select((con_value, con_i) => (con_value, con_i)))
+                                            {
+                                                <tr class="BudgetCode_Sub">
+                                                    <td class="text-center align-middle">@(con_Period.con_i + 1)</td>
+                                                    <td class="align-middle">
+                                                        <select class="form-control bg-focus selectpicker PeriodBudgetcode" data-live-search="true"
+                                                                name="InfoConditionPayment.PeriodList[@(item_period.i)].ContractPeriod[@(con_Period.con_i)].PeriodBudgetcode"
+                                                                asp-items="@(new SelectList((from s in Model.InfoContract.Budgetcodes select new {
+                                                                Code=s.Budgetcode,
+                                                                FullName = $"{s.Budgetcode}"}),
+                                                                "Code",
+                                                                "FullName",
+                                                                selectedValue: con_Period.con_value.PeriodBudgetcode))">
+                                                            <option value="">---เลือก---</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <input type="text" class="form-control moneyformat periodpercent" autocomplete="off" onkeyup="keyupCalTotalPeriodPercent(@(item_period.value.PeriodNo))"
+                                                               name="InfoConditionPayment.PeriodList[@(item_period.i)].ContractPeriod[@(con_Period.con_i)].PeriodPercent"
+                                                               value="@(con_Period.con_value.PeriodPercent.HasValue && con_Period.con_value.PeriodPercent > 0 ? con_Period.con_value.PeriodPercent.Value.ToString("#,##0.00") : "")">
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                                                name="InfoConditionPayment.PeriodList[@(item_period.i)].ContractPeriod[@(con_Period.con_i)].PeriodVendorId"
+                                                                asp-items="@(new SelectList((from s in lookUp.MasterVendors select new {
+                                                                Code=s.VendorId,
+                                                                FullName = $"{s.VendorId}"}),
+                                                                "Code",
+                                                                "FullName",
+                                                                selectedValue: con_Period.con_value.PeriodVendorId))">
+                                                            <option value="">---เลือก---</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="text-center align-middle">
+                                                        <i class="fa fa-minus-circle fa-2x cursor-pointer" onclick="RemoveBudgetCode(this,@(item_period.value.PeriodNo))"></i>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot class="table-secondary">
+                                        <tr>
+                                            <td></td>
+                                            <td class="text-right align-middle">รวม</td>
+                                            <td>
+                                                <input readonly id="TotalPeriodPercent_@(item_period.value.PeriodNo)" type="text" class="form-control "
+                                                       value="@(item_period.value.ContractPeriod.Where(x=>x.PeriodNo == item_period.value.PeriodNo).Sum(x=>x.PeriodPercent).Value.ToString("#,##0.00"))">
+                                            </td>
+                                            <td class="align-middle">บาท</td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div id="PeriodDetail_Render_@(item_period.value.PeriodNo)">
+                                    @if (item_period.value.ContractPeriodDetail != null && item_period.value.ContractPeriodDetail.Count > 0)
+                                    {
+                                        foreach (var item_detail in item_period.value.ContractPeriodDetail.Select((detail_val, detail_i) => (detail_val, detail_i)))
+                                        {
+                                            <div class="PeriodDetail_Sub form-group row">
+                                                <label class="col-sm-3 col-form-label text-sm-right">ผลการดำเนินงานที่ส่งมอบ :</label>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control bg-focus" autocomplete="off"
+                                                           name="InfoConditionPayment.PeriodList[@(item_period.i)].ContractPeriodDetail[@(item_detail.detail_i)].ContractPeriodDetail1"
+                                                           value="@(item_detail.detail_val.ContractPeriodDetail1)">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    @if (item_detail.detail_i == 0)
+                                                    {
+                                                        <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer" onclick="InsertPeriodDetail(@(item_period.value.PeriodNo),@(item_period.i))"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer" onclick="RemovePeriodDetail(this,@(item_period.value.PeriodNo))"></i>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </fieldset>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</fieldset>

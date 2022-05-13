@@ -1,0 +1,127 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoSignerPartnersOfContract;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม (สำนักงาน) :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control-plaintext text-primary" readonly="readonly"                           
+                           id="NhsoSignerUser" data-empid="@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indata.NhsoSignerUser)?.EmpId ?? String.Empty)"
+                           value="@(lookUp.NhsoSigner.FirstOrDefault(x=>x.EmpId == indata.NhsoSignerUser)?.SignerFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม (คู่สัญญา) :</label>
+                <div class="col-sm-7">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorSignerUser)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">พยาน (ฝ่ายสำนักงาน) :</label>
+                <div class="col-sm-4">
+                    <select class="form-control bg-focus selectpicker" data-live-search="true"
+                            name="InfoSignerPartnersOfContract.NhsoWitnessUser"
+                            asp-items="@(new SelectList((from s in lookUp.NhsoSigner select new {
+                                                            Code=s.EmpId,
+                                                            FullName = $"{s.SignerFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.NhsoWitnessUser))">
+                        <option value="">---เลือก---</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">พยาน (ฝ่ายคู่สัญญา) :</label>
+                <div class="col-sm-4 bootstrapSelectRemove">
+                    <input type="text" readonly class="form-control-plaintext text-primary"
+                           value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorWitnessUser)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">Foot Note (ฝ่ายสำนักงาน)</label>
+                <div class="col-sm-4">
+                    <div id="FootNoteNhso_First">
+                        <div>
+                            <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                    name="InfoSignerPartnersOfContract.FootNotesNhso[0].EmpId"
+                                    asp-items="@(new SelectList((from s in lookUp.NhsoSigner select new {
+                                                            Code=s.EmpId,
+                                                            FullName = $"{s.SignerFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.FootNotesNhso != null && indata.FootNotesNhso.Count > 0 ? indata.FootNotesNhso[0].EmpId : String.Empty))">
+                                <option value="">---เลือก---</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer" onclick="insert_row_footnoteNhso()"></i>
+                </div>
+            </div>
+            <div id="FootNoteNhso_Render">
+                @if (indata.FootNotesNhso.Count > 0)
+                {
+                    foreach (var item in indata.FootNotesNhso.Select((value, i) => (value, i)))
+                    {
+                        if (item.i > 0)
+                        {
+                            <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label text-sm-right"></label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                                name="InfoSignerPartnersOfContract.FootNotesNhso[@(item.i)].EmpId" 
+                                                asp-items="@(new SelectList((from s in lookUp.NhsoSigner select new {
+                                                            Code=s.EmpId,
+                                                            FullName = $"{s.SignerFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: item.value.EmpId))">
+                                            <option value="">---เลือก---</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer" onclick="remove_row_footnoteNhso(this)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+            <div id="">
+                @if (indata.FootNotes.Count > 0)
+                {
+                    foreach (var item in indata.FootNotes.Select((value, i) => (value, i)))
+                    {
+                        <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-sm-right">@(item.i == 0 ? "Foot Note (ฝ่ายคู่สัญญา)" : "") @(item.i + 1):</label>
+                                <div class="col-sm-4">
+                                    <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                                        <input type="text" readonly class="form-control-plaintext text-primary"
+                                               value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.FootNotes[item.i].IdUserSmct)?.UserFullname ?? String.Empty)">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,184 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+    Layout = "_LayoutRegister";
+    String TypeName = Model.Approvetype == "U" ? "ผู้เข้าใช้งาน" : "หน่วยบริการ";
+    String _Status = Model.Approvetype == "U" ? Model.UserSmct.Status : Model.RegisterNhso.Status;
+}
+
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+<form asp-controller="Register" asp-action="Approve" method="post"
+      data-ajax="true" data-ajax-method="post"
+      data-ajax-begin="onbeginForm"
+      data-ajax-complete="completedForm"
+      data-ajax-failure="failedForm">
+    <div>
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small class="text-dark"><i class="fa fa-book mr-1"></i>อนุมัติ(@TypeName)</small>
+                                </h4>
+                            </div>
+                            <div class="col-6 text-right">
+                                <h5>
+                                    <b>สถานะ : </b>
+                                    <partial name="_PartialRegStatus.cshtml" model="Model" />
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+
+        @if (Model.Approvetype == "U")
+        {
+            <div class="card accordion-group">
+                <div class="card-header" id="headingUserView">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseUserView" aria-expanded="true" aria-controls="collapseUserView">
+                            <i class="fas fa-user"></i> ผู้เข้าใช้งาน
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseUserView" class="collapse show" aria-labelledby="headingUserView">
+                    <partial name="_PartialUserView.cshtml" model="Model" />
+                </div>
+            </div>
+        }
+        <div class="card accordion-group">
+            <div class="card-header" id="headingDetailVendor">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailVendor" aria-expanded="true" aria-controls="collapseDetailVendor">
+                        <i class="fas fa-id-card"></i> หน่วยบริการ/คู่สัญญา
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseDetailVendor" class="collapse  show" aria-labelledby="headingDetailVendor">
+                <partial name="_PartialVendorView.cshtml" model="Model" />
+            </div>
+        </div>
+
+
+        @if (_Status == UserSmctStatus.WaitUse)
+        {
+            <div class="card accordion-group">
+                <div class="card-header" id="headingApproval">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseApproval" aria-expanded="true" aria-controls="collapseApproval">
+                            <i class="fas fa-pencil-alt"></i> รายละเอียดการตรวจสอบการอนุมัติ(@TypeName)
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseApproval" class="collapse show" aria-labelledby="headingApproval">
+                    <div class="card-body thead_tabsub1 bg-form">
+                        <section>
+                            <div class="">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="lable_blue" for="">ผลการตรวจสอบ(@TypeName)</label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input select_approve"
+                                                   asp-for="Approve.Approve">
+                                            <label class="custom-control-label" for="Approve_Approve">อนุมัติ</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input select_approve"
+                                                   asp-for="Approve.UnApprove">
+                                            <label class="custom-control-label" for="Approve_UnApprove">ไม่อนุมัติ</label>
+                                            <div class="form-group col-md-8 mt-2 ">
+                                                <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                                                <div class="col-sm-8">
+                                                    <textarea cols="80" rows="5" asp-for="Approve.Remark"
+                                                              placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col text-center">
+                    <input type="hidden" name="Approvetype" value="@Model.Approvetype" />
+                    <input type="hidden" name="RegisterNhso.IdRegisterNhso" value="@Model.RegisterNhso.IdRegisterNhso" />
+                    <input type="hidden" name="UserSmct.IdUserSmct" value="@Model.UserSmct.IdUserSmct" />
+                    <button class="btn btn-secondary min_w_100" onclick="window.history.go(-1); return false;" value="ย้อนกลับ">ย้อนกลับ</button>
+                    <button type="submit" class="btn btn-success" name="BtnSubmit" value="@Model.Approvetype">บันทึกผลการอนุมัติ</button>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-12">
+                <div class="col text-center">
+                    <button class="btn btn-secondary min_w_100" onclick="window.history.go(-1); return false;" value="ย้อนกลับ">ย้อนกลับ</button>
+                </div>
+            </div>
+        }
+    </div>
+</form>
+
+<partial name="/Views/Shared/JavaScript/JavascriptFileShare.cshtml" for="@Model.GetLookUp" />
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
+
+        $('.select_approve').on('change', function () {
+            $('.select_approve').not(this).prop('checked', false);
+        });
+
+        function SentMailVerify() {
+            try {
+                var urlfull = `${hostname}/Register/SentMailVerify`;
+
+                var _IdUserSmct = $("input[name='UserSmct.IdUserSmct']").val();
+                var _Approvetype = $("input[name='Approvetype']").val();
+                AjaxPost(urlfull, true, { IdUserSmct: _IdUserSmct, Approvetype: _Approvetype }, function (response) {
+                    console.log(response);
+                });
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+
+
+        onbeginForm = function (xhr) {
+            showLoading();
+        };
+
+        completedForm = function (xhr) {
+            hideLoading()
+            console.log(xhr.responseJSON);
+            if (xhr.responseJSON.Status == false && xhr.responseJSON.MessagError != null) {
+                SweetAlert2Warning(xhr.responseJSON.MessagError);
+            } else {
+                SweetAlert2Success(xhr.responseJSON.UrlRedirect);
+                SentMailVerify()
+            }
+        };
+
+        failedForm = function (xhr) {
+            console.log(xhr);
+            SweetAlert2Warning(`${xhr.status} ${xhr.statusText}\nเกิดข้อผิดพลาดในการบันทึกข้อมูล`);
+        };
+
+    </script>
+}

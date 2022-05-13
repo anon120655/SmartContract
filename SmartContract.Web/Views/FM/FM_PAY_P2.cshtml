@@ -1,0 +1,55 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "FM_PAY_P2";
+    Layout = "~/Views/Shared/_LayoutFM.cshtml";
+    var indataCon = Model.InfoContract;
+    var indataConstation = Model.ContractStation;
+    var payment = Model.InfoConditionPayment;
+}
+
+<link rel="stylesheet" href="~/css/font.css" />
+<link rel="stylesheet" href="~/css/FM.css" asp-append-version="true" />
+
+<section>
+    <div class="main-page size-15">
+        <div class="content-page ">
+            <div class="text-right ">เลขที่อ้างอิง <span class="para">@indataCon.RefId</span></div>
+            <div class="text-center">
+                <img src="../images/logo/NHSO.png" alt="Mountain">
+            </div>
+            <h3 class="text-center size-17 mt-1">เงื่อนไขการจ่ายเงินสนับสนุน(งวดเดียวจ่ายหลายครั้ง)</h3>
+            <h3 class="text-center size-15"> เอกสารนี้เป็นส่วนหนึ่ง<span class="para">@(indataCon.ContractTypeFullName)</span> </h3>
+            <h3 class="text-center size-15"> เลขที่สัญญา..........   ลงวันที่ ..... เดือน ............ พ.ศ. .......  </h3>
+            <div class="text-1">
+                <span class="para">@(indataConstation.DepartmentName)</span>  ตกลงให้เงินสนับสนุนให้แก่ <span class="para">@(indataConstation.VendorName)</span>   ซึ่งเป็นผู้ดำเนินงานตาม<span class="para">@(indataCon.ContractTypeFullName)</span>   จำนวนเงินทั้งสิ้นไม่เกิน <span class="para">@(indataCon.Budget > 0 ? indataCon.Budget.ToString("#,##0.00") : "")</span> บาท (<span class="para">@(GeneralUtils.ThaiBahtText(indataCon.Budget.ToString()))</span>)  เบิกจ่ายจากรหัสงบประมาณ <span class="para">@(string.Join(" ,", indataCon.Budgetcodes.Select(x=>x.Budgetcode)))</span>    ซึ่งได้รวมภาษีมูลค่าเพิ่มตลอดจนภาษีอากรอื่นๆ  และค่าใช้จ่ายทั้งปวงไว้ด้วยแล้ว ดังนี้
+            </div>
+            <div class="text-1">
+                งวดที่ 1 เป็นเงินทั้งหมด <span class="para">@(indataCon.Budget > 0 ? indataCon.Budget.ToString("#,##0.00") : "")</span> บาท (<span class="para">@(GeneralUtils.ThaiBahtText(indataCon.Budget.ToString()))</span>)  จ่ายให้คู่สัญญาตามผลการดำเนินงานดังต่อไปนี้
+            </div>
+            <br />
+            <div class="text-1">ทั้งนี้ผู้ดำเนินงานต้องส่งสรุปผลการดำเนินงานเมื่อสิ้นสุดโครงการ ดังนี้</div>
+            <div class="text-1"><span class="para">@payment.ContractPeriodDetail1</span></div>
+            <br />
+            <div id="A1">
+                <div class="text-1">
+                    หากผู้ดำเนินงานไม่สามารถดำเนินการให้แล้วเสร็จตามเวลาที่กำหนดไว้ในโครงการ ผู้ดำเนินงานยินยอมให้สำนักงานเรียกเงินสนับสนุนดังกล่าวคืนทั้งหมด หรือหักเงินสนับสนุนที่ค้างจ่ายไว้ทั้งหมด หรือระงับการจ่ายเงินสนับสนุนที่เหลือไว้ทั้งหมด หรือจ่ายเงินสนับสนุนบางส่วนตามผลงานที่เบิกจ่ายจริง โดยไม่ต้องบอกกล่าวล่วงหน้า
+                </div>
+            </div>
+            <div id="A2">
+                <div class="text-1">
+                    หากผู้ดำเนินการไม่สามารถดำเนินการให้แล้วเสร็จตามเวลาที่กำหนดไว้ในสัญญาหรือปฏิบัติงานไม่ถูกต้องตามสัญญา ผู้ดำเนินการต้องชำระค่าปรับเป็นรายวันให้แก่สำนักงานในอัตราร้อยละ 0.10 (ศูนย์จุดหนึ่งศูนย์) ของค่าดำเนินการตามสัญญาเป็นเงินวันละ {1@14} บาท ({2@15})  แต่ไม่ต่ำกว่า 100 บาท ต่อวัน และจะต้องชำระค่าใช้จ่ายในการจ้างบุคคลอื่นดำเนินงาน ในเมื่อสำนักงานมีความจำเป็นต้องดำเนินการ นับถัดจากวันที่กำหนดแล้วเสร็จตามสัญญา หรือวันที่สำนักงานได้ขยายให้จนถึงทำงานแล้วเสร็จจริง นอกจากนี้ผู้ดำเนินงานยินยอมให้สำนักงานเรียกค่าเสียหายอันเกิดขึ้นจากการที่ผู้ดำเนินงานยินยอมให้สำนักงานเรียกค่าเสียหายอันเกิดขึ้นจากการที่ผู้ดำเนินงานทำงานล่าช้า เฉพาะส่วนที่เกินกว่าจำนวนค่าปรับและค่าใช้จ่ายได้อีกด้วย
+                </div>
+                <div class="text-1">
+                    ในระหว่างที่สำนักงานยังมิได้บอกเลิกสัญญานั้น สำนักงานสงวนสิทธิ์ในการเรียกค่าปรับและใช้สิทธิบอกเลิกสัญญาและสงวนสิทธิในการริบหลักประกันสัญญาที่ผู้ดำเนินงานได้มีอยู่กับสำนักงาน เมื่อแจ้งสิทธิดังกล่าวและผู้ดำเนินงานยินยอมให้สำนักงานเรียกเงินที่จ่ายไปแล้วคืนได้ทั้งหมดหรือบางส่วนได้ และสำนักงานระงับการจ่ายเงินสนับสนุนทั้งหมดหรือบางส่วนตามที่สำนักงานเห็นสมควรได้ รวมทั้งให้สำนักงานมีสิทธิหักเงินพึงจ่ายใดๆได้ทุกกรณีที่สำนักงานจะจ่ายในภายหลังเพื่อชดใช้ความเสียหายได้โดยไม่ต้องบอกกล่าวล่วงหน้า
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/FM.js" asp-append-version="true"></script>
+}

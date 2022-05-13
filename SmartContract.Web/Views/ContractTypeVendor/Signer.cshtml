@@ -1,0 +1,91 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoSignerPartnersOfContract;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ฝ่ายคู่สัญญา</label>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม (ฝ่ายคู่สัญญา) :</label>
+                <div class="col-sm-4 bootstrapSelectRemove">
+                    <input type="text" readonly class="form-control-plaintext text-primary" id="VendorSignerTxt"
+                           value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.VendorSignerUser)?.UserFullname ?? String.Empty)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">พยาน (ฝ่ายคู่สัญญา) :</label>
+                <div class="col-sm-4 bootstrapSelectRemove">
+                    <select class="form-control bg-focus selectpicker" data-live-search="true"
+                            name="InfoSignerPartnersOfContract.VendorWitnessUser"
+                            asp-items="@(new SelectList((from s in lookUp.UserSmctSigner select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"{s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.VendorWitnessUser))">
+                        <option value="">---เลือก---</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-sm-right">Foot Note (ฝ่ายคู่สัญญา)</label>
+                <div class="col-sm-4">
+                    <div id="FootNote_First">
+                        <div>
+                            <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                    name="InfoSignerPartnersOfContract.FootNotes[0].IdUserSmct"
+                                    asp-items="@(new SelectList((from s in lookUp.UserSmctSigner select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"{s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.FootNotes != null && indata.FootNotes.Count > 0 ? indata.FootNotes[0].IdUserSmct : String.Empty))">
+                                <option value="">---เลือก---</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer" onclick="insert_row_footnote()"></i>
+                </div>
+            </div>
+            <div id="FootNote_Render">
+                @if (indata.FootNotes.Count > 0)
+                {
+                    foreach (var item in indata.FootNotes.Select((value, i) => (value, i)))
+                    {
+                        if (item.i > 0)
+                        {
+                            <div class="FootNote_Sub FootNote_Sub_@(item.i)">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label text-sm-right"></label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                                name="InfoSignerPartnersOfContract.FootNotes[@(item.i)].IdUserSmct" asp-items="@(new SelectList((from s in lookUp.UserSmctSigner select new {
+                                                            Code=s.IdUserSmct,
+                                                            FullName = $"{s.UserFullname}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.FootNotes[item.i].IdUserSmct))">
+                                            <option value="">---เลือก---</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer" onclick="remove_row_footnote(this)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,201 @@
+﻿
+
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "รายละเอียด";
+    if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+        Layout = "_LayoutTemplatesVendor";
+    else
+        Layout = "_LayoutTemplates";
+}
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-auto">
+                        <h4 class="mr-5">
+                            <small class="text-primary"><i class="fa fa-book mr-1"></i>รายงานขอปิดโครงการ</small>
+                        </h4>
+                    </div>
+                    <button class="btn btn-success loadding text-white mr-3" style="width:120px"> ส่งออก excel </button>
+                    <button class="btn btn-primary loadding text-white mr-3" style="width:120px" onclick="JavaScript: window.history.back(1); return false;"> กลับ </button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-bordered table-sm table-responsive justify-content-center bg-white">
+                    <thead class="thead_green">
+                        <tr>
+                            <th class="align-middle text-center">#</th>
+                            <th class="align-middle text-center">สำนักที่จัดทำสัญญา</th>
+                            <th class="align-middle text-center">เลขที่ REF</th>
+                            <th class="align-middle text-center">วันที่จัดทำเอกสาร</th>
+                            <th class="align-middle text-center">เลขที่สัญญา</th>
+                            <th class="align-middle text-center">วันที่ทำสัญญา</th>
+                            <th class="align-middle text-center">ประเภทสัญญา</th>
+                            <th class="align-middle text-center">ชื่อคู่สัญญา</th>
+                            <th class="align-middle text-center">วันที่เริ่มต้น</th>
+                            <th class="align-middle text-center">วันที่สิ้นสุด</th>
+                            <th class="align-middle text-center">รหัสคู่สัญญา</th>
+                            <th class="align-middle text-center">ประเภทกองทุน</th>
+                            <th class="align-middle text-center">งวดเงิน</th>
+                            <th class="align-middle text-center">รหัสงบประมาณ</th>
+                            <th class="align-middle text-center">วงเงินตั้งต้น</th>
+                            <th class="align-middle text-center">วงเงินที่ใช้ไป</th>
+                            <th class="align-middle text-center">วงเงินคงเลือก</th>
+                            <th class="align-middle text-center">สถานะ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-nowrap">
+                            <td>1</td>
+                            <td>03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
+                            <td>REF64/0001</td>
+                            <td>01/01/2564</td>
+                            <td>64/B/0001</td>
+                            <td>10/01/2564</td>
+                            <td>สัญญา</td>
+                            <td>โรงพยาบาลศูนย์ลำปาง</td>
+                            <td>01/10/2564</td>
+                            <td>30/09/2565</td>
+                            <td>10672</td>
+                            <td>64-01_กองทุนผู้ป่วยนอก</td>
+                            <td>มี</td>
+                            <td>64-08-01-04-02000-01-01</td>
+                            <td>10000.00</td>
+                            <td>5000.00</td>
+                            <td>5000.00</td>
+                            <td>รอไฟล์แนบ 1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
+                            <td>REF64/0001</td>
+                            <td>01/01/2564</td>
+                            <td>64/B/0001</td>
+                            <td>10/01/2564</td>
+                            <td>สัญญา</td>
+                            <td>โรงพยาบาลศูนย์ลำปาง</td>
+                            <td>01/10/2564</td>
+                            <td>30/09/2565</td>
+                            <td>10672</td>
+                            <td>64-01_กองทุนผู้ป่วยนอก</td>
+                            <td>มี</td>
+                            <td>64-08-01-04-02000-01-01</td>
+                            <td>10000.00</td>
+                            <td>5000.00</td>
+                            <td>5000.00</td>
+                            <td>รอไฟล์แนบ 1</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
+                            <td>REF64/0001</td>
+                            <td>01/01/2564</td>
+                            <td>64/B/0001</td>
+                            <td>10/01/2564</td>
+                            <td>สัญญา</td>
+                            <td>โรงพยาบาลศูนย์ลำปาง</td>
+                            <td>01/10/2564</td>
+                            <td>30/09/2565</td>
+                            <td>10672</td>
+                            <td>64-01_กองทุนผู้ป่วยนอก</td>
+                            <td>มี</td>
+                            <td>64-08-01-04-02000-01-01</td>
+                            <td>10000.00</td>
+                            <td>5000.00</td>
+                            <td>5000.00</td>
+                            <td>รอไฟล์แนบ 1</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
+                            <td>REF64/0001</td>
+                            <td>01/01/2564</td>
+                            <td>64/B/0001</td>
+                            <td>10/01/2564</td>
+                            <td>สัญญา</td>
+                            <td>โรงพยาบาลศูนย์ลำปาง</td>
+                            <td>01/10/2564</td>
+                            <td>30/09/2565</td>
+                            <td>10672</td>
+                            <td>64-01_กองทุนผู้ป่วยนอก</td>
+                            <td>มี</td>
+                            <td>64-08-01-04-02000-01-01</td>
+                            <td>10000.00</td>
+                            <td>5000.00</td>
+                            <td>5000.00</td>
+                            <td>รอไฟล์แนบ 1</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
+                            <td>REF64/0001</td>
+                            <td>01/01/2564</td>
+                            <td>64/B/0001</td>
+                            <td>10/01/2564</td>
+                            <td>สัญญา</td>
+                            <td>โรงพยาบาลศูนย์ลำปาง</td>
+                            <td>01/10/2564</td>
+                            <td>30/09/2565</td>
+                            <td>10672</td>
+                            <td>64-01_กองทุนผู้ป่วยนอก</td>
+                            <td>มี</td>
+                            <td>64-08-01-04-02000-01-01</td>
+                            <td>10000.00</td>
+                            <td>5000.00</td>
+                            <td>5000.00</td>
+                            <td>รอไฟล์แนบ 1</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
+                            <td>REF64/0001</td>
+                            <td>01/01/2564</td>
+                            <td>64/B/0001</td>
+                            <td>10/01/2564</td>
+                            <td>สัญญา</td>
+                            <td>โรงพยาบาลศูนย์ลำปาง</td>
+                            <td>01/10/2564</td>
+                            <td>30/09/2565</td>
+                            <td>10672</td>
+                            <td>64-01_กองทุนผู้ป่วยนอก</td>
+                            <td>มี</td>
+                            <td>64-08-01-04-02000-01-01</td>
+                            <td>10000.00</td>
+                            <td>5000.00</td>
+                            <td>5000.00</td>
+                            <td>รอไฟล์แนบ 1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="/Views/Shared/Layout/_DataDate.cshtml" />
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+    </script>
+}

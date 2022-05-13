@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>@ViewBag.Title</title>
+    <link rel="Shortcut Icon" href="~/favicon.ico" type="image/x-icon" />
+    <!-- Mobile Specific Meta
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link href="~/lib/fontawesome5_11_2/css/fontawesome.css" rel="stylesheet">
+    <link href="~/lib/fontawesome5_11_2/css/brands.css" rel="stylesheet">
+    <link href="~/lib/fontawesome5_11_2/css/solid.css" rel="stylesheet">
+
+    <link href="~/lib/sweetalert2_9_10/dist/sweetalert2.css" rel="stylesheet" asp-append-version="true" />
+
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/btnOnTop.css" rel="stylesheet" asp-append-version="true" />
+
+    @*<link href="~/templates/css/select2.css" rel="stylesheet" />*@
+</head>
+<body>
+    <div id="body" class="page-container loaddingcontent">
+        <div id="">
+            @RenderBody()
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Sweetalert2 js -->
+            <script src="~/lib/sweetalert2_9_10/dist/sweetalert2.js"></script>
+
+            <!-- signalr js -->
+            <script src="~/js/signalr/dist/browser/signalr.js"></script>
+
+            <script src="~/js/site.js" asp-append-version="true"></script>
+
+            @RenderSection("Scripts", required: false)
+        </div>
+    </div>
+    <div id="divLoading">
+    </div>
+</body>
+</html>

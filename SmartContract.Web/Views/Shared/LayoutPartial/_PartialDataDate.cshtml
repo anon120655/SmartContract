@@ -1,0 +1,13 @@
+﻿@using System.Globalization;
+
+@{
+    Layout = null;
+    string Current = DateTime.Now.ToString("d MMMM yyyy เวลา HH:mm น", new System.Globalization.CultureInfo("th-TH"));
+}
+
+<div class="datadate">
+    <div class="text-lg-right" style="margin-right:15px; font-weight:800;">
+        ข้อมูล ณ วันที่ @Current
+        <br>
+    </div>
+</div> 

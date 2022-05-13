@@ -1,0 +1,167 @@
+﻿
+@model SmartContract.Infrastructure.Resources.Authenticate.RegisterMaster
+@using SmartContract.Utils;
+
+@{
+
+    var lookUp = Model.GetLookUp;
+    var indata = Model;
+}
+
+@if (Model.UserSmct.UserSmctSigners != null)
+{
+    var Group_SignerType_S1 = indata.UserSmct.UserSmctSigners.SignerType == SignerTypes.AuthReceive ? "d-none" : "";
+    var Group_SignerType_S2 = indata.UserSmct.UserSmctSigners.SignerType == SignerTypes.AuthBySelf ? "d-none" : "";
+
+    <div>
+        <div class="card-body thead_tabsub1 bg-form">
+            <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดผู้มีอำนาจลงนาม</label>
+            <div class="form-group">
+                <fieldset class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจลงนาม :</label>
+                        <div class="col-sm-7">
+                            <div class="form-check">
+                                <input class="form-check-input DecisionMaker" type="radio" onchange="UserSignerChange()" onclick="return false"
+                                       asp-for="UserSmct.UserSmctSigners.SignerType" value="S1">
+                                <label class="form-check-label">
+                                    เป็นผู้มีอำนาจด้วยตัวเอง
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input DecisionMaker" type="radio" onchange="UserSignerChange()" onclick="return false"
+                                       asp-for="UserSmct.UserSmctSigners.SignerType" value="S2">
+                                <label class="form-check-label">
+                                    รับมอบอำนาจ
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="Group_SignerType_S1" class="@Group_SignerType_S1">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ผู้มีอำนาจด้วยตัวเอง :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.UserSmct.UserSmctSigners.Signer1User)?.UserFullname ?? String.Empty)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ตามหนังสือ(ผู้มีอำนาจ) :</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer1DocName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือ(ผู้มีอำนาจ) :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer1DocNo">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้มีอำนาจ) :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer1DocDateStr">
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="Group_SignerType_S2" class="@Group_SignerType_S2">
+                    <div id="DecisionMaker_Radios2_Deail">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">หนังสือมอบอำนาจเลขที่ :</label>
+                            <div class="col-sm-3 pr-sm-0">
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       asp-for="UserSmct.UserSmctSigners.Signer2PoaDocNo">
+                            </div>
+                            <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้รับมอบ) :</label>
+                            <div class="col-sm-2 ">
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       asp-for="UserSmct.UserSmctSigners.Signer2PoaDocDateStr">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-sm-right">จากผู้มีอำนาจ :</label>
+                            <div class="col-sm-3 pr-sm-0">
+                                <input type="text" readonly class="form-control-plaintext text-primary"
+                                       value="@(lookUp.UserSmctSigner.FirstOrDefault(x=>x.IdUserSmct == indata.UserSmct.UserSmctSigners.Signer2PoaSigner1User)?.UserFullname ?? String.Empty)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">ตามหนังสือ(ผู้รับมอบ) :</label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer2DocName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">เลขที่หนังสือ(ผู้รับมอบ) :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer2DocNo">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-sm-right">ลงวันที่(ผู้รับมอบ) :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer2DocDateStr">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-sm-right">วันที่เริ่มมอบอำนาจ :</label>
+                        <div class="col-sm-3 pr-sm-0">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer2StartDateStr">
+                        </div>
+                        <label class="col-sm-2 col-form-label text-sm-right">วันที่สิ้นสุดมอบอำนาจ :</label>
+                        <div class="col-sm-2 ">
+                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                   asp-for="UserSmct.UserSmctSigners.Signer2EndDateStr">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <hr class="my-4">
+            </div>
+
+
+            <div class="form-group">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบ</label>
+                <fieldset>
+                    <div id="Attachfile_Rander">
+
+                        <table class="table table-hover" style="width:50%">
+                            <tbody>
+                                @if (Model.UserSmct.UserSmctSigners.UserSmctSignerFiles != null && Model.UserSmct.UserSmctSigners.UserSmctSignerFiles.Count > 0)
+                                {
+                                    int index_file = 0;
+                                    foreach (var item_file in Model.UserSmct.UserSmctSigners.UserSmctSignerFiles)
+                                    {
+                                        index_file++;
+                                        String pathFolder = $"Register\\Signer\\{item_file.PathFolder}";
+                                        <tr>
+                                            <td>@(index_file)</td>
+                                            <td class="text-primary">@item_file.SignerFileName</td>
+                                            <td>
+                                                <a asp-action="Render"
+                                                   asp-controller="Files"
+                                                   asp-route-type="@(pathFolder)"
+                                                   asp-route-fileftp="@(item_file.SignerFileFtp)"
+                                                   target="_blank" class="ml-3">
+                                                    <i class="fas fa-file-pdf fa-lg"></i> View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </fieldset>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,148 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "เอกสารแนบท้ายเพิ่มเติม";
+    if (GroupRoles.GroupRoleUnit.Contains(UserService.GetRoleRoleCode()))
+        Layout = "_LayoutTemplatesVendor";
+    else
+        Layout = "_LayoutTemplates";
+}
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+        /*transition: 0.3s;*/
+    }
+
+        .cursor-pointer:hover {
+            text-decoration: underline;
+        }
+
+        .cursor-pointer:active {
+            opacity: 0.5;
+        }
+</style>
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>เอกสารแนบท้ายเพิ่มเติม > </small>
+                            <small><span class="text-primary"><u>ขอแนบเอกสารแนบท้ายเพิ่มเติม</u></span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <form id="form1">
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <label class="col-sm-2 col-form-label text-sm-right">REF :</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <label class="col-sm-2 col-form-label text-sm-right">เลขที่สัญญา :</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3">
+                        <a class="btn btn-primary loadding" style="width:120px" onclick="bt_form1()">ตกลง</a>
+                        @*<button class="btn btn-primary loadding text-white" style="width:120px" onclick="bt_form1()"> ตกลง </button>*@
+                        <button class="btn btn-secondary loadding text-white" style="width:120px"> ยกเลิก </button>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <form id="form2">
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <label class="col-sm-2 col-form-label text-sm-right">REF :</label>
+                    <label class="col-sm-3 col-form-label text-primary">REF65/00001</label>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <label class="col-sm-2 col-form-label text-sm-right">เลขที่สัญญา :</label>
+                    <label class="col-sm-2 col-form-label text-primary">65/B/00001</label>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <label class="col-sm-2 col-form-label text-sm-right">ไฟล์ผลงาน :</label>
+                    <div class="col-sm-3">
+                        <input type="file" class="form-control-file" />
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <label class="col-sm-2 col-form-label text-sm-right">หมายเหตุ :</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3">
+                        <a class="btn btn-primary loadding" style="width:120px" onclick="bt_form2()">ตกลง</a>
+                        @*<button class="btn btn-primary loadding text-white" style="width:120px" onclick="bt_form2()"> ตกลง </button>*@
+                        <button class="btn btn-secondary loadding text-white" style="width:120px"> ยกเลิก </button>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#form2').hide();
+        });
+
+        function bt_form1() {
+            $('#form1').hide();
+            $('#form2').show();
+        }
+        function bt_form2() {
+            $('#form1').show();
+            $('#form2').hide();
+        }
+
+    </script>
+}

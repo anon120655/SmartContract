@@ -1,0 +1,210 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeBureau.TrackingGuaranteeMain
+
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "Tracking";
+    String _MenuEn = Context.Request.Query["MenuEn"].ToString();
+    String _Menu = String.Empty;
+    String _Title = String.Empty;
+}
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+        /*transition: 0.3s;*/
+    }
+
+        .cursor-pointer:hover {
+            text-decoration: underline;
+        }
+
+        .cursor-pointer:active {
+            opacity: 0.5;
+        }
+</style>
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var _Items = (Model != null ? Model.TrackingGuaranteeNew.Items : null);
+    var _pager = (_Items != null ? Model.TrackingGuaranteeNew.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    if (_MenuEn != null)
+    {
+        _Menu = SecurityRepo.Decrypt(_MenuEn);
+        if (_Menu == ContractGuaranteeTypes.T1_NEW || _Menu == ContractGuaranteeTypes.T2_RENEW || _Menu == ContractGuaranteeTypes.T3_RETURN || _Menu == ContractGuaranteeTypes.T4_CLAIM)
+        {
+            _Title = ContractUtils.GuaranteePropertite(_Menu).MenuFullName;
+            ViewData["Title"] = _Title;
+        }
+    }
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-book mr-1"></i>หลักประกันสัญญา > </small>
+                                <small><span class="text-primary">@_Title</span></small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3"></div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <section>
+                    <div class="">
+                        <div id="div_table1" class="col-md-12 search-table-outter table-responsive">
+                            <table id="table1" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:13px;">
+                                <thead style="background-color: @(ContractUtils.GuaranteePropertite(_Menu).Color)">
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>เลขที่อ้างอิง</th>
+                                        <th>วันที่ทำเอกสาร</th>
+                                        <th>ประเภทการลงนาม</th>
+                                        <th>เลขที่สัญญา</th>
+                                        <th>ชื่อสัญญา</th>
+                                        <th>ประเภทนิติกรรมสัญญา</th>
+                                        <th>ผู้บันทึก</th>
+                                        <th class="col-2">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (_Items != null && _Items.Count > 0)
+                                    {
+                                        foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                                        {
+                                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                                <td class="text-center">@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
+                                                <td class="text-center col-md-1">
+                                                    @item.Value.RefId
+                                                </td>
+                                                <td>10/10/2564</td>
+                                                <td>@ContractUtils.SigningTypes(item.Value.ContractSignType).Description</td>
+                                                <td>
+                                                    <b class="">
+                                                        เลขที่สัญญา
+                                                    </b> : @item.Value.ContractId
+                                                    <br />
+                                                    <b>
+                                                        วันที่ทำสัญญา
+                                                    </b> : @GeneralUtils.DateToThString(item.Value.ContractDate)
+                                                </td>
+                                                <td>@item.Value.ContractName</td>
+                                                <td>@item.Value.ContractTypeName</td>
+                                                <td>
+                                                    <b>
+                                                        ผู้สร้างเอกสาร
+                                                    </b> : @item.Value.CreateUserFullname
+                                                    <br />
+                                                    <b>
+                                                        ผู้บันทึกล่าสุด
+                                                    </b> : @item.Value.EditUserFullname
+                                                    <br />
+                                                    <b>
+                                                        วันที่บันทึกล่าสุด
+                                                    </b> :@GeneralUtils.DateToThString(item.Value.EditDate)
+                                                </td>
+                                                @if (item.Value.StationStatusCurr != ContractStationStatusAll.S1Draft && item.Value.StationStatusCurr != ContractStationStatusAll.S2BookRequestApproval)
+                                                {
+                                                    <td class="text-center col-md-1">
+                                                        @if (_Menu == ContractGuaranteeTypes.T1_NEW)
+                                                        {
+                                                            <a class="btn btn-warning btn-sm mr-2" onclick="showLoading()"
+                                                               asp-controller="Guarantee"
+                                                               asp-action="GuaranteeRenew"
+                                                               asp-route-Style="@item.Value.ContractStyleCode"
+                                                               asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                                               asp-route-Station="@item.Value.StationStatusCurr"
+                                                               asp-route-StationEn="@SecurityRepo.Encrypt(ContractStationStatusAll.S7Binding)"
+                                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                                               asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)"
+                                                               asp-route-State="@SecurityRepo.Encrypt("2")"
+                                                               asp-route-ContractGuaranteeTypeEn="@SecurityRepo.Encrypt(ContractGuaranteeTypes.T2_RENEW)">ต่ออายุ</a>
+                                                        }
+
+                                                        @if (_Menu == ContractGuaranteeTypes.T1_NEW || _Menu == ContractGuaranteeTypes.T2_RENEW)
+                                                        {
+                                                            <a class="btn btn-primary btn-sm mr-2" onclick="showLoading()"
+                                                               asp-controller="Guarantee"
+                                                               asp-action="GuaranteeReturn"
+                                                               asp-route-Style="@item.Value.ContractStyleCode"
+                                                               asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                                               asp-route-Station="@item.Value.StationStatusCurr"
+                                                               asp-route-StationEn="@SecurityRepo.Encrypt(ContractStationStatusAll.S7Binding)"
+                                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                                               asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)"
+                                                               asp-route-State="@SecurityRepo.Encrypt("2")"
+                                                               asp-route-ContractGuaranteeTypeEn="@SecurityRepo.Encrypt(ContractGuaranteeTypes.T3_RETURN)">คืน</a>
+                                                        }
+
+                                                        @if (_Menu == ContractGuaranteeTypes.T1_NEW || _Menu == ContractGuaranteeTypes.T2_RENEW)
+                                                        {
+                                                            <a class="btn btn-danger btn-sm" onclick="showLoading()"
+                                                               asp-controller="Guarantee"
+                                                               asp-action="GuaranteeClaim"
+                                                               asp-route-Style="@item.Value.ContractStyleCode"
+                                                               asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                                               asp-route-Station="@item.Value.StationStatusCurr"
+                                                               asp-route-StationEn="@SecurityRepo.Encrypt(ContractStationStatusAll.S7Binding)"
+                                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                                               asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)"
+                                                               asp-route-State="@SecurityRepo.Encrypt("2")"
+                                                               asp-route-ContractGuaranteeTypeEn="@SecurityRepo.Encrypt(ContractGuaranteeTypes.T4_CLAIM)">เคลม/ยึด</a>
+                                                        }
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>-</td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <div class="col-md-12">
+                    <div class="row mr-1">
+                        <div class="col-xl-4 col-md-4 mt-2 pagination_font font_bold">
+                            แสดงผล <span class="text_blue">@(Model.TrackingGuaranteeNew.Items.Count)</span> จากทั้งหมด <span class="text_blue">@(Model.TrackingGuaranteeNew.Pager.TotalItems)</span>
+                        </div>
+                        <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.TrackingGuaranteeNew.Pager" />
+                    </div>
+                </div>
+
+                <br />
+                <br />
+
+            </div>
+        </div>
+    </section>
+
+
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}

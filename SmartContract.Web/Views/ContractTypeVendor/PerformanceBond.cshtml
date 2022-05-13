@@ -1,0 +1,355 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var lookUp = Model.CTVendor.GetLookUp;
+    var indata = Model.InfoGuaranteeContract;
+
+    var _Action = String.Empty;
+    if (ViewContext.RouteData.Values["action"] != null)
+    {
+        _Action = ViewContext.RouteData.Values["action"].ToString();
+    }
+    var AmountMoneyT01 = _Action.StartsWith("T01") ? "0" : "";
+
+
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <label class="lable_blue mr-5" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดหักหลักประกัน</label>
+            Link : <a style="text-decoration: underline;" href="https://kccp.krungthai.com/elg-portal/#/" target="_blank">หลักประกันสัญญา KTB</a>
+            @* 20211208
+        -สัญญาดำเนินงานตามโครงการ
+          >แสดงเฉพาะหักงวดที่ 1 (ที่เหลือ Hide)
+        -สัญญาให้บริการสาธาณสุขฯ
+          >Hide แคชเชียร์เช็ค ที่เหลือแสดงเหมือนเดิม*@
+            @if (_Action.StartsWith("T11"))
+            {
+                if (Model.InfoContract.Budget > 0)
+                {
+                    indata.DeductedAmountMoney = ((Model.InfoContract.Budget * 5) / 100);
+                }
+
+                <div class="form-group row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2 form-check mt-sm-2 d-none">
+                        <input type="hidden" asp-for="InfoGuaranteeContract.IdContractGuaranteeDetail" />
+                        <input class="form-check-input PerformanceBondOptGuaranteeType4"
+                               asp-for="InfoGuaranteeContract.GuaranteeType4"
+                               type="checkbox" checked>
+                        <label class="form-check-label">
+                            หักจากเงินโอนงวดที่ 1
+                        </label>
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">จำนวนเงิน :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" class="form-control" disabled
+                               asp-for="InfoGuaranteeContract.DeductedAmountMoney"
+                               value="@(indata.DeductedAmountMoney.HasValue ? indata.DeductedAmountMoney.Value.ToString("#,##0.00") : "0")">
+                    </div>
+                    <label class="col-sm-1 col-form-label">บาท</label>
+                </div>
+            }
+            else
+            {
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดหักหลักประกันอื่นๆ(กรณีไม่หักจากเงินโอนงวดที่ 1)</label>
+                <div class="form-group row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2 form-check mt-sm-2">
+                        <input type="hidden" asp-for="InfoGuaranteeContract.IdContractGuaranteeDetail" />
+                        <input class="form-check-input PerformanceBondOpt"
+                               asp-for="InfoGuaranteeContract.GuaranteeType1"
+                               type="checkbox">
+                        <label class="form-check-label">
+                            เงินสด
+                        </label>
+                    </div>
+                    <label class="col-sm-1 col-form-label text-sm-right">จำนวนเงิน :</label>
+                    <div class="col-sm-2 ">
+                        <input type="text" class="form-control bg-focus moneyformat"
+                               asp-for="InfoGuaranteeContract.AmountMoney"
+                               value="@(indata.AmountMoney.HasValue ? indata.AmountMoney.Value.ToString("#,##0.00") : AmountMoneyT01)">
+                    </div>
+                    <label class="col-sm-1 col-form-label">บาท</label>
+                </div>
+                @if (!_Action.StartsWith("T01"))
+                {
+                    <div>
+                        <div id="CashierCheck_First">
+                            <div class="form-group row">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-2 form-check mt-sm-2">
+                                    <input class="form-check-input PerformanceBondOpt"
+                                           asp-for="InfoGuaranteeContract.GuaranteeType2"
+                                           type="checkbox">
+                                    <label class="form-check-label">
+                                        แคชเชียร์เช็ค
+                                    </label>
+                                </div>
+                                <label class="col-sm-1 col-form-label text-sm-right">ธนาคาร :</label>
+                                <fieldset class="col-sm-3 Group_CashierCheck">
+                                    <input type="hidden" name="InfoGuaranteeContract.CashierChequeDesc[0].IdContractGuaranteeDetail"
+                                           value="@(indata.CashierChequeDesc != null && indata.CashierChequeDesc.Count > 0 ? indata.CashierChequeDesc[0].IdContractGuaranteeDetail : String.Empty)" />
+                                    <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                            name="InfoGuaranteeContract.CashierChequeDesc[0].BankCode"
+                                            asp-items="@(new SelectList((from s in lookUp.BankInfos
+                                                                               select new
+                                                                               {
+                                                                                   Code = s.BankId,
+                                                                                   FullName = $"({s.BankId}) {s.BankName}"
+                                                                               }),
+                                                                            "Code",
+                                                                            "FullName",
+                                                                            selectedValue: indata.CashierChequeDesc.FirstOrDefault()?.BankCode))">
+                                        <option value="">---เลือก---</option>
+                                    </select>
+                                </fieldset>
+                                <label class="col-sm-1 col-form-label text-sm-right">เลขที่เช็ค :</label>
+                                <fieldset class="col-sm-2 Group_CashierCheck">
+                                    <input type="text" class="form-control bg-focus"
+                                           name="InfoGuaranteeContract.CashierChequeDesc[0].CheckNumber"
+                                           value="@(indata.CashierChequeDesc.FirstOrDefault()?.CheckNumber)"
+                                           placeholder="">
+                                </fieldset>
+                                <div class="col-sm-2">
+                                    <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer CashierCheque_PlusMins" onclick="insert_row_CashierCheck()"></i>
+                                </div>
+                            </div>
+                            <fieldset class="form-group row Group_CashierCheck">
+                                <label class="col-sm-4 col-form-label text-sm-right">วันที่ :</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                                           name="InfoGuaranteeContract.CashierChequeDesc[0].DateStr"
+                                           value="@(indata.CashierChequeDesc.FirstOrDefault()?.DateStr)"
+                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                </div>
+                                <label class="col-sm-1 col-form-label text-sm-right">จำนวนเงิน :</label>
+                                <div class="col-sm-2 ">
+                                    <input type="text" class="form-control bg-focus moneyformat"
+                                           name="InfoGuaranteeContract.CashierChequeDesc[0].AmountMoney"
+                                           value="@(indata.CashierChequeDesc.FirstOrDefault()?.AmountMoney.Value.ToString("#,##0.00"))"
+                                           placeholder="0.00">
+                                </div>
+                                <label class="col-sm-1 col-form-label">บาท</label>
+                            </fieldset>
+
+                            <hr class="mt-2 mb-3 width_75" />
+                        </div>
+
+                        <fieldset id="CashierCheck_Render" class="Group_CashierCheck">
+                            @if (indata != null && indata.CashierChequeDesc != null && indata.CashierChequeDesc.Count() > 0)
+                            {
+                                foreach (var item in indata.CashierChequeDesc.Select((value, i) => (value, i)))
+                                {
+                                    if (item.i > 0)
+                                    {
+                                        <div class="Cashiercheck_Sub Cashiercheck_Sub_@(item.i)">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3"></div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">ธนาคาร :</label>
+                                                <div class="col-sm-3">
+                                                    <input type="hidden" name="InfoGuaranteeContract.CashierChequeDesc[@item.i].IdContractGuaranteeDetail"
+                                                           value="@(item.value.IdContractGuaranteeDetail)" />
+                                                    <select class="form-control bg-focus selectpicker" data-live-search="true"
+                                                            name="InfoGuaranteeContract.CashierChequeDesc[@item.i].BankCode"
+                                                            asp-items="@(new SelectList((from s in lookUp.BankInfos
+                                                                                    select new
+                                                                                    {
+                                                                                        Code = s.BankId,
+                                                                                        FullName = $"({s.BankId}) {s.BankName}"
+                                                                                    }),
+                                                                                   "Code",
+                                                                                   "FullName",
+                                                                                   selectedValue: item.value.BankCode))">
+                                                        <option value="">---เลือก---</option>
+                                                    </select>
+                                                </div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">เลขที่เช็ค :</label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" class="form-control bg-focus"
+                                                           name="InfoGuaranteeContract.CashierChequeDesc[@item.i].CheckNumber"
+                                                           value="@item.value.CheckNumber"
+                                                           placeholder="">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer CashierCheque_PlusMins" onclick="remove_row_CashierCheck(this)"></i>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-sm-right">วันที่ :</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control bg-focus input_icon_calendar datepicker"
+                                                           name="InfoGuaranteeContract.CashierChequeDesc[@item.i].DateStr"
+                                                           value="@item.value.DateStr"
+                                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">จำนวนเงิน :</label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" class="form-control bg-focus moneyformat"
+                                                           name="InfoGuaranteeContract.CashierChequeDesc[@item.i].AmountMoney"
+                                                           value="@(item.value.AmountMoney.HasValue ? item.value.AmountMoney.Value.ToString("#,##0.00") : "")"
+                                                           placeholder="">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label">บาท</label>
+                                            </div>
+                                            <hr class="mt-2 mb-3 width_75" />
+                                        </div>
+                                    }
+                                }
+                            }
+                        </fieldset>
+                    </div>
+                }
+                <div>
+                    <div id="BookGuarantee_First">
+                        <div class="form-group row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2 form-check mt-sm-2">
+                                <input class="form-check-input PerformanceBondOpt"
+                                       asp-for="InfoGuaranteeContract.GuaranteeType3"
+                                       type="checkbox">
+                                <label class="form-check-label">
+                                    หนังสือค้ำประกัน
+                                </label>
+                            </div>
+
+                            <label class="col-sm-1 col-form-label text-sm-right">ธนาคาร :</label>
+                            <fieldset class="col-sm-3 Group_BookGuarantee">
+                                <input type="hidden" name="InfoGuaranteeContract.BookGuaranteeDesc[0].IdContractGuaranteeDetail"
+                                       value="@(indata.BookGuaranteeDesc != null && indata.BookGuaranteeDesc.Count > 0 ? indata.BookGuaranteeDesc[0].IdContractGuaranteeDetail : String.Empty)" />
+                                <select class="bankcode_0 form-control bg-focus selectpicker" data-live-search="true" onchange="BookGuaranteeChange(this,0)"
+                                        name="InfoGuaranteeContract.BookGuaranteeDesc[0].BankCode"
+                                        asp-items="@(new SelectList((from s in lookUp.BankInfos select new {
+                                                            Code=s.BankId,
+                                                            FullName = $"({s.BankId}) {s.BankName}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: indata.BookGuaranteeDesc.FirstOrDefault()?.BankCode))">
+                                    <option value="">---เลือก---</option>
+                                </select>
+                            </fieldset>
+                            <label class="col-sm-1 col-form-label text-sm-right pl-sm-0">เลขที่หนังสือ :</label>
+                            <fieldset class="col-sm-2 Group_BookGuarantee">
+                                <input type="text" class="form-control bg-focus"
+                                       name="InfoGuaranteeContract.BookGuaranteeDesc[0].BookNumber" onkeyup="BookNumberChange(this,0)"
+                                       value="@(indata.BookGuaranteeDesc.FirstOrDefault()?.BookNumber)"
+                                       placeholder="">
+                            </fieldset>
+                            <div class="col-sm-2 BookGuarantee_PlusMins">
+                                <i class="fa fa-plus-circle fa-2x mr-1 cursor-pointer" onclick="insert_row_BookGuarantee()"></i>
+                            </div>
+                        </div>
+                        <fieldset class="Group_BookGuarantee">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label text-sm-right">วันที่เริ่มต้น :</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="startdatestr_0 form-control bg-focus input_icon_calendar datepicker"
+                                           name="InfoGuaranteeContract.BookGuaranteeDesc[0].StartDateStr"
+                                           value="@(indata.BookGuaranteeDesc.FirstOrDefault()?.StartDateStr)"
+                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                </div>
+                                <label class="col-sm-1 col-form-label text-sm-right">วันที่สิ้นสุด :</label>
+                                <div class="col-sm-2 ">
+                                    <input type="text" class="enddatestr_0 form-control bg-focus input_icon_calendar datepicker"
+                                           name="InfoGuaranteeContract.BookGuaranteeDesc[0].EndDateStr"
+                                           value="@(indata.BookGuaranteeDesc.FirstOrDefault()?.EndDateStr)"
+                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                </div>
+                                <label class="col-sm-1 col-form-label">บาท</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label text-sm-right">จำนวนเงิน :</label>
+                                <div class="col-sm-6 ">
+                                    <input type="text" class="amountmoney_0 form-control bg-focus moneyformat"
+                                           name="InfoGuaranteeContract.BookGuaranteeDesc[0].AmountMoney"
+                                           value="@(indata.BookGuaranteeDesc.FirstOrDefault()?.AmountMoney.Value.ToString("#,##0.00"))"
+                                           placeholder="0.00">
+                                </div>
+                                <label class="col-sm-1 col-form-label">บาท</label>
+                            </div>
+                        </fieldset>
+                        <hr class="mt-2 mb-3 width_75" />
+                    </div>
+                    <fieldset id="BookGuarantee_Render" class="Group_BookGuarantee">
+                        @if (indata != null && indata.BookGuaranteeDesc != null && indata.BookGuaranteeDesc.Count() > 0)
+                        {
+                            foreach (var item in indata.BookGuaranteeDesc.Select((value, i) => (value, i)))
+                            {
+                                if (item.i > 0)
+                                {
+                                    <div class="BookGuarantee_Sub BookGuarantee_Sub_@(item.i)">
+                                        <div class="form-group row">
+                                            <div class="col-sm-3"></div>
+                                            <label class="col-sm-1 col-form-label text-sm-right">ธนาคาร :</label>
+                                            <fieldset class="col-sm-3 Group_BookGuarantee">
+                                                <input type="hidden" name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].IdContractGuaranteeDetail"
+                                                       value="@(item.value.IdContractGuaranteeDetail)" />
+                                                <select class="bankcode_@item.i form-control bg-focus selectpicker" data-live-search="true" onchange="BookGuaranteeChange(this,item.i)"
+                                                        name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].BankCode"
+                                                        asp-items="@(new SelectList((from s in lookUp.BankInfos select new {
+                                                            Code=s.BankId,
+                                                            FullName = $"({s.BankId}) {s.BankName}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: item.value.BankCode))">
+                                                    <option value="">---เลือก---</option>
+                                                </select>
+                                            </fieldset>
+                                            <label class="col-sm-1 col-form-label text-sm-right pl-sm-0">เลขที่หนังสือ :</label>
+                                            <fieldset class="col-sm-2 Group_BookGuarantee">
+                                                <input type="text" class="form-control bg-focus"
+                                                       name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].BookNumber" onkeyup="BookNumberChange(this,@item.i)"
+                                                       value="@item.value.BookNumber"
+                                                       placeholder="">
+                                            </fieldset>
+                                            <div class="col-sm-2 BookGuarantee_PlusMins">
+                                                <i class="fa fa-minus-circle fa-2x mr-1 cursor-pointer" onclick="remove_row_BookGuarantee(this)"></i>
+                                            </div>
+                                        </div>
+                                        <fieldset class="Group_BookGuarantee">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-sm-right">วันที่เริ่มต้น :</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="startdatestr_@item.i form-control bg-focus input_icon_calendar datepicker"
+                                                           name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].StartDateStr"
+                                                           value="@item.value.StartDateStr"
+                                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label text-sm-right">วันที่สิ้นสุด :</label>
+                                                <div class="col-sm-2 ">
+                                                    <input type="text" class="enddatestr_@item.i form-control bg-focus input_icon_calendar datepicker"
+                                                           name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].EndDateStr"
+                                                           value="@item.value.EndDateStr"
+                                                           placeholder="วว/ดด/ปปปป" autocomplete="off">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label">บาท</label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label text-sm-right">จำนวนเงิน :</label>
+                                                <div class="col-sm-6 ">
+                                                    <input type="text" class="amountmoney_@item.i form-control bg-focus moneyformat"
+                                                           name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].AmountMoney"
+                                                           value="@(item.value.AmountMoney.HasValue ? item.value.AmountMoney.Value.ToString("#,##0.00") : "")"
+                                                           placeholder="0.00">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label">บาท</label>
+                                            </div>
+                                        </fieldset>
+                                        <hr class="mt-2 mb-3 width_75" />
+                                    </div>
+                                }
+                            }
+                        }
+                    </fieldset>
+                </div>
+
+            }
+
+
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "รายละเอียด";
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-auto">
+                        <h4 class="mr-5">
+                            <small class="text-primary"><i class="fa fa-book mr-1"></i>รายงานจำนวนการเข้าใช้งาน(transection)แยกรายเขต</small>
+                        </h4>
+                    </div>
+                    <button class="btn btn-success loadding text-white mr-3" style="width:120px"> ส่งออก excel </button>
+                    <button class="btn btn-primary loadding text-white mr-3" style="width:120px" onclick="JavaScript: window.history.back(1); return false;"> กลับ </button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-bordered table-sm table-responsive-sm justify-content-center">
+                    <thead class="thead_green">
+                        <tr>
+                            <th class="align-middle text-center">#</th>
+                            <th class="align-middle text-center">สังกัด</th>
+                            <th class="align-middle text-center">วันที่เข้าใช้งาน</th>
+                            <th class="align-middle text-center">ชื่อผู้เข้าใช้งาน</th>
+                            <th class="align-middle text-center">รหัสพนักงาน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-nowrap">
+                            <td>1</td>
+                            <td>03200_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 3 นครสวรรค์</td>
+                            <td>2020/07/06 09:07:11</td>
+                            <td>นางจรรยา รัตนวิภา</td>
+                            <td>57055</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>03200_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 3 นครสวรรค์</td>
+                            <td>2020/07/08 03:07:40</td>
+                            <td>นางจรรยา รัตนวิภา</td>
+                            <td>57055</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>03200_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 3 นครสวรรค์</td>
+                            <td>2020/07/08 03:07:40</td>
+                            <td>นางจรรยา รัตนวิภา</td>
+                            <td>57055</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>03200_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 3 นครสวรรค์</td>
+                            <td>2020/07/08 03:07:57</td>
+                            <td>นางจรรยา รัตนวิภา</td>
+                            <td>57055</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>03200_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 3 นครสวรรค์</td>
+                            <td>2020/07/08 04:07:55</td>
+                            <td>นางจรรยา รัตนวิภา</td>
+                            <td>57055</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>03200_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 3 นครสวรรค์</td>
+                            <td>2020/07/08 07:07:06</td>
+                            <td>นางจรรยา รัตนวิภา</td>
+                            <td>57055</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+    </script>
+}

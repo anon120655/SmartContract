@@ -1,0 +1,624 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeBureau.DashboardHomeMain
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "Dashboard";
+    var _ConutConType = Model.ContractTypeCount;
+}
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-home mr-1"></i>Dashboard</small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-align-justify mr-1"></i>สร้างนิติกรรมสัญญา ประจำปีงบประมาณ 2565</small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var _Items = (Model != null ? Model.ContractList.Items : null);
+    var _pager = (_Items != null ? Model.ContractList.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    <section>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-7 mb-2 p-1">
+                    <div class="card">
+                        <table id="example" class="table table-hover">
+                            <thead style="background-color:lemonchiffon">
+                                <tr>
+                                    <th class="text-left">นิติกรรมสัญญา</th>
+                                    <th style="width:160px">บันทึกข้อมูลล่าสุด</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (_Items != null && _Items.Count > 0)
+                                {
+                                    foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                                    {
+                                        <tr>
+                                            <td class="text-left">
+                                                <span class="text-primary">
+                                                    <a class="btn-outline-primary" onclick="showLoading()"
+                                                       asp-controller="ContractType"
+                                                       asp-action="T@(item.Value.ContractTypeId)C"
+                                                       asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                                       asp-route-Style="@item.Value.ContractStyleCode"
+                                                       asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                                       asp-route-Station="@item.Value.StationStatusCurr"
+                                                       asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)"
+                                                       asp-route-State="@SecurityRepo.Encrypt("1")">@item.Value.ContractName</a>
+                                                </span><br />
+                                                <span style="font-size:14px" class="text-black-50">ประเภทนิติกรรม : @item.Value.ContractTypeName</span><br />
+                                                <span style="font-size:14px" class="text-black-50">คู่สัญญา : @item.Value.VendorName</span><br />
+                                                <span style="font-size:14px" class="text-black-50">สังกัด : @item.Value.DepartmentName</span>
+                                            </td>
+                                            <td>
+                                                @GeneralUtils.DateToThString(item.Value.EditDate)<br />
+                                                <i class="fas fa-clock"><span style="font-size:14px" class="text-black-50"> @GeneralUtils.DateToTimeString(item.Value.EditDate) น</span></i>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 mt-2">
+                                ทั้งหมด 5 รายการ
+                            </div>
+                            <div class="col-xl-6 col-md-6 text-right mt-2">
+                                <a class="btn-outline-primary" onclick="showLoading()" asp-controller="Home" asp-action="index"> แสดงรายละเอียดทั้งหมด</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color:aquamarine">
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ประเภทนิติกรรมสัญญา(<span class="badge badge-pill badge-dark">@_ConutConType.SumContractTypeCount()</span>)</span></i>
+                                </div>
+                                <div class="col-6 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="myChart1" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-align-justify mr-1"></i>จัดการนิติกรรมสัญญา(อนุมัติแล้ว) ประจำปีงบประมาณ 2565</small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color: rgb(255, 205, 86,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">แก้ไขข้อมูลสัญญา(<span class="badge badge-pill badge-dark">33</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_01" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color:rgb(54, 162, 235,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ยกเลิกข้อมูลสัญญา(<span class="badge badge-pill badge-dark">28</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_02" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color: aquamarine">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ขยายสัญญา(<span class="badge badge-pill badge-dark">22</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_03" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color: rgb(255, 99, 132,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ปิดโครงการ(<span class="badge badge-pill badge-dark">28</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_04" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color:rgb(238, 130, 238,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ยุติสัญญา(<span class="badge badge-pill badge-dark">28</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_05" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-align-justify mr-1"></i>จัดการหลักประกันสัญญา ประจำปีงบประมาณ 2565</small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color: rgb(255, 205, 86,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ออกใหม่(<span class="badge badge-pill badge-dark">15</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_11" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color:rgb(54, 162, 235,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ต่ออายุ(<span class="badge badge-pill badge-dark">12</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_12" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color: aquamarine">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">คืน(<span class="badge badge-pill badge-dark">11</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_13" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color: rgb(255, 99, 132,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">เคลม/ยึด(<span class="badge badge-pill badge-dark">6</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_14" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+}
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        var ctxdata1 = {
+            labels: [
+                'สัญญา(@_ConutConType.ContractType1)',
+                'ข้อตกลง(@_ConutConType.ContractType2)',
+                'หนังสือแสดงความจำนง(@_ConutConType.ContractType3)',
+                'โครงการ(@_ConutConType.ContractType4)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [2, 1, 1, 1],
+                backgroundColor: [
+                    'rgb(255, 205, 86,0.8)',
+                    'rgb(54, 162, 235,0.8)',
+                    'rgb(255, 99, 132,0.8)',
+                    'rgb(238, 130, 238,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_01 = {
+            labels: [
+                'รอดำเนินการ(7)',
+                'อนุมัติ(20)',
+                'ไม่อนุมัติ(5)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [7, 20, 5, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_02 = {
+            labels: [
+                'รอดำเนินการ(15)',
+                'อนุมัติ(9)',
+                'ไม่อนุมัติ(3)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [15, 9, 3, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_03 = {
+            labels: [
+                'รอดำเนินการ(7)',
+                'อนุมัติ(7)',
+                'ไม่อนุมัติ(7)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [7, 7, 7, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_04 = {
+            labels: [
+                'รอดำเนินการ(10)',
+                'อนุมัติ(3)',
+                'ไม่อนุมัติ(14)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [10, 3, 14, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_05 = {
+            labels: [
+                'รอดำเนินการ(10)',
+                'อนุมัติ(3)',
+                'ไม่อนุมัติ(14)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [10, 3, 14, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_11 = {
+            labels: [
+                'รอดำเนินการ(2)',
+                'อนุมัติ(5)',
+                'ไม่อนุมัติ(7)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [2, 5, 7, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_12 = {
+            labels: [
+                'รอดำเนินการ(5)',
+                'อนุมัติ(4)',
+                'ไม่อนุมัติ(2)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [5, 4, 2, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_13 = {
+            labels: [
+                'รอดำเนินการ(7)',
+                'อนุมัติ(2)',
+                'ไม่อนุมัติ(1)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [7, 2, 1, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+        var ctxdata_14 = {
+            labels: [
+                'รอดำเนินการ(2)',
+                'อนุมัติ(3)',
+                'ไม่อนุมัติ(0)',
+                'ยกเลิก(1)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [2, 3, 0, 1],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+
+
+        window.onload = function () {
+            var ctx1 = document.getElementById('myChart1').getContext('2d');
+            var ctx_01 = document.getElementById('Chart_01').getContext('2d');
+            var ctx_02 = document.getElementById('Chart_02').getContext('2d');
+            var ctx_03 = document.getElementById('Chart_03').getContext('2d');
+            var ctx_04 = document.getElementById('Chart_04').getContext('2d');
+            var ctx_05 = document.getElementById('Chart_05').getContext('2d');
+            var ctx_11 = document.getElementById('Chart_11').getContext('2d');
+            var ctx_12 = document.getElementById('Chart_12').getContext('2d');
+            var ctx_13 = document.getElementById('Chart_13').getContext('2d');
+            var ctx_14 = document.getElementById('Chart_14').getContext('2d');
+            window.myBar = new Chart(ctx1, {
+                type: 'doughnut',
+                data: ctxdata1,
+                //options: {
+                //    responsive: true,
+                //    title: {
+                //        display: false,
+                //        text: 'Chart.js Bar Chart - Stacked'
+                //    },
+                //    tooltips: {
+                //        mode: 'index',
+                //        intersect: false
+                //    },
+                //    scales: {
+                //        yAxes: [{
+                //            ticks: {
+                //                beginAtZero: true
+                //            }
+                //        }]
+                //    }
+                //}
+            });
+            window.myBar = new Chart(ctx_01, {
+                type: 'pie',
+                data: ctxdata_01,
+            });
+            window.myBar = new Chart(ctx_02, {
+                type: 'pie',
+                data: ctxdata_02,
+            });
+            window.myBar = new Chart(ctx_03, {
+                type: 'pie',
+                data: ctxdata_03,
+            });
+            window.myBar = new Chart(ctx_04, {
+                type: 'pie',
+                data: ctxdata_04,
+            });
+            window.myBar = new Chart(ctx_05, {
+                type: 'pie',
+                data: ctxdata_05,
+            });
+            window.myBar = new Chart(ctx_11, {
+                type: 'pie',
+                data: ctxdata_11,
+            });
+            window.myBar = new Chart(ctx_12, {
+                type: 'pie',
+                data: ctxdata_12,
+            });
+            window.myBar = new Chart(ctx_13, {
+                type: 'pie',
+                data: ctxdata_13,
+            });
+            window.myBar = new Chart(ctx_14, {
+                type: 'pie',
+                data: ctxdata_14,
+            });
+        }
+
+        $(document).ready(function () {
+            $('[data-toggle="modal"]').tooltip();
+
+            //$('#example').dataTable({
+            //    "oLanguage": {
+            //        "sSearch": "Search all columns:"
+            //    },
+            //    "aoColumnDefs": [
+            //        {
+            //            'bSortable': true,
+            //            'aTargets': [0]
+            //        }
+            //    ],
+            //    'iDisplayLength': 10,
+            //    "sPaginationType": "full_numbers",
+            //    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            //    "bAutoWidth": true
+            //});
+        });
+    </script>
+}

@@ -1,0 +1,190 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Share.IGeneralRepo _repoShare
+@model SmartContract.Infrastructure.Resources.ContractTypeBureau.TrackingContractMain
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "นิติกรรมสัญญา";
+    Layout = "~/Views/Shared/_LayoutTemplatesVendor.cshtml";
+    String _Station = Context.Request.Query["Station"].ToString();
+    String _MenuEn = Context.Request.Query["MenuEn"].ToString();
+    String _ContractSuccessTypeEn = Context.Request.Query["ContractSuccessTypeEn"].ToString();
+    String _Menu = String.Empty;
+    String _Title = String.Empty;
+}
+
+<link href="~/css/home/progressbarcontract.css" rel="stylesheet" />
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var _Items = (Model != null ? Model.TrackingSuccess.Items : null);
+    var _pager = (_Items != null ? Model.TrackingSuccess.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    if (_MenuEn != null)
+    {
+        _Menu = SecurityRepo.Decrypt(_MenuEn);
+        _Title = ContractUtils.BindingPropertite(_Menu).MenuFullName;
+        ViewData["Title"] = _Title;
+    }
+
+    <div>
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small class="text-primary"><i class="fa fa-file-alt mr-1"></i>@_Title</small>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1 mb-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small><i class="fas fa-table mr-1"></i>รายละเอียดข้อเสนอจัดทำนิติกรรมสัญญา</small>
+                                </h4>
+                            </div>
+                            <div class="col-6">
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <section>
+                        <div class="">
+                            <div id="div_table1" class="col-md-12 search-table-outter table-responsive">
+                                <table id="table1" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:13px;">
+                                    <thead style="background-color: @(ContractUtils.BindingPropertite(_Menu).Color)">
+                                        <tr>
+                                            <th>ลำดับ</th>
+                                            <th>เลขที่อ้างอิง</th>
+                                            <th>วันที่ทำเอกสาร</th>
+                                            <th>ประเภทการลงนาม</th>
+                                            <th>เลขที่สัญญา</th>
+                                            <th>ชื่อสัญญา</th>
+                                            <th>ประเภทนิติกรรมสัญญา</th>
+                                            <th>ผู้บันทึก</th>
+                                            @*<th>สถานะ</th>*@
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (_Items != null && _Items.Count > 0)
+                                        {
+                                            foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                                            {
+                                                <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                                    <td>@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
+                                                    <td class="text-center col-md-1">
+                                                        @item.Value.RefId
+                                                    </td>
+                                                    <td>10/10/2564</td>
+                                                    <td>@ContractUtils.SigningTypes(item.Value.ContractSignType).Description</td>
+                                                    <td>
+                                                        <b class="">
+                                                            เลขที่สัญญา
+                                                        </b> : @item.Value.ContractId
+                                                        <br />
+                                                        <b>
+                                                            วันที่ทำสัญญา
+                                                        </b> : @GeneralUtils.DateToThString(item.Value.ContractDate)
+                                                    </td>
+                                                    <td>@item.Value.ContractName</td>
+                                                    <td>@item.Value.ContractTypeName</td>
+                                                    <td>
+                                                        <b>
+                                                            ผู้สร้างเอกสาร
+                                                        </b> : @item.Value.CreateUserFullname
+                                                        <br />
+                                                        <b>
+                                                            ผู้บันทึกล่าสุด
+                                                        </b> : @item.Value.EditUserFullname
+                                                        <br />
+                                                        <b>
+                                                            วันที่บันทึกล่าสุด
+                                                        </b> :@GeneralUtils.DateToThString(item.Value.EditDate)
+                                                    </td>
+                                                    @*<td class="">
+                                                        <span class="badge badge-pill p-2" style="min-width: 100px; color: #ffffff; background-color: @(ContractUtils.StatusBindingPropertites(item.Value.ContractSuccessStatus).Color2)">
+                                                            @ContractUtils.StatusBindingPropertites(item.Value.ContractSuccessStatus).Name2
+                                                        </span>
+                                                    </td>*@
+                                                    @if (item.Value.StationStatusCurr != ContractStationStatusAll.S1Draft && item.Value.StationStatusCurr != ContractStationStatusAll.S2BookRequestApproval)
+                                                    {
+                                                        <td class="text-center col-md-1">
+                                                            <a class="btn-outline-primary" onclick="showLoading()"
+                                                               asp-controller="ContractTypeVendor"
+                                                               asp-action="T@(item.Value.ContractTypeId)"
+                                                               asp-route-Style="@item.Value.ContractStyleCode"
+                                                               asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                                               asp-route-Station="@item.Value.StationStatusCurr"
+                                                               asp-route-StationEn="@SecurityRepo.Encrypt(ContractStationStatusAll.S7Binding)"
+                                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                                               asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)"
+                                                               asp-route-ContractSuccessTypeEn="@(_ContractSuccessTypeEn)"
+                                                               asp-route-State="@SecurityRepo.Encrypt("1")"
+                                                               asp-route-MenuEn="@(_MenuEn)">เลือก</a>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="col-md-12">
+                        <div class="row mr-1">
+                            <div class="col-xl-4 col-md-4 mt-2 pagination_font font_bold">
+                                แสดงผล <span class="text_blue">@(Model.TrackingSuccess.Items.Count)</span> จากทั้งหมด <span class="text_blue">@(Model.TrackingSuccess.Pager.TotalItems)</span>
+                            </div>
+                            <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.TrackingSuccess.Pager" />
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+
+                </div>
+            </div>
+        </section>
+
+
+
+    </div>
+}
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}
+
+

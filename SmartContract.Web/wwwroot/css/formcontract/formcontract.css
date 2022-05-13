@@ -1,0 +1,40 @@
+﻿.btn-link {
+    font-weight: 400;
+    color: #28583d !important;
+    background-color: transparent;
+}
+
+.card {
+    margin: 10px;
+    border: 1px solid #0a3915 !important;
+}
+
+.card-header {
+    border-bottom: 0px !important;
+    background-color: #ffa05c !important; /*#ffc3b1*/
+}
+
+.card-header .mb-0 .btn {
+    line-height: 0.5 !important;
+}
+
+.card2 {
+    margin: 10px;
+    border: 1px solid #0a3915 !important;
+}
+.card2-header2 {
+    border-bottom: 0px !important;
+    background-color: #e1acac !important;
+}
+
+.card2-header2 .mb-0 .btn {
+        line-height: 0.5 !important;
+    }
+
+.custom-control {
+    padding-top: 6px;
+}
+
+form    .form-group label.tltle {
+    font-weight: bold;
+}

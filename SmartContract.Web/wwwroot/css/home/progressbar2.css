@@ -1,0 +1,287 @@
+﻿.progressbar-wrapper {
+    background: #fff;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.progressbar2 li {
+    list-style-type: none;
+    width: 10%;
+    float: left;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    color: #7d7d7d;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+    .progressbar2 li:before {
+        width: 55px;
+        height: 55px;
+        content: "";
+        line-height: 60px;
+        border: 2px solid #7d7d7d;
+        display: block;
+        text-align: center;
+        margin: 0 auto 3px auto;
+        border-radius: 50%;
+        position: relative;
+        z-index: 2;
+        background-color: #fff;
+    }
+
+    .progressbar2 li:after {
+        width: 100%;
+        height: 3px;
+        content: '';
+        position: absolute;
+        background-color: #7d7d7d;
+        top: 30px;
+        left: -50%;
+        z-index: 0;
+    }
+
+    .progressbar2 li:first-child:after {
+        content: none;
+    }
+
+    .progressbar2 li.active {
+        color: green;
+        font-weight: bold;
+    }
+
+        .progressbar2 li.active:before {
+            border-color: #55b776;
+            background: green;
+        }
+
+        .progressbar2 li.active + li:after {
+            background-color: #55b776;
+        }
+
+
+        .progressbar2 li.active:before {
+            background: #2c8655 url('../../images/logo/user.svg') no-repeat center center;
+            background-size: 60%;
+        }
+
+    /*.progressbar2 li::before {
+        background: #fff url('../../images/logo/user.svg') no-repeat center center;
+        background-size: 60%;
+    }*/
+
+    /*แสดงสถานะข้อมูลการเบิกจ่ายเงินสดย่อย*/
+
+    .progressbar2 li.station_all_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_department_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_approve1_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_approve2_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_receive_doc:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_check_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_audit_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_finance_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_success_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_cancel_cash:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    /*แสดงสถานะข้อมูลการเบิกจ่ายเงินทดรองจ่าย*/
+    .progressbar2 li.station_all_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_department_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_approve1_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_approve2_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_receive_doc:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_check_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_audit_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_finance_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_success_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_cancel_trial:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    /*แสดงสถานะข้อมูลการเบิกจ่ายเงินส่งใช้ยืมคืน*/
+    .progressbar2 li.station_all_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_department_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_approve1_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_approve2_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_receive_doc:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_check_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_audit_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_finance_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_success_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }
+
+    .progressbar2 li.station_cancel_borrow:before {
+        content: attr(data-before);
+        font-size: 14px;
+        font-weight: bold;
+        background-size: 60%;
+    }

@@ -1,0 +1,39 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+    String _MenuCode = Model.ParameterCondition.MenuEn != null ? SecurityRepo.Decrypt(Model.ParameterCondition.MenuEn) : String.Empty;
+    var indata = Model.InfoRequestBinding;
+}
+
+@if (_MenuCode == ContractSuccessTypes.T1_EDIT
+|| _MenuCode == ContractSuccessTypes.T2_CANCEL
+|| _MenuCode == ContractSuccessTypes.T3_EXPAND
+|| _MenuCode == ContractSuccessTypes.T4_CLOSEPROJECT
+|| _MenuCode == ContractSuccessTypes.T5_TERMINATE)
+{
+    <div class="card accordion-group">
+        <div class="card-header" id="headingDetailRequestBindingApprove">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailRequestBindingApprove" aria-expanded="true" aria-controls="collapseDetailRequestBindingApprove">
+                    <i class="fas fa-pencil-alt"></i> รายละเอียดการขอ@(ContractUtils.BindingPropertite(_MenuCode).MenuFullName)
+                </button>
+            </h5>
+        </div>
+        <div id="collapseDetailRequestBindingApprove" class="collapse show" aria-labelledby="headingDetailRequestBindingApprove">
+            <div class="card-body thead_tabsub1 bg-form">
+                <partial name="/Views/ContractTypeVendor/RequestBindingView.cshtml" />
+                <hr class="mt-2 mb-3 ">
+                @if (indata.ContractSuccessStatus == ContractStatusAll.S1WaitApprove)
+                {
+                    <partial name="/Views/ContractType/RequestBindingApprove.cshtml" />
+                }
+                else
+                {
+                    <partial name="/Views/ContractType/RequestBindingApproveView.cshtml" />
+                }
+            </div>
+        </div>
+    </div>
+}

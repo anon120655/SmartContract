@@ -1,0 +1,115 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils;
+
+@{
+    Layout = null;
+    var indata = Model.InfoAttachDraftContract;
+    var indataAppReq = Model.InfoAttachDraftContractAppReq;
+    string _ContractTypeId = Model.ParameterCondition.ContractTypeId;
+}
+
+<div>
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์เอกสารจากระบบสมัคร</label>
+                    @*<div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 1 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/files/FileNhso.pdf">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 2 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/files/FileNhso.pdf">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label ml-5">เอกสาร สปสช. 3 </label>
+                        <div class="col-sm-4 ">
+                            <a style="margin-left:5px;" target="_blank" href="~/files/FileNhso.pdf">
+                                <i class="fas fa-file-pdf fa-lg"></i> View
+                            </a>
+                        </div>
+                    </div>*@
+                </div>
+                <div class="form-group">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบท้าย(ร่าง)นิติกรรม(คู่สัญญา)</label>
+                    <fieldset>
+                        <div id="">
+                            <table class="table table-hover" style="width:50%">
+                                <tbody>
+                                    @if (indata != null && indata.SmctMasterFile != null && indata.SmctMasterFile.Where(x => x.FileType == "F1").Count() > 0)
+                                    {
+                                        int index_file = 0;
+                                        foreach (var item_file in indata.SmctMasterFile.Where(x => x.FileType == "F1"))
+                                        {
+                                            index_file++;
+                                            String pathFolder = $"Attach\\T{_ContractTypeId}\\{item_file.PathFolder}";
+                                            <tr>
+                                                <td>@(index_file)</td>
+                                                <td class="text-primary">@item_file.FileName</td>
+                                                <td>
+                                                    <a asp-action="Render"
+                                                       asp-controller="Files"
+                                                       asp-route-fileftp="@(item_file.FileFtp)"
+                                                       asp-route-type="@(pathFolder)"
+                                                       target="_blank" class="ml-3">
+                                                        <i class="fas fa-file-pdf fa-lg"></i> View
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form-group">
+                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์แนบท้าย(ร่าง)นิติกรรม(สำนัก/กองทุนย่อย/เขต)</label>
+                    <fieldset>
+                        <div id="Attachfile_Rander">
+                            <table class="table table-hover" style="width:50%">
+                                <tbody>
+                                    @if (indataAppReq != null && indataAppReq.SmctMasterFile != null && indataAppReq.SmctMasterFile.Where(x => x.FileType == "F2").Count() > 0)
+                                    {
+                                        int index_file = 0;
+                                        foreach (var item_file in indataAppReq.SmctMasterFile.Where(x => x.FileType == "F2"))
+                                        {
+                                            index_file++;
+                                            String pathFolder = $"Attach\\T{_ContractTypeId}\\{item_file.PathFolder}";
+                                            <tr>
+                                                <td>@(index_file)</td>
+                                                <td class="text-primary">@item_file.FileName</td>
+                                                <td>
+                                                    <a asp-action="Render"
+                                                       asp-controller="Files"
+                                                       asp-route-fileftp="@(item_file.FileFtp)"
+                                                       asp-route-type="@(pathFolder)"
+                                                       target="_blank" class="ml-3">
+                                                        <i class="fas fa-file-pdf fa-lg"></i> View
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>

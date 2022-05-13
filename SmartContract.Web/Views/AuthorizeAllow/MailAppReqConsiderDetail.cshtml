@@ -1,0 +1,214 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+
+@{
+    ViewData["Title"] = "MailAppReqConsiderDetail";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+
+    var indataPara = Model.ParameterCondition;
+    var indataApp = Model.ApprovalReqStation;
+    var indata = Model.InfoFMPDF;
+
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    PermissionRole roleCode = UserService.GetRoleRoleCode();
+    String _readonly = "";
+    if (roleCode != PermissionRole.SystemAdmin && Model.ApproveProposal.UserNameCA != "ti-claim@nhso.go.th")
+    {
+        _readonly = "readonly";
+    }
+
+    if (indataPara.StationReq == ApproveStationStatusAll.S3Consider)
+    {
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>
+                                    <small><i class="fa fa-file-alt mr-1 x_title_before"></i>รายละเอียดการตรวจสอบหนังสือขออนุมัติ(พิจารณา(ผอ.))  </small>
+                                </h4>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+        <form asp-controller="AuthorizeAllow" asp-action="MailAppReqConsiderDetail" enctype="multipart/form-data" method="post"
+              data-ajax="true" data-ajax-method="post"
+              data-ajax-begin="onbeginForm"
+              data-ajax-complete="completedForm"
+              data-ajax-failure="failedForm">
+            <div>
+                <div class="card accordion-group">
+                    <div class="card-header" id="headingDetailT03_12">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_12" aria-expanded="true" aria-controls="collapseDetailT03_12">
+                                <i class="fas fa-file-alt"></i> รายละเอียดไฟล์หนังสือขออนุมัติ
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseDetailT03_12" class="collapse show" aria-labelledby="headingDetailT03_12">
+                        <div class="card-body thead_tabsub1 bg-form">
+                            <section>
+                                <div class="">
+                                    <div class="col-md-12">
+                                        <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดไฟล์นิติกรรมสัญญาจากระบบ(ฉบับจริง)</label>
+                                        <table class="table borderless">
+                                            <tr>
+                                                <td class="col-sm-1 pt-0"></td>
+                                                <td>
+                                                    <div class="form-group row mb-0">
+                                                        <div class="col-sm-7 text-left">
+                                                            <label class="tltle mt-1">หนังสือขออนุมัติ</label>
+                                                        </div>
+                                                        <div class="col-sm-3 text-right">
+                                                            @if (indata.SmctMasterFile_APPROVAL != null)
+                                                            {
+                                                                var _File = indata.SmctMasterFile_APPROVAL;
+                                                                String pathFolder = $"FM\\FM_APPROVAL_REQ\\{_File.PathFolder}";
+                                                                <a class="btn-outline-primary" target="_blank"
+                                                                   asp-controller="Files"
+                                                                   asp-action="Render"
+                                                                   asp-route-type="@(pathFolder)"
+                                                                   asp-route-fileftp="@(_File.FileFtp)">
+                                                                    <i class="fas fa-file-pdf fa-2x"></i> View
+                                                                </a>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card accordion-group">
+                    <div class="card-header" id="headingDetailT03_8">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_8" aria-expanded="true" aria-controls="collapseDetailT03_8">
+                                <i class="fas fa-pencil-alt"></i> ผลการตรวจสอบหนังสือขออนุมัติ(สำนัก/กองทุนย่อย/เขต)
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseDetailT03_8" class="collapse show" aria-labelledby="headingDetailT03_8">
+                        <div class="card-body thead_tabsub1 bg-form">
+                            <section>
+                                <div class="">
+                                    <div class="col-md-12">
+                                        <section>
+                                            <div class="">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="lable_blue" for="">ผลการตรวจสอบหนังสือขออนุมัติ</label>
+
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input select_approve_req"
+                                                                   asp-for="ApproveReq.Approve">
+                                                            <label class="custom-control-label" for="ApproveReq_Approve">อนุมัติ</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input select_approve_req"
+                                                                   asp-for="ApproveReq.UnApprove">
+                                                            <label class="custom-control-label" for="ApproveReq_UnApprove">ไม่อนุมัติ(ตีกลับหน่วยบริการ)</label>
+                                                        </div>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input select_approve_req"
+                                                                   asp-for="ApproveReq.UnApproveCheck">
+                                                            <label class="custom-control-label" for="ApproveReq_UnApproveCheck">ไม่อนุมัติ(ตีกลับเจ้าหน้าที่ตรวจสอบ)</label>
+                                                        </div>
+                                                        <div class="form-group col-md-8 mt-2 ">
+                                                            <label class="tltle lable_blue">ระบุรายละเอียดหมายเหตุ</label>
+                                                            <div class="col-sm-8">
+                                                                <textarea cols="80" rows="5" asp-for="ApproveReq.Remark"
+                                                                          placeholder="ระบุได้ไม่เกิน 250 ตัวอักษร"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="lable_blue" for="">NHSO CA Gateway</label>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-2 col-form-label text-right">Username</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="text" class="form-control" @_readonly
+                                                                   name="ApproveProposal.UserNameCA" value="@Model.ApproveProposal.UserNameCA">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="" class="col-sm-2 col-form-label text-right">Password</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="password" class="form-control"
+                                                                   asp-for="ApproveProposal.PasswordCA">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-5">
+                    <div class="col text-center">
+                        <input type="hidden" asp-for="ObjectState" />
+                        <input type="hidden" asp-for="ParameterCondition.IdSmctMaster" />
+                        <input type="hidden" asp-for="ParameterCondition.Style" />
+                        <input type="hidden" asp-for="ParameterCondition.ContractTypeId" />
+                        <input type="hidden" asp-for="ParameterCondition.ContractTypeIdEn" />
+                        <input type="hidden" asp-for="ParameterCondition.Station" />
+                        <input type="hidden" asp-for="ParameterCondition.StationReq" />
+                        <input type="hidden" asp-for="ParameterCondition.SigningTypeEn" />
+                        <input type="hidden" asp-for="ParameterCondition.RefId" />
+                        <input type="hidden" asp-for="ApprovalReqStation.StationStatusCurr" />
+
+                        <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกส่งต่อ<i class="fa fa-angle-right align-middle"></i></button>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    }
+    else
+    {
+        <fieldset id="">
+            <div class="form-group  text-center">
+                <h2 id="overview" class="text-success mt-5">
+                    <span class="bd-content-title"><i class="fas fa-check-circle"></i>   ดำเนินการเรียบร้อยแล้ว</span>
+                </h2>
+            </div>
+        </fieldset>
+    }
+}
+<partial name="/Views/Shared/JavaScript/JavascriptFileShare.cshtml" for="@Model.CTVendor.GetLookUp" />
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/authorizeallow/MailAppReqConsiderDetail.js" asp-append-version="true"></script>
+
+}

@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "สร้างข้อมูลนิติกรรมใหม่";
+}
+
+<link href="~/css/home/progressbar.css" rel="stylesheet" />
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group m-1">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            <small><i class="fa fa-book mr-1"></i>สร้างนิติกรรมสัญญา > </small>
+                            <small><span class="text-primary"><u>สร้างนิติกรรมสัญญาใหม่</u></span></small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3"></div>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="card accordion-group">
+    <div class="card-header" id="headingDetailContract">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailContract" aria-expanded="true" aria-controls="collapseDetailContract">
+                <i class="fas fa-pencil-alt"></i> รายละเอียดนิติกรรมสัญญา
+            </button>
+        </h5>
+    </div>
+    <div id="collapseDetailContract" class="collapse show" aria-labelledby="headingDetailContract">
+        <div class="card-body thead_tabsub1">
+            <div class="form-group">
+                <label class="lable_blue" for="">รายละเอียดนิติกรรมสัญญา</label>
+                <div class="list-group text-center">รายละเอียดเงื่อนไขการสร้างนิติกรรมสัญญา</div>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+</div>
+\
+<br />
+<div class="col-md-12">
+    <div class="col text-center">
+        @*<button type="button" class="btn btn-success">ตกลง</button>&nbsp;*@
+        <a class="btn btn-success mr-3" onclick="showLoading()" asp-area="" asp-controller="Home" asp-action="ContractCreate">ตกลง</a>
+        <button type="button" class="btn btn-secondary"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</button>
+    </div>
+</div>
+<br />
+<br />

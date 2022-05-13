@@ -1,0 +1,102 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "";
+    PermissionRole roleCode = UserService.GetRoleRoleCode();
+    var indataSign = Model.InfoSignerPartnersOfContract;
+    string _Station = Model.ContractStation.StationStatusCurr;
+    string _ItemStatusCurr = Model.ContractStation.ItemStatusCurr;
+    string _SigningType = SecurityRepo.Decrypt(Model.ParameterCondition.SigningTypeEn);
+    String _MenuCode = Model.ParameterCondition.MenuEn != null ? SecurityRepo.Decrypt(Model.ParameterCondition.MenuEn) : String.Empty;
+    var indataBinding = Model.InfoRequestBinding;
+
+    var indataSigner = Model.InfoSignerPartnersOfContract;
+    int NhsoWitnessCount = Model.MasterSendmail.Count(x => x.SendmailType == SendmailTypes.NhsoWitness || x.SendmailType == SendmailTypes.NhsoWitnessP);
+    int NhsoAuthorityCount = Model.MasterSendmail.Count(x => x.SendmailType == SendmailTypes.NhsoAuthority || x.SendmailType == SendmailTypes.NhsoAuthorityP);
+
+}
+
+<div class="col text-center">
+    <input type="hidden" asp-for="ObjectState" />
+    <input type="hidden" asp-for="ParameterCondition.Menu" />
+    <input type="hidden" asp-for="ParameterCondition.MenuEn" />
+    <input type="hidden" asp-for="ParameterCondition.IdSmctMaster" />
+    <input type="hidden" asp-for="ParameterCondition.Style" />
+    <input type="hidden" asp-for="ParameterCondition.IdContract" />
+    <input type="hidden" asp-for="ParameterCondition.ContractTypeId" />
+    <input type="hidden" asp-for="ParameterCondition.ContractTypeIdEn" />
+    <input type="hidden" asp-for="ParameterCondition.IdContractType" />
+    <input type="hidden" asp-for="ParameterCondition.ItemStatusCurr" />
+    <input type="hidden" asp-for="ParameterCondition.Station" />
+    <input type="hidden" asp-for="ParameterCondition.StationEn" />
+    <input type="hidden" asp-for="ParameterCondition.SigningType" />
+    <input type="hidden" asp-for="ParameterCondition.SigningTypeEn" />
+    <input type="hidden" asp-for="ParameterCondition.ContractSuccessType" />
+    <input type="hidden" asp-for="ParameterCondition.ContractSuccessTypeEn" />
+    <input type="hidden" asp-for="ApprovalReqStation.StationStatusCurr" />
+    <input type="hidden" asp-for="ParameterCondition.RefId" />
+    <input type="hidden" id="NhsoWitnessStatus" value="@(indataSigner.NhsoWitnessStatus)" />
+    <input type="hidden" id="NhsoWitnessCount" value="@(NhsoWitnessCount)" />
+    <input type="hidden" id="NhsoAuthorityCount" value="@(NhsoAuthorityCount)" />
+
+    @if (_Station != ContractStationStatusAll.S5Signing2 && _Station != ContractStationStatusAll.S3SetVendor && _Station != ContractStationStatusAll.S6ContractNumber && _Station != ContractStationStatusAll.S7Binding)
+    {
+        <button type="submit" class="btn btn-warning mr-2" name="BtnSubmit" value="0">บันทึกร่าง</button>
+    }
+
+    @*แก้ไขหลังจากผูกพันไปแล้ว*@
+    @if (_MenuCode == ContractSuccessTypes.T1_EDIT || _MenuCode == ContractSuccessTypes.T2_CANCEL || _MenuCode == ContractSuccessTypes.T3_EXPAND || _MenuCode == ContractSuccessTypes.T4_CLOSEPROJECT || _MenuCode == ContractSuccessTypes.T5_TERMINATE)
+    {
+        <a class="btn btn-secondary mr-2" onclick="showLoading()"
+           asp-controller="Home"
+           asp-action="IndexBinding"
+           asp-route-MenuEn="@(SecurityRepo.Encrypt(_MenuCode))"
+           asp-route-StationEn="@(SecurityRepo.Encrypt("S7"))">ยกเลิกทำรายการ</a>
+
+        @if (indataBinding.ContractSuccessStatus == ContractStatusAll.S1WaitApprove)
+        {
+            <button type="submit" class="btn btn-success" name="BtnSubmit" value="@(ContractUtils.BindingPropertite(_MenuCode).ButtonState)">
+                @(ContractUtils.BindingPropertite(_MenuCode).ButtonName) <i class="fa fa-angle-right align-middle"></i>
+            </button>
+        }
+
+    }
+    else
+    {
+        <a class="btn btn-secondary mr-2" asp-controller="Home" asp-action="Index"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+    }
+
+    @*ลงนาม 2 ฝ่าย*@
+    @if (_Station == ContractStationStatusAll.S5Signing2)
+    {
+        @*if (_SigningType == SigningTypes.Paper)
+            {
+                if (indataSign != null && indataSign.NhsoWitnessStatus == WitnessStatusAll.W2WitnessComplete)
+                {
+                    if (_ItemStatusCurr == ContractStationStatusItemAll.S51WaitSigning2 || _ItemStatusCurr == ContractStationStatusItemAll.S53WaitSigningNhso)
+                    {
+                        <button type="submit" class="btn btn-success" name="BtnSubmit" value="3">บันทึกส่งต่อ <i class="fa fa-angle-right align-middle"></i></button>
+                    }
+                }
+            }*@
+    }
+    else if (_Station == ContractStationStatusAll.S6ContractNumber)
+    {
+        if (roleCode == PermissionRole.SystemAdmin || roleCode == PermissionRole.CentralAdmin)
+        {
+            <button type="submit" class="btn btn-success" name="BtnSubmit" value="5">บันทึกส่งต่อ <i class="fa fa-angle-right align-middle"></i></button>
+        }
+    }
+    else if (_Station == ContractStationStatusAll.S7Binding || _Station == ContractStationStatusAll.S3SetVendor)
+    {
+
+    }
+    else
+    {
+        <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกส่งต่อ <i class="fa fa-angle-right align-middle"></i></button>
+    }
+</div>

@@ -1,0 +1,21 @@
+﻿@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+@{
+
+    String _MenuCode = Model.ParameterCondition.MenuEn != null ? SecurityRepo.Decrypt(Model.ParameterCondition.MenuEn) : String.Empty;
+}
+
+<div class="col-12">
+    <h4>
+        @if (!String.IsNullOrEmpty(_MenuCode))
+        {
+            <small><i class="fa fa-file-alt mr-1 x_title_before"></i>นิติกรรมสัญญา > @(ContractUtils.BindingPropertite(_MenuCode).MenuFullName) ></small>
+        }
+        else
+        {
+            <small><i class="fa fa-file-alt mr-1 x_title_before"></i>สร้างนิติกรรมสัญญา > สร้าง(ร่าง)นิติกรรมใหม่ ></small>
+        }
+        <small><span class="text-primary"><u>@Model.InfoContract.ContractTypeFullName </u></span></small>
+    </h4>
+</div>

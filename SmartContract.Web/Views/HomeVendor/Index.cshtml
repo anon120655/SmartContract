@@ -1,0 +1,797 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Share.IGeneralRepo _repoShare
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TrackingCTVendorMain
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "ข้อเสนอจัดทำนิติกรรมสัญญา";
+
+    Layout = "_LayoutTemplatesVendor";
+    var _tab = "tab1";
+}
+
+<link href="~/css/home/Tracking.css" rel="stylesheet" />
+<link href="~/css/home/progressbarproposal.css" rel="stylesheet" />
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var _Dash = Model.DashboardMain;
+    var _DashS1 = _Dash.Dashboards.FirstOrDefault(x => x.Style == "S1");
+    var _DashFReturnS1 = _Dash.DashboardFReturn.FirstOrDefault(x => x.Style == "S1");
+
+    var _DashS2 = _Dash.Dashboards.FirstOrDefault(x => x.Style == "S2");
+    var _DashFReturnS2 = _Dash.DashboardFReturn.FirstOrDefault(x => x.Style == "S2");
+
+    var _DashS41 = _Dash.Dashboards.FirstOrDefault(x => x.Style == "S41");
+    var _DashFReturnS41 = _Dash.DashboardFReturn.FirstOrDefault(x => x.Style == "S41");
+
+    var _DashS42 = _Dash.Dashboards.FirstOrDefault(x => x.Style == "S42");
+    var _DashFReturnS42 = _Dash.DashboardFReturn.FirstOrDefault(x => x.Style == "S42");
+
+    <div>
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>
+                                    <small class="text-primary"><i class="fa fa-file mr-1"></i>สร้างนิติกรรมสัญญา</small>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav>
+                            <ul id="tabs" class="nav nav-tabs nav-fill">
+                                <li class="nav-item tab_station_bar"><a href="" data-target="#tab1" data-toggle="tab" class="tab_station_bar_active tab1 nav-link text-uppercase">สัญญาให้บริการสาธารณสุขฯ</a></li>
+                                @*<li class="nav-item tab_station_bar"><a href="" data-target="#tab2" data-toggle="tab" class="tab_station_bar_active tab2 nav-link text-uppercase">สัญญาให้บริการฯตามกิจกรรมบริการ</a></li>*@
+                                <li class="nav-item tab_station_bar"><a href="" data-target="#tab3" data-toggle="tab" class="tab_station_bar_active tab3 nav-link text-uppercase">สัญญาดำเนินการตามโครงการ</a></li>
+                                <li class="nav-item tab_station_bar"><a href="" data-target="#tab4" data-toggle="tab" class="tab_station_bar_active tab4 nav-link text-uppercase">หนังสือแสดงความจำนงฯ</a></li>
+                            </ul>
+                        </nav>
+                        <br />
+
+                        <div id="tabsContent" class="tab-content">
+                            @*//Tab1---Style1
+                                                1.สัญญาให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ
+                                                2.สัญญาให้บริการสาธารสุข (สำรองเตียง) กรณีอุบัติเหตุหรือกรณีเจ็บป่วยฉุกเฉิน
+                                                3.สัญญาให้บริการสาธารสุข (สำรองเตียง) เฉพาะด้าน
+                                ---*@
+                            <div id="tab1" class="tab-pane fade">
+
+                                <section>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mt-md-3">
+                                                <div class="row">
+                                                    <div class="x_title text-center col-md-12">
+                                                        <p class="text-center">
+                                                            <h5><span class="x_title_before">ข้อมูลจัดทำ@(ContractUtils.PropertiesVendor("S1").Name) ประจำปีงบประมาณ 2565</span></h5>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <br />
+                                                    <div class="col-md-12 justify-content-center">
+                                                        <div class="progressbar-wrapper bg-transparent">
+                                                            <ul id="progressbar_tab1" class="progressbar">
+                                                                <li style="width:14.0%" class="proposal2_tab1all">ทั้งหมด</li>
+                                                                <li style="width:14.0%" class="proposal2_tab11">สร้าง(ร่าง)นิติกรรม</li>
+                                                                <li style="width:14.0%" class="proposal2_tab12">สร้างนิติกรรมสัญญา</li>
+                                                                <li style="width:14.0%" class="proposal2_tab13">ออกเลขที่สัญญา</li>
+                                                                <li style="width:14.0%" class="proposal2_tab14">ลงนาม 2 ฝ่าย</li>
+                                                                <li style="width:14.0%" class="proposal2_tab15">ผูกพัน</li>
+                                                                <li style="width:14.0%" class="proposal2_tab16">ยกเลิก</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <div class="form-group m-1 mb-2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h4>
+                                                            <small><i class="fas fa-table mr-1"></i>รายละเอียดจัดทำนิติกรรมสัญญา</small>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="text-right">
+                                                            <a class="btn btn-success mr-2" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="ContractCondition"
+                                                               asp-route-style="S1"><i class="fa fa-file mr-1"></i>สร้าง(ร่าง)นิติกรรมใหม่</a>
+                                                            <a class="btn btn-warning" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="Tracking"
+                                                               asp-route-style="S1"><i class="fa fa-indent mr-1"></i>ติดตามสถานะทั้งหมด</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12 search-table-outter table-responsive">
+                                                    <table id="table_tab1" name="table1" class="table table-bordered" style="background-color:#ffffff; font-size:14px;">
+                                                        <thead style="background-color: @(ContractUtils.PropertiesVendor("S1").Color)">
+                                                            <tr>
+                                                                <th class="text-center align-middle w-25" rowspan="2">@(ContractUtils.PropertiesVendor("S1").Name)</th>
+                                                                <th class="text-center align-middle" rowspan="2">ทั้งหมด</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้าง(ร่าง)นิติกรรม</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้างนิติกรรมสัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ออกเลขที่สัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ลงนาม 2 ฝ่าย</th>
+                                                                <th class="text-center align-middle" rowspan="2">ผูกพัน</th>
+                                                                <th class="text-center align-middle" rowspan="2">ยกเลิก</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ใหม่</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.SumCount())</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S1"
+                                                                           asp-route-station="S1">@string.Format("{0}", _DashS1.DraftCount)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S1"
+                                                                           asp-route-station="S5">@string.Format("{0}", _DashS1.Sign2Count)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.CancelCount)</td>
+                                                            </tr>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ตีกลับ/แก้ไข</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS1.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS1.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS1.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS1.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS1.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS1.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS1.CancelCount)</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="txt_totalAll">
+                                                                <td class="text-center">รวม</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.SumCount() + _DashFReturnS1.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.DraftCount + _DashFReturnS1.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.ContractCount + _DashFReturnS1.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.GenContractIdCount + _DashFReturnS1.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.Sign2Count + _DashFReturnS1.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.BindingCount + _DashFReturnS1.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS1.CancelCount + _DashFReturnS1.CancelCount)</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>หมายเหตุ</label>
+                                    <div class="form-group row col-md-12 align-top">
+                                        <div class="col-md-2 text-left">
+                                            ประเภทนิติกรรมสัญญา :
+                                        </div>
+                                        <div class="col-md-10 text-left">
+                                            1.สัญญาให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ<br />
+                                            2.สัญญาให้บริการสาธารสุข (สำรองเตียง) กรณีอุบัติเหตุหรือกรณีเจ็บป่วยฉุกเฉิน<br />
+                                            3.สัญญาให้บริการสาธารสุข (สำรองเตียง) เฉพาะด้าน
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+
+                            @*//Tab2---Style2
+                                    1.สัญญาให้บริการฯตามกิจกรรมบริการ
+                                    2.สัญญาให้บริการสาธารณสุขตามกิจกรรมบริการ รับการส่งต่อเฉพาะด้านบริการฟอกเลือดด้วยเครื่องไตเทียม (Hemodialysis : HD)
+                                ---*@
+                            <div id="tab2" class="tab-pane fade">
+
+                                <section>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mt-md-3">
+                                                <div class="row">
+                                                    <div class="x_title text-center col-md-12">
+                                                        <p class="text-center">
+                                                            <h5><span class="x_title_before">ข้อมูลจัดทำ@(ContractUtils.PropertiesVendor("S2").Name) ประจำปีงบประมาณ 2565</span></h5>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <br />
+                                                    <div class="col-md-12 justify-content-center">
+                                                        <div class="progressbar-wrapper bg-transparent">
+                                                            <ul id="progressbar_tab2" class="progressbar">
+                                                                <li style="width:14.0%" class="proposal2_tab2all">ทั้งหมด</li>
+                                                                <li style="width:14.0%" class="proposal2_tab21">สร้าง(ร่าง)นิติกรรม</li>
+                                                                <li style="width:14.0%" class="proposal2_tab22">สร้างนิติกรรมสัญญา</li>
+                                                                <li style="width:14.0%" class="proposal2_tab23">ออกเลขที่สัญญา</li>
+                                                                <li style="width:14.0%" class="proposal2_tab24">ลงนาม 2 ฝ่าย</li>
+                                                                <li style="width:14.0%" class="proposal2_tab25">ผูกพัน</li>
+                                                                <li style="width:14.0%" class="proposal2_tab26">ยกเลิก</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <div class="form-group m-1 mb-2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h4>
+                                                            <small><i class="fas fa-table mr-1"></i>รายละเอียดจัดทำนิติกรรมสัญญา</small>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="text-right">
+                                                            <a class="btn btn-success mr-2" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="ContractCondition"
+                                                               asp-route-style="S2"><i class="fa fa-file mr-1"></i>สร้าง(ร่าง)นิติกรรมใหม่</a>
+                                                            <a class="btn btn-warning" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="Tracking"
+                                                               asp-route-style="S2"><i class="fa fa-indent mr-1"></i>ติดตามสถานะทั้งหมด</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 search-table-outter table-responsive">
+                                                    <table id="table_tab2" name="table1" class="table table-bordered" style="background-color:#ffffff; font-size:14px;">
+                                                        <thead style="background-color: @(ContractUtils.PropertiesVendor("S2").Color)">
+                                                            <tr>
+                                                                <th class="text-center align-middle w-25" rowspan="2">@(ContractUtils.PropertiesVendor("S2").Name)</th>
+                                                                <th class="text-center align-middle" rowspan="2">ทั้งหมด</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้าง(ร่าง)นิติกรรม</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้างนิติกรรมสัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ออกเลขที่สัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ลงนาม 2 ฝ่าย</th>
+                                                                <th class="text-center align-middle" rowspan="2">ผูกพัน</th>
+                                                                <th class="text-center align-middle" rowspan="2">ยกเลิก</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ใหม่</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.SumCount())</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S2"
+                                                                           asp-route-station="S1">@string.Format("{0}", _DashS2.DraftCount)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S2"
+                                                                           asp-route-station="S5">@string.Format("{0}", _DashS2.Sign2Count)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.CancelCount)</td>
+                                                            </tr>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ตีกลับ/แก้ไข</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS2.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS2.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS2.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS2.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS2.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS2.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS2.CancelCount)</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="txt_totalAll">
+                                                                <td class="text-center">รวม</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.SumCount() + _DashFReturnS2.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.DraftCount + _DashFReturnS2.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.ContractCount + _DashFReturnS2.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.GenContractIdCount + _DashFReturnS2.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.Sign2Count + _DashFReturnS2.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.BindingCount + _DashFReturnS2.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS2.CancelCount + _DashFReturnS2.CancelCount)</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>หมายเหตุ</label>
+                                    <div class="form-group row col-md-12 align-top">
+                                        <div class="col-md-2 text-left">
+                                            ประเภทนิติกรรมสัญญา :
+                                        </div>
+                                        <div class="col-md-10 text-left">
+                                            1.สัญญาให้บริการฯตามกิจกรรมบริการ<br />
+                                            2.สัญญาให้บริการสาธารณสุขตามกิจกรรมบริการ รับการส่งต่อเฉพาะด้านบริการฟอกเลือดด้วยเครื่องไตเทียม (Hemodialysis : HD)
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+
+                            @*//Tab3---Style4.1
+                                    1.สัญญาดำเนินการตามโครงการ
+                                ---*@
+                            <div id="tab3" class="tab-pane fade">
+
+                                <section>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mt-md-3">
+                                                <div class="row">
+                                                    <div class="x_title text-center col-md-12">
+                                                        <p class="text-center">
+                                                            <h5><span class="x_title_before">ข้อมูลจัดทำ@(ContractUtils.PropertiesVendor("S41").Name) ประจำปีงบประมาณ 2565</span></h5>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <br />
+                                                    <div class="col-md-12 justify-content-center">
+                                                        <div class="progressbar-wrapper bg-transparent">
+                                                            <ul id="progressbar_tab3" class="progressbar">
+                                                                <li style="width:12.5%" class="proposal2_tab3all">ทั้งหมด</li>
+                                                                <li style="width:12.5%" class="proposal2_tab31">สร้าง(ร่าง)นิติกรรม</li>
+                                                                <li style="width:12.5%" class="proposal2_tab32">หนังสือขออนุมัติ</li>
+                                                                <li style="width:12.5%" class="proposal2_tab33">สร้างนิติกรรมสัญญา</li>
+                                                                <li style="width:12.5%" class="proposal2_tab34">ออกเลขที่สัญญา</li>
+                                                                <li style="width:12.5%" class="proposal2_tab35">ลงนาม 2 ฝ่าย</li>
+                                                                <li style="width:12.5%" class="proposal2_tab36">ผูกพัน</li>
+                                                                <li style="width:12.5%" class="proposal2_tab37">ยกเลิก</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <div class="form-group m-1 mb-2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h4>
+                                                            <small><i class="fas fa-table mr-1"></i>รายละเอียดจัดทำนิติกรรมสัญญา</small>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="text-right">
+                                                            <a class="btn btn-success mr-2" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="ContractCondition"
+                                                               asp-route-style="S41"><i class="fa fa-file mr-1"></i>สร้าง(ร่าง)นิติกรรมใหม่</a>
+                                                            <a class="btn btn-warning" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="Tracking"
+                                                               asp-route-style="S41"><i class="fa fa-indent mr-1"></i>ติดตามสถานะทั้งหมด</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12 search-table-outter table-responsive">
+                                                    <table id="table_tab3" name="table1" class="table table-bordered" style="background-color:#ffffff; font-size:14px;">
+                                                        <thead style="background-color: @(ContractUtils.PropertiesVendor("S41").Color)">
+                                                            <tr>
+                                                                <th class="text-center align-middle w-25" rowspan="2">@(ContractUtils.PropertiesVendor("S41").Name)</th>
+                                                                <th class="text-center align-middle" rowspan="2">ทั้งหมด</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้าง(ร่าง)นิติกรรม</th>
+                                                                <th class="text-center align-middle" rowspan="2">หนังสือขออนุมัติ</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้างนิติกรรมสัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ออกเลขที่สัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ลงนาม 2 ฝ่าย</th>
+                                                                <th class="text-center align-middle" rowspan="2">ผูกพัน</th>
+                                                                <th class="text-center align-middle" rowspan="2">ยกเลิก</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ใหม่</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.SumCount())</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S41"
+                                                                           asp-route-station="S1">@string.Format("{0}", _DashS41.DraftCount)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.ReqAppCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S41"
+                                                                           asp-route-station="S5">@string.Format("{0}", _DashS41.Sign2Count)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.CancelCount)</td>
+                                                            </tr>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ตีกลับ/แก้ไข</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.ReqAppCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS41.CancelCount)</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="txt_totalAll">
+                                                                <td class="text-center">รวม</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.SumCount() + _DashFReturnS41.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.DraftCount + _DashFReturnS41.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.ReqAppCount + _DashFReturnS41.ReqAppCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.ContractCount + _DashFReturnS41.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.GenContractIdCount + _DashFReturnS41.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.Sign2Count + _DashFReturnS41.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.BindingCount + _DashFReturnS41.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS41.CancelCount + _DashFReturnS41.CancelCount)</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>หมายเหตุ</label>
+                                    <div class="form-group row col-md-12 align-top">
+                                        <div class="col-md-2 text-left">
+                                            ประเภทนิติกรรมสัญญา :
+                                        </div>
+                                        <div class="col-md-10 text-left">
+                                            1.สัญญาดำเนินการตามโครงการ
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            @*//Tab4---Style4.2
+                                    1.หนังสือแสดงความจำนงตอบรับการดำเนินการ(เอกชน)
+                                ---*@
+                            <div id="tab4" class="tab-pane fade">
+
+                                <section>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mt-md-3">
+                                                <div class="row">
+                                                    <div class="x_title text-center col-md-12">
+                                                        <p class="text-center">
+                                                            <h5><span class="x_title_before">ข้อมูลจัดทำ@(ContractUtils.PropertiesVendor("S42").Name) ประจำปีงบประมาณ 2565</span></h5>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <br />
+                                                    <div class="col-md-12 justify-content-center">
+                                                        <div class="progressbar-wrapper bg-transparent">
+                                                            <ul id="progressbar_tab4" class="progressbar">
+                                                                <li style="width:12.5%" class="proposal2_tab3all">ทั้งหมด</li>
+                                                                <li style="width:12.5%" class="proposal2_tab31">สร้าง(ร่าง)นิติกรรม</li>
+                                                                <li style="width:12.5%" class="proposal2_tab32">หนังสือขออนุมัติ</li>
+                                                                <li style="width:12.5%" class="proposal2_tab33">สร้างนิติกรรมสัญญา</li>
+                                                                <li style="width:12.5%" class="proposal2_tab34">ออกเลขที่สัญญา</li>
+                                                                <li style="width:12.5%" class="proposal2_tab35">ลงนาม 2 ฝ่าย</li>
+                                                                <li style="width:12.5%" class="proposal2_tab36">ผูกพัน</li>
+                                                                <li style="width:12.5%" class="proposal2_tab37">ยกเลิก</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <div class="form-group m-1 mb-2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h4>
+                                                            <small><i class="fas fa-table mr-1"></i>รายละเอียดจัดทำนิติกรรมสัญญา</small>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="text-right">
+                                                            <a class="btn btn-success mr-2" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="ContractCondition"
+                                                               asp-route-style="S42"
+                                                               asp-route-sector="P"><i class="fa fa-file mr-1"></i>สร้าง(ร่าง)นิติกรรมใหม่</a>
+                                                            <a class="btn btn-warning" onclick="showLoading()"
+                                                               asp-controller="HomeVendor"
+                                                               asp-action="Tracking"
+                                                               asp-route-style="S42"><i class="fa fa-indent mr-1"></i>ติดตามสถานะทั้งหมด</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12 search-table-outter table-responsive">
+                                                    <table id="table_tab4" name="table1" class="table table-bordered" style="background-color:#ffffff; font-size:14px;">
+                                                        <thead style="background-color:@(ContractUtils.PropertiesVendor("S42").Color)">
+                                                            <tr>
+                                                                <th class="text-center align-middle w-25" rowspan="2">@(ContractUtils.PropertiesVendor("S42").Name)</th>
+                                                                <th class="text-center align-middle" rowspan="2">ทั้งหมด</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้าง(ร่าง)นิติกรรม</th>
+                                                                <th class="text-center align-middle" rowspan="2">หนังสือขออนุมัติ</th>
+                                                                <th class="text-center align-middle" rowspan="2">สร้างนิติกรรมสัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ออกเลขที่สัญญา</th>
+                                                                <th class="text-center align-middle" rowspan="2">ลงนาม 2 ฝ่าย</th>
+                                                                <th class="text-center align-middle" rowspan="2">ผูกพัน</th>
+                                                                <th class="text-center align-middle" rowspan="2">ยกเลิก</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ใหม่</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.SumCount())</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S42"
+                                                                           asp-route-station="S1">@string.Format("{0}", _DashS42.DraftCount)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.ReqAppCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">
+                                                                    <u class="text-primary">
+                                                                        <a class="btn btn-outline-primary mr-3" onclick="showLoading()"
+                                                                           asp-controller="HomeVendor"
+                                                                           asp-action="Tracking"
+                                                                           asp-route-style="S42"
+                                                                           asp-route-station="S5">@string.Format("{0}", _DashS42.Sign2Count)</a>
+                                                                    </u>
+                                                                </td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.CancelCount)</td>
+                                                            </tr>
+                                                            <tr class="thead_tabsub1">
+                                                                <td class="text-center">ตีกลับ/แก้ไข</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.ReqAppCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashFReturnS42.CancelCount)</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="txt_totalAll">
+                                                                <td class="text-center">รวม</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.SumCount() + _DashFReturnS42.SumCount())</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.DraftCount + _DashFReturnS42.DraftCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.ReqAppCount + _DashFReturnS42.ReqAppCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.ContractCount + _DashFReturnS42.ContractCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.GenContractIdCount + _DashFReturnS42.GenContractIdCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.Sign2Count + _DashFReturnS42.Sign2Count)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.BindingCount + _DashFReturnS42.BindingCount)</td>
+                                                                <td class="text-center col-md-1">@string.Format("{0}", _DashS42.CancelCount + _DashFReturnS42.CancelCount)</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>หมายเหตุ</label>
+                                    <div class="form-group row col-md-12 align-top">
+                                        <div class="col-md-2 text-left">
+                                            ประเภทนิติกรรมสัญญา :
+                                        </div>
+                                        <div class="col-md-10 text-left">
+                                            1.หนังสือแสดงความจำนงตอบรับการดำเนินการ(เอกชน)
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+
+                            <br />
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        var _tab_active = '@(_tab)';
+        $(function () {
+            if (_tab_active != "" && _tab_active != undefined) {
+                $(`.${_tab_active}`).addClass('active'); $(`#${_tab_active}`).addClass('active show');
+            } else {
+                $('.tab1').addClass('active'); $('#tab1').addClass('active show');
+            }
+
+            $('[data-toggle="modal"]').tooltip()
+        });
+
+        setTimeout(function () {
+            $('#table_tab1 tfoot tr:eq(0)').each(function () {
+                $(this).find('td').each(function (index) {
+                    if (index > 0) {
+                        $(`#progressbar_tab1 li:eq(${index - 1})`).attr('data-before', $(this).text());
+                    }
+                });
+            });
+        }, 200);
+
+        setTimeout(function () {
+            $('#table_tab2 tfoot tr:eq(0)').each(function () {
+                $(this).find('td').each(function (index) {
+                    if (index > 0) {
+                        $(`#progressbar_tab2 li:eq(${index - 1})`).attr('data-before', $(this).text());
+                    }
+                });
+            });
+        }, 200);
+
+        setTimeout(function () {
+            $('#table_tab3 tfoot tr:eq(0)').each(function () {
+                $(this).find('td').each(function (index) {
+                    if (index > 0) {
+                        $(`#progressbar_tab3 li:eq(${index - 1})`).attr('data-before', $(this).text());
+                    }
+                });
+            });
+        }, 200);
+
+        setTimeout(function () {
+            $('#table_tab4 tfoot tr:eq(0)').each(function () {
+                $(this).find('td').each(function (index) {
+                    if (index > 0) {
+                        $(`#progressbar_tab4 li:eq(${index - 1})`).attr('data-before', $(this).text());
+                    }
+                });
+            });
+        }, 200);
+
+        setTimeout(function () {
+            $('#table_tab5 tfoot tr:eq(0)').each(function () {
+                $(this).find('td').each(function (index) {
+                    if (index > 0) {
+                        $(`#progressbar_tab5 li:eq(${index - 1})`).attr('data-before', $(this).text());
+                    }
+                });
+            });
+        }, 200);
+
+        setTimeout(function () {
+            $('#table_tab6 tfoot tr:eq(0)').each(function () {
+                $(this).find('td').each(function (index) {
+                    if (index > 0) {
+                        $(`#progressbar_tab6 li:eq(${index - 1})`).attr('data-before', $(this).text());
+                    }
+                });
+            });
+        }, 200);
+
+
+    </script>
+}

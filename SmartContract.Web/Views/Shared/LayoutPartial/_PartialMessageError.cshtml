@@ -1,0 +1,33 @@
+﻿
+
+@model SmartContract.Infrastructure.Resources.Share.CommonModel
+
+@{
+    var indata = Model;
+}
+
+<div class="alert alert-danger" role="alert">
+    เกิดข้อผิดพลาดของข้อมูล กรณากดรีเฟรช หรือออกจากระบบและเข้าสู่ระบบอีกครั้ง ถ้าไม่หายกรุณาติดต่อผู้ดูแลระบบ
+</div>
+<div class="d-none">
+    <p>@indata.errorMessage</p>
+</div>
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Details
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <p class="text-danger">
+                    @indata.errorMessage
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>

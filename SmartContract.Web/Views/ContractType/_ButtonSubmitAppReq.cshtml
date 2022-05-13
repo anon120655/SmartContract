@@ -1,0 +1,28 @@
+﻿
+
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+@using SmartContract.Utils
+
+<div class="col text-center">
+    <input type="hidden" asp-for="ObjectState" />
+    <input type="hidden" asp-for="ParameterCondition.IdSmctMaster" />
+    <input type="hidden" asp-for="ParameterCondition.Style" />
+    <input type="hidden" asp-for="ParameterCondition.ContractTypeId" />
+    <input type="hidden" asp-for="ParameterCondition.ContractTypeIdEn" />
+    <input type="hidden" asp-for="ParameterCondition.Station" />
+    <input type="hidden" asp-for="ParameterCondition.StationReq" />
+    <input type="hidden" asp-for="ParameterCondition.SigningTypeEn" />
+    <input type="hidden" asp-for="ParameterCondition.RefId" />
+    <input type="hidden" asp-for="ApprovalReqStation.StationStatusCurr" />
+    @if (Model.ApprovalReqStation != null && Model.ApprovalReqStation.StationStatusCurr == ApproveStationStatusAll.S2CreateApprove && Model.ApprovalReqStation.StatusCheckMail == null)
+    {
+        <button type="submit" class="btn btn-warning mr-2" name="BtnSubmit" value="0">บันทึกร่าง</button>
+    }
+
+    <a class="btn btn-secondary mr-2" asp-controller="Home" asp-action="IndexProposal"><i class="fa fa-angle-left align-middle"></i> ยกเลิกทำรายการ</a>
+
+    @if (Model.ApprovalReqStation.StatusCheckMail == null)
+    {
+        <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกส่งต่อ <i class="fa fa-angle-right align-middle"></i></button>
+    }
+</div>

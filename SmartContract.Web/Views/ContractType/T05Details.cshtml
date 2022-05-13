@@ -1,0 +1,106 @@
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TAllMasterVendorView
+
+@{
+    Layout = null;
+    var indata = Model.InfoConDetail.ContractDetail05;
+}
+
+<section>
+    <div class="">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ข้อที่ 2 ภาระหน้าที่</label>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-7 col-form-label text-sm-right pt-sm-0">(5) สำนักงาน และองค์การบริหารส่วนจังหวัด ยินยอมให้ตรวจสอบบัญชีเงินฝากของกองทุนฟื้นฟูสมรรถภาพ จังหวัด:</label>
+                <div class="col-sm-3 ">
+                    <div class="form-group">
+                        <select class="form-control" asp-for="InfoConDetail.ContractDetail05.P1">
+                            <option value="0">-เลือก-</option>
+                            <option value="SP00">กรมแพทย์ทหารอากาศ</option>
+                            <option value="SN00">กรมแพทย์ทหารเรือ</option>
+                            <option value="8100">กระบี่</option>
+                            <option value="1000">กรุงเทพฯ</option>
+                            <option value="7100">กาญจนบุรี</option>
+                            <option value="4600">กาฬสินธุ์</option>
+                            <option value="6200">กำแพงเพชร</option>
+                            <option value="4000">ขอนแก่น</option>
+                            <option value="2200">จันทบุรี</option>
+                            <option value="2400">ฉะเชิงเทรา</option>
+                            <option value="2000">ชลบุรี</option>
+                            <option value="1800">ชัยนาท</option>
+                            <option value="3600">ชัยภูมิ</option>
+                            <option value="8600">ชุมพร</option>
+                            <option value="9200">ตรัง</option>
+                            <option value="2300">ตราด</option>
+                            <option value="6300">ตาก</option>
+                            <option value="2600">นครนายก</option>
+                            <option value="7300">นครปฐม</option>
+                            <option value="4800">นครพนม</option>
+                            <option value="3000">นครราชสีมา</option>
+                            <option value="8000">นครศรีธรรมราช</option>
+                            <option value="6000">นครสวรรค์</option>
+                            <option value="1200">นนทบุรี</option>
+                            <option value="9600">นราธิวาส</option>
+                            <option value="5500">น่าน</option>
+                            <option value="3100">บุรีรัมย์</option>
+                            <option value="1300">ปทุมธานี</option>
+                            <option value="7700">ประจวบคีรีขันธ์</option>
+                            <option value="2500">ปราจีนบุรี</option>
+                            <option value="9400">ปัตตานี</option>
+                            <option value="1400">พระนครศรีอยุธยา</option>
+                            <option value="5600">พะเยา</option>
+                            <option value="8200">พังงา</option>
+                            <option value="9300">พัทลุง</option>
+                            <option value="6600">พิจิตร</option>
+                            <option value="6500">พิษณุโลก</option>
+                            <option value="8300">ภูเก็ต</option>
+                            <option value="4400">มหาสารคาม</option>
+                            <option value="4900">มุกดาหาร</option>
+                            <option value="9500">ยะลา</option>
+                            <option value="3500">ยโสธร</option>
+                            <option value="8500">ระนอง</option>
+                            <option value="2100">ระยอง</option>
+                            <option value="7000">ราชบุรี</option>
+                            <option value="4500">ร้อยเอ็ด</option>
+                            <option value="1600">ลพบุรี</option>
+                            <option value="5200">ลำปาง</option>
+                            <option value="5100">ลำพูน</option>
+                            <option value="3300">ศรีสะเกษ</option>
+                            <option value="4700">สกลนคร</option>
+                            <option value="9000">สงขลา</option>
+                            <option value="9100">สตูล</option>
+                            <option value="NHSO">สปสช</option>
+                            <option value="1100">สมุทรปราการ</option>
+                            <option value="7500">สมุทรสงคราม</option>
+                            <option value="7400">สมุทรสาคร</option>
+                            <option value="1900">สระบุรี</option>
+                            <option value="2700">สระแก้ว</option>
+                            <option value="1700">สิงห์บุรี</option>
+                            <option value="7200">สุพรรณบุรี</option>
+                            <option value="8400">สุราษฎร์ธานี</option>
+                            <option value="3200">สุรินทร์</option>
+                            <option value="6400">สุโขทัย</option>
+                            <option value="4300">หนองคาย</option>
+                            <option value="3900">หนองบัวลำภู</option>
+                            <option value="3700">อำนาจเจริญ</option>
+                            <option value="4100">อุดรธานี</option>
+                            <option value="5300">อุตรดิตถ์</option>
+                            <option value="6100">อุทัยธานี</option>
+                            <option value="3400">อุบลราชธานี</option>
+                            <option value="1500">อ่างทอง</option>
+                            <option value="5700">เชียงราย</option>
+                            <option value="5000">เชียงใหม่</option>
+                            <option value="7600">เพชรบุรี</option>
+                            <option value="6700">เพชรบูรณ์</option>
+                            <option value="4200">เลย</option>
+                            <option value="5400">แพร่</option>
+                            <option value="5800">แม่ฮ่องสอน</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

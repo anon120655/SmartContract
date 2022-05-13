@@ -1,0 +1,294 @@
+﻿
+@inject SmartContract.Infrastructure.Interfaces.Share.IGeneralRepo _repoShare
+@model SmartContract.Infrastructure.Resources.ContractTypeVendor.TrackingCTVendorMain
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    Layout = "_LayoutTemplatesVendor";
+    ViewData["Title"] = "ติดตามสถานะ";
+    String _Station = String.Empty;
+
+    //_Style = "S1";
+}
+
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+        /*transition: 0.3s;*/
+    }
+
+        .cursor-pointer:hover {
+            text-decoration: underline;
+        }
+
+        .cursor-pointer:active {
+            opacity: 0.5;
+        }
+</style>
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    string _Style = Context.Request.Query["style"].ToString();
+    _Station = Context.Request.Query["Station"].ToString();
+    var _Dash = Model.Dashboards;
+
+    var _Items = (Model != null ? Model.TrackingResource.Items : null);
+    var _pager = (_Items != null ? Model.TrackingResource.Pager : null);
+    int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
+
+    @*//---Style1
+                1.ข้อตกลงให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ
+                2.ข้อตกลงกองทุนฟื้นฟูฯจังหวัด
+        ---Style2
+                1.ข้อตกลงให้บริการฯตามกิจกรรมบริการ
+                2.ข้อตกลงให้บริการฯตามกิจกรรมบริการ ไตเทียม
+        ---Style3
+                1.ข้อตกลง อปท
+        ---Style4.1
+                1.ข้อตกลงดำเนินการตามโครงการ
+        ---Style4.2
+                1.หนังสือแสดงความจำนงตอบรับการดำเนินการ(รัฐ)
+        ---Style4.3
+                1.โครงการ(รัฐ)
+        ---*@
+    <div>
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>
+                                    <small><i class="fa fa-file-alt mr-1"></i>สร้างนิติกรรมสัญญา > @ContractUtils.PropertiesVendor2(_Style).Name ปีงบประมาณ 2565 ></small>
+                                    <small><span class="text-primary"><u>ติดตามสถานะ</u></span></small>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="">
+                <div class="col-md-12">
+                    <div class="form-group m-1 mb-2">
+                        <div class="row">
+                            <div class="col-sm-12 mb-1">
+                                <i class="fas fa-indent text-dark mr-2 cursor-pointer">
+                                    <a id="_S0" class="ml-1 text-dark" onclick="showLoading()"
+                                       asp-controller="HomeVendor"
+                                       asp-action="Tracking2"
+                                       asp-route-style="@(_Style)">
+                                        ทั้งหมด (@_Dash.SumCount())
+                                    </a>
+                                </i>
+                                <i class="fas fa-file text-warning mr-2 cursor-pointer">
+                                    <a id="_S1" class="ml-1 text-warning" onclick="showLoading()"
+                                       asp-controller="HomeVendor"
+                                       asp-action="Tracking2"
+                                       asp-route-style="@(_Style)"
+                                       asp-route-Station="S1">
+                                        สร้าง(ร่าง)นิติกรรม (@_Dash.DraftCount)
+                                    </a>
+                                </i>
+                                @if (_Style == "S41" || _Style == "S43")
+                                {
+                                    <i class="fas fa-check text-success mr-2 cursor-pointer">
+                                        <a id="_S2" class="ml-1 text-success" onclick="showLoading()"
+                                           asp-controller="HomeVendor"
+                                           asp-action="Tracking2"
+                                           asp-route-style="@(_Style)"
+                                           asp-route-Station="S2">
+                                            หนังสือขออนุมัติ (@_Dash.ReqAppCount)
+                                        </a>
+                                    </i>
+                                }
+                                @if (_Style == "S42")
+                                {
+                                    <i class="fas fa-check text-success mr-2 cursor-pointer">
+                                        <a id="_S2" class="ml-1 text-success" onclick="showLoading()"
+                                           asp-controller="HomeVendor"
+                                           asp-action="Tracking2"
+                                           asp-route-style="@(_Style)"
+                                           asp-route-Station="S2">
+                                            อนุมัติข้อเสนอ (@_Dash.ReqAppCount)
+                                        </a>
+                                    </i>
+                                }
+                                <i class="fas fa-file-alt text-info mr-2 cursor-pointer">
+                                    <a id="_S4" class="ml-1 text-info" onclick="showLoading()"
+                                       asp-controller="HomeVendor"
+                                       asp-action="Tracking2"
+                                       asp-route-style="@(_Style)"
+                                       asp-route-Station="S4">
+                                        สร้างนิติกรรมสัญญา (@_Dash.ContractCount)
+                                    </a>
+                                </i>
+                                <i class="fas fa-file text-primary mr-2 cursor-pointer">
+                                    <a id="_S6" class="ml-1 text-primary" onclick="showLoading()"
+                                       asp-controller="HomeVendor"
+                                       asp-action="Tracking2"
+                                       asp-route-style="@(_Style)"
+                                       asp-route-Station="S6">
+                                        ออกเลขที่สัญญา (@_Dash.GenContractIdCount)
+                                    </a>
+                                </i>
+                                @if (_Style != "S43")
+                                {
+                                    <i class="fas fa-signature text-dark mr-2 cursor-pointer">
+                                        <a id="_S5" class="ml-1 text-dark" onclick="showLoading()"
+                                           asp-controller="HomeVendor"
+                                           asp-action="Tracking2"
+                                           asp-route-style="@(_Style)"
+                                           asp-route-Station="S5">
+                                            ลงนาม 2 ฝ่าย (@_Dash.Sign2Count)
+                                        </a>
+                                    </i>
+                                }
+                                <i class="fas fa-check-circle text-binding mr-2 cursor-pointer">
+                                    <a id="_S7" class="ml-1 text-binding" onclick="showLoading()"
+                                       asp-controller="HomeVendor"
+                                       asp-action="Tracking2"
+                                       asp-route-style="@(_Style)"
+                                       asp-route-Station="S7">
+                                        ผูกพัน (@_Dash.BindingCount)
+                                    </a>
+                                </i>
+                                <i class="fas fa-times-circle text-danger mr-2 cursor-pointer">
+                                    <a id="_S8" class="ml-1 text-danger" onclick="showLoading()"
+                                       asp-controller="HomeVendor"
+                                       asp-action="Tracking2"
+                                       asp-route-style="@(_Style)"
+                                       asp-route-Station="S8">
+                                        ยกเลิก (@_Dash.CancelCount)
+                                    </a>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="">
+                <div id="div_table11" class="col-md-12 search-table-outter table-responsive">
+                    <table id="table11" class="table table-condensed bg-white" style="border-collapse:collapse;font-size:13px;">
+                        <thead style="background-color: @ContractUtils.PropertiesVendor2(_Style).Color">
+                            <tr>
+                                <th>ลำดับ</th>
+                                <th>เลขที่อ้างอิง</th>
+                                <th>วันที่ทำเอกสาร</th>
+                                <th>ประเภทการลงนาม</th>
+                                <th>เลขที่สัญญา</th>
+                                <th>ชื่อสัญญา</th>
+                                <th>ประเภทนิติกรรมสัญญา</th>
+                                <th>ผู้บันทึก</th>
+                                <th>สถานะ</th>
+                                @*<th>ไฟล์แนบ</th>*@
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (_Items != null && _Items.Count > 0)
+                            {
+                                foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
+                                {
+                                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                        <td>@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
+                                        <td class="text-center col-md-1">
+                                            @item.Value.RefId
+                                        </td>
+                                        <td>@GeneralUtils.DateToThString(item.Value.CreateDate)</td>
+                                        <td>@ContractUtils.SigningTypes(item.Value.ContractSignType).Description</td>
+                                        <td>
+                                            <b class="">
+                                                เลขที่สัญญา
+                                            </b> : @item.Value.ContractId
+                                            <br />
+                                            <b>
+                                                วันที่ทำสัญญา
+                                            </b> : @GeneralUtils.DateToThString(item.Value.ContractDate)
+                                        </td>
+                                        <td>@item.Value.ContractName</td>
+                                        <td>@item.Value.ContractTypeName</td>
+                                        <td>
+                                            <b>
+                                                ผู้สร้างเอกสาร
+                                            </b> : @item.Value.CreateUserFullname
+                                            <br />
+                                            <b>
+                                                ผู้บันทึกล่าสุด
+                                            </b> : @item.Value.EditUserFullname
+                                            <br />
+                                            <b>
+                                                วันที่บันทึกล่าสุด
+                                            </b> :@GeneralUtils.DateToThString(item.Value.EditDate)
+                                        </td>
+                                        <td class="">
+                                            <span class="badge badge-pill p-2"
+                                                  style="min-width: 100px; color: #ffffff; background-color: @(ContractUtils.ContractSations(item.Value.StationStatusCurr).Color)">
+                                                @ContractUtils.ContractSations(item.Value.StationStatusCurr).Name
+                                            </span>
+                                        </td>
+                                        @*<td>
+                                                <a asp-controller="Files"
+                                                   asp-action="RenderPdf"
+                                                   asp-route-id="123"
+                                                   asp-route-type="PrintTest"
+                                                   target="_blank"
+                                                   class="fas fa-file fa-2x" onclick="">
+                                                </a>
+                                            </td>*@
+                                        <td class="text-center col-md-1">
+                                            <a class="btn-outline-primary" onclick="showLoading()"
+                                               asp-controller="ContractTypeVendor"
+                                               asp-action="T@(item.Value.ContractTypeId)"
+                                               asp-route-Style="@item.Value.ContractStyleCode"
+                                               asp-route-Station="@item.Value.StationStatusCurr"
+                                               asp-route-IdSmctMaster="@item.Value.IdSmctMaster"
+                                               asp-route-ContractTypeIdEn="@SecurityRepo.Encrypt(item.Value.ContractTypeId)"
+                                               asp-route-SigningTypeEn="@SecurityRepo.Encrypt(item.Value.ContractSignType)">รายละเอียด</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <div class="col-md-12">
+            <div class="row mr-1">
+                <div class="col-xl-4 col-md-4 mt-2 pagination_font font_bold">
+                    แสดงผล <span class="text_blue">@(Model.TrackingResource.Items.Count)</span> จากทั้งหมด <span class="text_blue">@(Model.TrackingResource.Pager.TotalItems)</span>
+                </div>
+                <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.TrackingResource.Pager" />
+            </div>
+        </div>
+        <br />
+    </div>
+}
+@section Scripts {
+    <script type="text/javascript">
+         $(document).ready(function () {
+            var _Station = '@(_Station)';
+            if (_Station == '') {
+                _Station = 'S0';
+            }
+
+            $(`#_${_Station}`).attr('style', 'text-decoration: underline !important; font-size: 15pt;');
+
+        });
+    </script>
+}
