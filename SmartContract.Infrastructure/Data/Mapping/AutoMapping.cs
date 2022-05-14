@@ -51,6 +51,9 @@ namespace SmartContract.Infrastructure.Data.Mapping
             CreateMap<EntityFramework.ContractSbbCkl, ContractSbbCklDTO>().ReverseMap()
                      .ForMember(dest => dest.ContractSbbCklDetails, opt => opt.MapFrom(src => src.ContractSbbCklDetails)).ReverseMap();
 
+            CreateMap<EntityFramework.GuaranteeLgReq, GuaranteeLgReqDTO>().ReverseMap();
+            CreateMap<EntityFramework.GuaranteeLgReqStation, GuaranteeLgReqStationDTO>().ReverseMap();
+
             CreateMap<EntityFramework.ContractDetail01, ContractDetail01DTO>().ReverseMap()
              .ForMember(q => q.IdContractDetail01, opt => opt.Ignore())
              .ForMember(q => q.IdContract, opt => opt.Ignore())

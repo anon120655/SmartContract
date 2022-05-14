@@ -32,6 +32,7 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
             ContractStationSuccesses = new HashSet<ContractStationSuccess>();
             ContractStations = new HashSet<ContractStation>();
             ContractVendors = new HashSet<ContractVendor>();
+            GuaranteeLgReqStations = new HashSet<GuaranteeLgReqStation>();
         }
 
         public string IdContract { get; set; }
@@ -81,5 +82,6 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public virtual ICollection<ContractStationSuccess> ContractStationSuccesses { get; set; }
         public virtual ICollection<ContractStation> ContractStations { get; set; }
         public virtual ICollection<ContractVendor> ContractVendors { get; set; }
+        public virtual ICollection<GuaranteeLgReqStation> GuaranteeLgReqStations { get; set; }
     }
 }

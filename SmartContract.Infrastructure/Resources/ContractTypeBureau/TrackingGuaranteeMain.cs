@@ -1,4 +1,6 @@
-﻿using SmartContract.Infrastructure.Resources.DTO;
+﻿using SmartContract.Infrastructure.Data.EntityFramework;
+using SmartContract.Infrastructure.Resources.DTO;
+using SmartContract.Infrastructure.Resources.Guarantee;
 using SmartContract.Infrastructure.Resources.Share;
 using System;
 using System.Collections.Generic;
@@ -18,9 +20,12 @@ namespace SmartContract.Infrastructure.Resources.ContractTypeBureau
         public bool errorCheck { get; set; }
         public string errorMessage { get; set; }
         public LookUpResource GetLookUp { get; set; }
-        public SearchOptionStation Condition { get; set; }
-        //ออกใหม่
-        public PaginationView<List<ContractStationGuaranteeDTO>> TrackingGuaranteeNew { get; set; }
+        public SearchOptionLG Condition { get; set; }
+       
+        //Search
+        public PaginationView<List<VGuaranteeLgContract>> VGuaranteeLgContract { get; set; }
+        //Tracking        
+        public PaginationView<List<GuaranteeLgReqStationDTO>> TrackingStation { get; set; }
 
     }
 }

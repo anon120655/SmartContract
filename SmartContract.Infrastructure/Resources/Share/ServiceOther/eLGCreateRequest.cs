@@ -18,7 +18,7 @@ namespace SmartContract.Infrastructure.Resources.Share.ServiceOther
         public string effectiveDateStart { get; set; }
         public string effectiveDateEnd { get; set; }
         public string lgNumber { get; set; }
-        public double lgAmount { get; set; }
+        public decimal lgAmount { get; set; }
         public string guaranteeTypeId { get; set; }
         public string contractTypeId { get; set; }
         public string contractNo { get; set; }
@@ -27,5 +27,13 @@ namespace SmartContract.Infrastructure.Resources.Share.ServiceOther
         public string comment { get; set; }
         public string email { get; set; }
         public string sms { get; set; }
+
+        
+        public string guranteeTypeDesc { get; set; }
+        public string contractTypeDesc { get; set; }
+        public string hospitalCode { get; set; }
+        public string hospitalName { get; set; }
+        public decimal LgAmountInitial { get; set; }       
+
     }
 }

@@ -10,6 +10,11 @@ namespace SmartContract.Infrastructure.Resources.Guarantee
 {
 	public class ELGCreateMain : CommonModel
 	{
+		public ELGCreateMain()
+		{
+			Request = new eLGCreateRequest();
+		}
+
 		public eLGCreateRequest Request { get; set; }
 	}
 }

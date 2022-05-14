@@ -77,11 +77,6 @@
     <None Include="Views\Contract\TerminateReport.cshtml" />
     <None Include="Views\Contract\TerminateReportDetail.cshtml" />
     <None Include="Views\Contract\TerminateTracking.cshtml" />
-    <None Include="Views\Guarantee\GuaranteeClaim.cshtml" />
-    <None Include="Views\Guarantee\GuaranteeRenew.cshtml" />
-    <None Include="Views\Guarantee\GuaranteeReport.cshtml" />
-    <None Include="Views\Guarantee\GuaranteeReturn.cshtml" />
-    <None Include="Views\Guarantee\KTB_New.cshtml" />
     <None Include="Views\HomeVendor\ContractApproveStation.cshtml" />
     <None Include="Views\HomeVendor\ContractCondition.cshtml" />
     <None Include="Views\HomeVendor\ContractCondition2.cshtml" />

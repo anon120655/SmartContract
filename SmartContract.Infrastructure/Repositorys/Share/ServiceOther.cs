@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using SmartContract.Infrastructure.Data.EntityFramework;
 using SmartContract.Infrastructure.Helpers;
 using SmartContract.Infrastructure.Interfaces;
 using SmartContract.Infrastructure.Interfaces.Share;
@@ -103,6 +104,8 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 		{
 			string UrlFull = $"{_mySet.eLGKTBs.UrlCreate}";
 
+			if (request.appTypeId == null) throw new Exception("ระบุประเภทใบคำขอ");
+
 			request.channelId = "NHSO";
 			request.beneficiaryRefNo = DateTime.Now.ToString("yyMMddHHmmss"); //เลขอ้างอิงระบบต้นทาง (Beneficiary)(YYMMDDHH24mmssSSS) 211205201021	
 			request.transDate = DateTime.Now.ToString("yyyyMMdd"); //Transaction Date (YYYY-MM-DD) 20211205
@@ -168,6 +171,97 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 			string jsonTxt = JsonConvert.SerializeObject(request);
 			var response_api = await ServiceHttp.CallHttpPost(jsonTxt, UrlFull, data.access_token);
 			var responseMap = JsonConvert.DeserializeObject<eLGCreateResponse>(response_api);
+
+			//Insert Table SMCT
+			if (responseMap.respCode == "000")
+			{
+				String idUserSmct = _repo.UserService.GetIdUserSmct();
+				String departmentCode = _repo.UserService.GetDepartmentCode();
+
+
+				var _Contract = _repo.Context.Contracts.FirstOrDefault(x=>x.ContractId == request.contractNo);
+				if (_Contract == null) throw new Exception($"ContractNo : {request.contractNo} Not Found.");
+
+				var _SmctMasters = _repo.Context.SmctMasters.FirstOrDefault(x => x.IdSmctMaster == _Contract.IdSmctMaster);
+				var _LkDepartments = _repo.Context.LkDepartments.FirstOrDefault(x => x.Dcode == _SmctMasters.DepartmentCode);
+				var _ContractTypes = _repo.Context.ContractTypes.FirstOrDefault(x => x.IdContractType == _Contract.IdContractType);
+				
+				using (var _transaction = _repo.BeginTransaction())
+				{
+					var guaranteeLgReq = new GuaranteeLgReq()
+					{
+						CreateDate = DateTime.Now,
+						CreateUser = idUserSmct,
+						EditDate = DateTime.Now,
+						EditUser = idUserSmct,
+						Used = true,
+						IdSmctMaster = _SmctMasters.IdSmctMaster,
+						ChannelId = request.channelId,
+						BeneficiaryRefNo = responseMap.beneficiaryRefNo,
+						TransDate = request.transDate,
+						TransTime = request.transTime,
+						AppTypeId = request.appTypeId,
+						TaxId = request.taxId,
+						RequesterNameTh = request.requesterNameTh,
+						EffectiveDateStart = request.effectiveDateStart,
+						EffectiveDateEnd = request.effectiveDateEnd,
+						LgNumber = request.lgNumber,
+						LgAmount = request.lgAmount,
+						GuaranteeTypeId = request.guaranteeTypeId,
+						ContractTypeId = request.contractTypeId,
+						ContractNo = request.contractNo,
+						ContractDate = request.contractDate,
+						ContractDetail = request.contractDetail,
+						Comments = request.comment,
+						Email = request.email,
+						Sms = request.sms,
+						LgStatus = null,
+						HospitalCode = request.hospitalCode,
+						HospitalName = request.hospitalName,
+						LgAmountInitial = request.LgAmountInitial
+					};
+					await _db.InsterAsync(guaranteeLgReq);
+					await _db.SaveAsync();
+
+					var guaranteeLgReqStation = new GuaranteeLgReqStation()
+					{
+						CreateDate = DateTime.Now,
+						CreateUser = idUserSmct,
+						EditDate = DateTime.Now,
+						EditUser = idUserSmct,
+						Used = true,
+						IdSmctMaster = _SmctMasters.IdSmctMaster,
+						IdContract = _Contract.IdContract,
+						IdGuaranteeLgReq = guaranteeLgReq.IdGuaranteeLgReq,
+						AppTypeId = guaranteeLgReq.AppTypeId,
+						Budgetyear = _SmctMasters.Budgetyear,
+						DepartmentCode = _LkDepartments.Dcode,
+						DepartmentName = _LkDepartments.Dename,
+						RefId = _SmctMasters.RefId,
+						RefDate = _SmctMasters.RefDate,
+						ContractId = _Contract.ContractId,
+						ContractDate = _Contract.ContractDate.Value,
+						ContractName = _Contract.ContractName,
+						ContractTypeName = _ContractTypes.ContractTypeShortName,
+						TaxId = request.taxId,
+						RequesterNameTh = request.requesterNameTh,
+						LgNumber = request.lgNumber,
+						EffectiveDateStart = request.effectiveDateStart,
+						EffectiveDateEnd = request.effectiveDateEnd,
+						LgAmount = request.lgAmount,
+						GuaranteeTypeId = request.guaranteeTypeId,
+						GuaranteeTypeDesc = request.guranteeTypeDesc,
+						ContractTypeId = request.contractTypeId,
+						ContractTypeDesc = request.contractTypeDesc,
+						LgAmountInitial = request.LgAmountInitial
+					};
+					await _db.InsterAsync(guaranteeLgReqStation);
+					await _db.SaveAsync();
+
+					await _transaction.CommitAsync();
+				}
+			}
+			
 			return responseMap;
 		}
 

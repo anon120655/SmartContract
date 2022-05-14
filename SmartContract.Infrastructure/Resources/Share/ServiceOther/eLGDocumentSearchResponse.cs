@@ -24,15 +24,15 @@ namespace SmartContract.Infrastructure.Resources.Share.ServiceOther
             public string effectiveDateStart { get; set; }
             public string effectiveDateEnd { get; set; }
             public string lgNumber { get; set; }
-            public double lgAmount { get; set; }
+            public decimal lgAmount { get; set; }
             public string guaranteeTypeId { get; set; }
             public string guranteeTypeDesc { get; set; }
             public string contractTypeId { get; set; }
             public string contractTypeDesc { get; set; }
-            public object contractNo { get; set; }
+            public string contractNo { get; set; }
             public object contractDate { get; set; }
             public string contractDetail { get; set; }
-            public object comment { get; set; }
+            public string comment { get; set; }
             public string accountNo { get; set; }
         }
 

@@ -85,7 +85,7 @@ else
                                         <label class="col-sm-2 col-form-label">Tax ID :</label>
                                         <div class="col-sm-7">
                                             <input type="text" readonly class="form-control-plaintext text-primary"
-                                                   asp-for="Request.taxId" value="1234455666789">
+                                                   asp-for="Request.taxId">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
@@ -93,7 +93,7 @@ else
                                         <label class="col-sm-2 col-form-label">ชื่อลูกค้า :</label>
                                         <div class="col-sm-7">
                                             <input type="text" readonly class="form-control-plaintext text-primary"
-                                                   asp-for="Request.requesterNameTh" value="ชื่อลูกค้าที่เป็นเจ้าของงาน">
+                                                   asp-for="Request.requesterNameTh">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
@@ -101,7 +101,7 @@ else
                                         <label class="col-sm-2 col-form-label">เลขที่สัญญา :</label>
                                         <div class="col-sm-7">
                                             <input type="text" readonly class="form-control-plaintext text-primary"
-                                                   asp-for="Request.contractNo" value="65-00001">
+                                                   asp-for="Request.contractNo">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -109,7 +109,16 @@ else
                                         <label class="col-sm-2 col-form-label">สัญญาลงวันที่ :</label>
                                         <div class="col-sm-7">
                                             <input type="text" readonly class="form-control-plaintext text-primary"
-                                                   asp-for="Request.contractDate" value="01/05/2565">
+                                                   asp-for="Request.contractDate">
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-3 width_75" />
+                                    <div class="form-group row">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <label class="col-sm-2 col-form-label">เลขที่หนังสือค้ำประกัน :</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.lgNumber">
                                         </div>
                                     </div>
                                     <div class="form-row mt-4">
@@ -125,13 +134,6 @@ else
                                             <input type="text" class="form-control input_icon_calendar datepicker"
                                                    asp-for="Request.effectiveDateEnd"
                                                    placeholder="วว/ดด/ปปปป" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
-                                        <div class="form-group col-md-5">
-                                            <label for="">เลขที่หนังสือค้ำประกัน</label>
-                                            <input type="text" asp-for="Request.lgNumber" class="form-control" value="00019/200008/0203/63">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -187,7 +189,7 @@ else
                                             <input type="text" asp-for="Request.comment" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="form-row">
+                                    @*<div class="form-row">
                                         <label class="col-sm-1 col-form-label text-sm-right"></label>
                                         <div class="form-group col-md-5">
                                             <label for="">Email ของลูกค้าสำหรับส่งใบเสร็จ</label>
@@ -200,8 +202,7 @@ else
                                             <label for="">เบอร์โทรศัพท์ของลูกค้าสำหรับส่ง sms</label>
                                             <input type="text" asp-for="Request.sms" class="form-control">
                                         </div>
-                                    </div>
-
+                                    </div>*@
                                 </div>
                             </div>
                         </section>
@@ -211,7 +212,12 @@ else
             </div>
 
             <div class="col text-center mt-5">
-                <a class="btn btn-secondary mr-2" asp-controller="Home" asp-action="Index"> ยกเลิกทำรายการ</a>
+                <input type="hidden" asp-for="Request.guranteeTypeDesc" value="@Model.Request.guranteeTypeDesc" />
+                <input type="hidden" asp-for="Request.contractTypeDesc" value="@Model.Request.contractTypeDesc" />
+                <input type="hidden" asp-for="Request.hospitalCode" value="@Model.Request.hospitalCode" />
+                <input type="hidden" asp-for="Request.hospitalName" value="@Model.Request.hospitalName" />
+                <input type="hidden" asp-for="Request.LgAmountInitial" value="@Model.Request.lgAmount" />
+                <a class="btn btn-secondary mr-2" asp-controller="Guarantee" asp-action="Tracking2"> ยกเลิกทำรายการ</a>
                 <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกคำขอ </button>
             </div>
         </div>

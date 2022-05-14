@@ -16,6 +16,8 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
             ContractStationSuccesses = new HashSet<ContractStationSuccess>();
             ContractStations = new HashSet<ContractStation>();
             Contracts = new HashSet<Contract>();
+            GuaranteeLgReqStations = new HashSet<GuaranteeLgReqStation>();
+            GuaranteeLgReqs = new HashSet<GuaranteeLgReq>();
             SmctMasterFiles = new HashSet<SmctMasterFile>();
             SmctMasterSendmails = new HashSet<SmctMasterSendmail>();
             SmctMasterSigners = new HashSet<SmctMasterSigner>();
@@ -48,6 +50,8 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public virtual ICollection<ContractStationSuccess> ContractStationSuccesses { get; set; }
         public virtual ICollection<ContractStation> ContractStations { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }
+        public virtual ICollection<GuaranteeLgReqStation> GuaranteeLgReqStations { get; set; }
+        public virtual ICollection<GuaranteeLgReq> GuaranteeLgReqs { get; set; }
         public virtual ICollection<SmctMasterFile> SmctMasterFiles { get; set; }
         public virtual ICollection<SmctMasterSendmail> SmctMasterSendmails { get; set; }
         public virtual ICollection<SmctMasterSigner> SmctMasterSigners { get; set; }

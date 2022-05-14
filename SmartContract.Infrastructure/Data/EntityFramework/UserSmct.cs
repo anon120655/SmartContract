@@ -74,6 +74,10 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
             ContractTypeEditUserNavigations = new HashSet<ContractType>();
             ContractVendorCreateUserNavigations = new HashSet<ContractVendor>();
             ContractVendorEditUserNavigations = new HashSet<ContractVendor>();
+            GuaranteeLgReqCreateUserNavigations = new HashSet<GuaranteeLgReq>();
+            GuaranteeLgReqEditUserNavigations = new HashSet<GuaranteeLgReq>();
+            GuaranteeLgReqStationCreateUserNavigations = new HashSet<GuaranteeLgReqStation>();
+            GuaranteeLgReqStationEditUserNavigations = new HashSet<GuaranteeLgReqStation>();
             InverseCreateUserNavigation = new HashSet<UserSmct>();
             InverseEditUserNavigation = new HashSet<UserSmct>();
             RegisterNhsoCreateUserNavigations = new HashSet<RegisterNhso>();
@@ -204,6 +208,10 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public virtual ICollection<ContractType> ContractTypeEditUserNavigations { get; set; }
         public virtual ICollection<ContractVendor> ContractVendorCreateUserNavigations { get; set; }
         public virtual ICollection<ContractVendor> ContractVendorEditUserNavigations { get; set; }
+        public virtual ICollection<GuaranteeLgReq> GuaranteeLgReqCreateUserNavigations { get; set; }
+        public virtual ICollection<GuaranteeLgReq> GuaranteeLgReqEditUserNavigations { get; set; }
+        public virtual ICollection<GuaranteeLgReqStation> GuaranteeLgReqStationCreateUserNavigations { get; set; }
+        public virtual ICollection<GuaranteeLgReqStation> GuaranteeLgReqStationEditUserNavigations { get; set; }
         public virtual ICollection<UserSmct> InverseCreateUserNavigation { get; set; }
         public virtual ICollection<UserSmct> InverseEditUserNavigation { get; set; }
         public virtual ICollection<RegisterNhso> RegisterNhsoCreateUserNavigations { get; set; }

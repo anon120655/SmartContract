@@ -183,8 +183,7 @@ namespace SmartContract.Web.Controllers
             try
             {
                 var response = await _repo.ServiceOther.eLGDocumentSearch(new eLGDocumentSearchRequest()
-                {
-                    
+                {                    
                     lgNumber = lgNumber
                 });
 

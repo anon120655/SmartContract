@@ -63,6 +63,8 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
         public virtual DbSet<EmUserType> EmUserTypes { get; set; }
         public virtual DbSet<EmpBureau> EmpBureaus { get; set; }
         public virtual DbSet<EmployeePhone> EmployeePhones { get; set; }
+        public virtual DbSet<GuaranteeLgReq> GuaranteeLgReqs { get; set; }
+        public virtual DbSet<GuaranteeLgReqStation> GuaranteeLgReqStations { get; set; }
         public virtual DbSet<LOrgOther> LOrgOthers { get; set; }
         public virtual DbSet<LkAmphur> LkAmphurs { get; set; }
         public virtual DbSet<LkBank> LkBanks { get; set; }
@@ -96,6 +98,7 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
         public virtual DbSet<UserSmctSignerFile> UserSmctSignerFiles { get; set; }
         public virtual DbSet<UserSmctVendor> UserSmctVendors { get; set; }
         public virtual DbSet<VDFiBankVendor> VDFiBankVendors { get; set; }
+        public virtual DbSet<VGuaranteeLgContract> VGuaranteeLgContracts { get; set; }
         public virtual DbSet<VMasterVendor> VMasterVendors { get; set; }
         public virtual DbSet<VMasterVendorV1> VMasterVendorV1s { get; set; }
         public virtual DbSet<VNhsoBorad> VNhsoBorads { get; set; }
@@ -118,7 +121,6 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -5566,6 +5568,390 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
                     .HasColumnName("WORK_GROUP");
             });
 
+            modelBuilder.Entity<GuaranteeLgReq>(entity =>
+            {
+                entity.HasKey(e => e.IdGuaranteeLgReq)
+                    .HasName("GUARANTEE_LG_REQ_PK");
+
+                entity.ToTable("GUARANTEE_LG_REQ");
+
+                entity.Property(e => e.IdGuaranteeLgReq)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_GUARANTEE_LG_REQ")
+                    .HasDefaultValueSql("sys_guid() ");
+
+                entity.Property(e => e.AppTypeId)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("APP_TYPE_ID");
+
+                entity.Property(e => e.BeneficiaryRefNo)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("BENEFICIARY_REF_NO");
+
+                entity.Property(e => e.ChannelId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CHANNEL_ID");
+
+                entity.Property(e => e.Comments)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("COMMENTS");
+
+                entity.Property(e => e.ContractDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_DATE");
+
+                entity.Property(e => e.ContractDetail)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_DETAIL");
+
+                entity.Property(e => e.ContractNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_NO");
+
+                entity.Property(e => e.ContractTypeId)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_TYPE_ID");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUser)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER");
+
+                entity.Property(e => e.EditDate)
+                    .HasPrecision(6)
+                    .HasColumnName("EDIT_DATE");
+
+                entity.Property(e => e.EditUser)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("EDIT_USER");
+
+                entity.Property(e => e.EffectiveDateEnd)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("EFFECTIVE_DATE_END");
+
+                entity.Property(e => e.EffectiveDateStart)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("EFFECTIVE_DATE_START");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("EMAIL");
+
+                entity.Property(e => e.GuaranteeTypeId)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("GUARANTEE_TYPE_ID");
+
+                entity.Property(e => e.HospitalCode)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("HOSPITAL_CODE");
+
+                entity.Property(e => e.HospitalName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("HOSPITAL_NAME");
+
+                entity.Property(e => e.IdSmctMaster)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_SMCT_MASTER");
+
+                entity.Property(e => e.LastupdateDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("LASTUPDATE_DATE");
+
+                entity.Property(e => e.LastupdateTime)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("LASTUPDATE_TIME");
+
+                entity.Property(e => e.LgAmount)
+                    .HasColumnType("NUMBER(17,2)")
+                    .HasColumnName("LG_AMOUNT");
+
+                entity.Property(e => e.LgAmountInitial)
+                    .HasColumnType("NUMBER(17,2)")
+                    .HasColumnName("LG_AMOUNT_INITIAL");
+
+                entity.Property(e => e.LgNumber)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("LG_NUMBER");
+
+                entity.Property(e => e.LgStatus)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("LG_STATUS");
+
+                entity.Property(e => e.RequesterNameTh)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("REQUESTER_NAME_TH");
+
+                entity.Property(e => e.Sms)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("SMS");
+
+                entity.Property(e => e.TaxId)
+                    .HasMaxLength(13)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_ID");
+
+                entity.Property(e => e.TransDate)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("TRANS_DATE");
+
+                entity.Property(e => e.TransTime)
+                    .IsRequired()
+                    .HasMaxLength(8)
+                    .HasColumnName("TRANS_TIME");
+
+                entity.Property(e => e.Used)
+                    .HasPrecision(1)
+                    .HasColumnName("USED");
+
+                entity.HasOne(d => d.CreateUserNavigation)
+                    .WithMany(p => p.GuaranteeLgReqCreateUserNavigations)
+                    .HasForeignKey(d => d.CreateUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_FK2");
+
+                entity.HasOne(d => d.EditUserNavigation)
+                    .WithMany(p => p.GuaranteeLgReqEditUserNavigations)
+                    .HasForeignKey(d => d.EditUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_FK3");
+
+                entity.HasOne(d => d.IdSmctMasterNavigation)
+                    .WithMany(p => p.GuaranteeLgReqs)
+                    .HasForeignKey(d => d.IdSmctMaster)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_FK1");
+            });
+
+            modelBuilder.Entity<GuaranteeLgReqStation>(entity =>
+            {
+                entity.HasKey(e => e.IdGuaranteeLgReqStation)
+                    .HasName("GUARANTEE_LG_REQ_STATION_PK");
+
+                entity.ToTable("GUARANTEE_LG_REQ_STATION");
+
+                entity.Property(e => e.IdGuaranteeLgReqStation)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_GUARANTEE_LG_REQ_STATION")
+                    .HasDefaultValueSql("sys_guid() ");
+
+                entity.Property(e => e.AppTypeId)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("APP_TYPE_ID");
+
+                entity.Property(e => e.Budgetyear)
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("BUDGETYEAR");
+
+                entity.Property(e => e.ContractDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CONTRACT_DATE");
+
+                entity.Property(e => e.ContractId)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_ID");
+
+                entity.Property(e => e.ContractName)
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_NAME");
+
+                entity.Property(e => e.ContractTypeDesc)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_TYPE_DESC");
+
+                entity.Property(e => e.ContractTypeId)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_TYPE_ID");
+
+                entity.Property(e => e.ContractTypeName)
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_TYPE_NAME");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUser)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER");
+
+                entity.Property(e => e.DepartmentCode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT_CODE");
+
+                entity.Property(e => e.DepartmentName)
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT_NAME");
+
+                entity.Property(e => e.EditDate)
+                    .HasPrecision(6)
+                    .HasColumnName("EDIT_DATE");
+
+                entity.Property(e => e.EditUser)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("EDIT_USER");
+
+                entity.Property(e => e.EffectiveDateEnd)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("EFFECTIVE_DATE_END");
+
+                entity.Property(e => e.EffectiveDateStart)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("EFFECTIVE_DATE_START");
+
+                entity.Property(e => e.GuaranteeTypeDesc)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("GUARANTEE_TYPE_DESC");
+
+                entity.Property(e => e.GuaranteeTypeId)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("GUARANTEE_TYPE_ID");
+
+                entity.Property(e => e.IdContract)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_CONTRACT");
+
+                entity.Property(e => e.IdGuaranteeLgReq)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_GUARANTEE_LG_REQ");
+
+                entity.Property(e => e.IdSmctMaster)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_SMCT_MASTER");
+
+                entity.Property(e => e.LgAmount)
+                    .HasColumnType("NUMBER(17,2)")
+                    .HasColumnName("LG_AMOUNT");
+
+                entity.Property(e => e.LgAmountInitial)
+                    .HasPrecision(17)
+                    .HasColumnName("LG_AMOUNT_INITIAL");
+
+                entity.Property(e => e.LgNumber)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("LG_NUMBER");
+
+                entity.Property(e => e.RefDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("REF_DATE");
+
+                entity.Property(e => e.RefId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("REF_ID");
+
+                entity.Property(e => e.RequesterNameTh)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("REQUESTER_NAME_TH");
+
+                entity.Property(e => e.TaxId)
+                    .HasMaxLength(13)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_ID");
+
+                entity.Property(e => e.Used)
+                    .HasPrecision(1)
+                    .HasColumnName("USED");
+
+                entity.HasOne(d => d.CreateUserNavigation)
+                    .WithMany(p => p.GuaranteeLgReqStationCreateUserNavigations)
+                    .HasForeignKey(d => d.CreateUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_STATION_FK4");
+
+                entity.HasOne(d => d.EditUserNavigation)
+                    .WithMany(p => p.GuaranteeLgReqStationEditUserNavigations)
+                    .HasForeignKey(d => d.EditUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_STATION_FK5");
+
+                entity.HasOne(d => d.IdContractNavigation)
+                    .WithMany(p => p.GuaranteeLgReqStations)
+                    .HasForeignKey(d => d.IdContract)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_STATION_FK2");
+
+                entity.HasOne(d => d.IdGuaranteeLgReqNavigation)
+                    .WithMany(p => p.GuaranteeLgReqStations)
+                    .HasForeignKey(d => d.IdGuaranteeLgReq)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_STATION_FK3");
+
+                entity.HasOne(d => d.IdSmctMasterNavigation)
+                    .WithMany(p => p.GuaranteeLgReqStations)
+                    .HasForeignKey(d => d.IdSmctMaster)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("GUARANTEE_LG_REQ_STATION_FK1");
+            });
+
             modelBuilder.Entity<LOrgOther>(entity =>
             {
                 entity.HasNoKey();
@@ -8621,6 +9007,99 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
 
                 entity.Property(e => e.VendorName)
                     .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("VENDOR_NAME");
+            });
+
+            modelBuilder.Entity<VGuaranteeLgContract>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_GUARANTEE_LG_CONTRACT");
+
+                entity.Property(e => e.Budgetyear)
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("BUDGETYEAR");
+
+                entity.Property(e => e.ContractDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("CONTRACT_DATE");
+
+                entity.Property(e => e.ContractId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_ID");
+
+                entity.Property(e => e.ContractName)
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_NAME");
+
+                entity.Property(e => e.ContractSignType)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_SIGN_TYPE");
+
+                entity.Property(e => e.ContractTypeName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACT_TYPE_NAME");
+
+                entity.Property(e => e.DepartmentCode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT_CODE");
+
+                entity.Property(e => e.DepartmentName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DEPARTMENT_NAME");
+
+                entity.Property(e => e.EffectiveDateEnd)
+                    .HasColumnType("DATE")
+                    .HasColumnName("EFFECTIVE_DATE_END");
+
+                entity.Property(e => e.EffectiveDateStart)
+                    .HasColumnType("DATE")
+                    .HasColumnName("EFFECTIVE_DATE_START");
+
+                entity.Property(e => e.LgAmountInitial)
+                    .HasColumnType("NUMBER(18,2)")
+                    .HasColumnName("LG_AMOUNT_INITIAL");
+
+                entity.Property(e => e.LgDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("LG_DATE");
+
+                entity.Property(e => e.LgNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("LG_NUMBER");
+
+                entity.Property(e => e.RefDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("REF_DATE");
+
+                entity.Property(e => e.RefId)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("REF_ID");
+
+                entity.Property(e => e.VendorId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("VENDOR_ID");
+
+                entity.Property(e => e.VendorName)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("VENDOR_NAME");
             });

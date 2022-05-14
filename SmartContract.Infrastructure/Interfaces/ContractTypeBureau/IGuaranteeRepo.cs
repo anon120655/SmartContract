@@ -1,6 +1,8 @@
-﻿using SmartContract.Infrastructure.Resources.ContractTypeBureau;
+﻿using SmartContract.Infrastructure.Data.EntityFramework;
+using SmartContract.Infrastructure.Resources.ContractTypeBureau;
 using SmartContract.Infrastructure.Resources.ContractTypeVendor;
 using SmartContract.Infrastructure.Resources.DTO;
+using SmartContract.Infrastructure.Resources.Guarantee;
 using SmartContract.Infrastructure.Resources.Share;
 using System;
 using System.Collections.Generic;
@@ -12,9 +14,13 @@ namespace SmartContract.Infrastructure.Interfaces.ContractTypeBureau
 {
     public interface IGuaranteeRepo
     {
+
+        IQueryable<GuaranteeLgReqStation> GetListLG(SearchOptionLG condition = null);
+        PaginationView<List<GuaranteeLgReqStationDTO>> GetTrackingLG(int? page, int pageSize, SearchOptionLG condition = null);
+
         string SetUrlRedirect(TAllMasterVendorView indata);
-        IEnumerable<ContractStationGuaranteeDTO> GetList(SearchOptionStation condition = null);
-        PaginationView<List<ContractStationGuaranteeDTO>> GetTrackingGuaranteeNew(int? page, int pageSize, SearchOptionStation condition = null);
+        IQueryable<VGuaranteeLgContract> GetListSearchLG(SearchOptionLG condition = null);
+        PaginationView<List<VGuaranteeLgContract>> GetTrackingSearchLG(int? page, int pageSize, SearchOptionLG condition = null);
 
 
         void Validate(TAllMasterVendorView indata);

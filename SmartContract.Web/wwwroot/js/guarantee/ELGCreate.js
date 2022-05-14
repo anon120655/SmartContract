@@ -1,4 +1,13 @@
 ﻿
+$(document).ready(function () {
+    InitialELGCreate();
+});
+
+function InitialELGCreate() {
+    setDateThai($(`#Request_effectiveDateStart`));
+    setDateThai($(`#Request_effectiveDateEnd`));
+}
+
 onbeginForm = function (xhr) {
     showLoading();
 };

@@ -25,13 +25,12 @@ namespace SmartContract.Web.Controllers
 		}
 
 		#region หน้าติดตามทุกประเภท
-		public IActionResult Tracking(int? page = 1, int pagesize = 10, SearchOptionStation Condition = null)
+		public IActionResult Tracking(int? page = 1, int pagesize = 10, SearchOptionLG Condition = null)
 		{
 			try
 			{
 				TrackingGuaranteeMain response = new TrackingGuaranteeMain();
-				Condition.PathUrlAction = "Guarantee/GuaranteeNew";
-				response.TrackingGuaranteeNew = _repo.GuaranteeRepo.GetTrackingGuaranteeNew(page, pagesize, Condition);
+				response.TrackingStation = _repo.GuaranteeRepo.GetTrackingLG(page, pagesize, Condition);
 				response.Condition = Condition;
 
 				return View(response);
@@ -43,31 +42,12 @@ namespace SmartContract.Web.Controllers
 			}
 		}
 
-		public IActionResult Tracking2(int? page = 1, int pagesize = 10, SearchOptionStation Condition = null)
+		public IActionResult Tracking2(int? page = 1, int pagesize = 10, SearchOptionLG Condition = null)
 		{
 			try
 			{
 				TrackingGuaranteeMain response = new TrackingGuaranteeMain();
-				Condition.PathUrlAction = "Guarantee/GuaranteeNew";
-				response.TrackingGuaranteeNew = _repo.GuaranteeRepo.GetTrackingGuaranteeNew(page, pagesize, Condition);
-				response.Condition = Condition;
-
-				return View(response);
-
-			}
-			catch (Exception ex)
-			{
-				return View(new TrackingGuaranteeMain() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
-			}
-		}
-
-		public IActionResult Tracking3(int? page = 1, int pagesize = 10, SearchOptionStation Condition = null)
-		{
-			try
-			{
-				TrackingGuaranteeMain response = new TrackingGuaranteeMain();
-				Condition.PathUrlAction = "Guarantee/GuaranteeNew";
-				response.TrackingGuaranteeNew = _repo.GuaranteeRepo.GetTrackingGuaranteeNew(page, pagesize, Condition);
+				response.VGuaranteeLgContract = _repo.GuaranteeRepo.GetTrackingSearchLG(page, pagesize, Condition);
 				response.Condition = Condition;
 
 				return View(response);
@@ -79,215 +59,68 @@ namespace SmartContract.Web.Controllers
 			}
 		}
 		#endregion
-
-		#region รายการขอต่ออายุ
-		public async Task<IActionResult> GuaranteeRenew(ParameterCondition indata)
-		{
-			try
-			{
-				TAllMasterVendorView response = new TAllMasterVendorView();
-				response.ParameterCondition = indata;
-
-				String _ContractTypeId = SecurityRepo.Decrypt(indata.ContractTypeIdEn);
-				if (_ContractTypeId == "01")
-					response = await _repo.T01BuRepo.GetView(indata);
-				else if (_ContractTypeId == "03")
-					response = await _repo.T03BuRepo.GetView(indata);
-				else if (_ContractTypeId == "04")
-					response = await _repo.T04BuRepo.GetView(indata);
-				else if (_ContractTypeId == "11")
-					response = await _repo.T11BuRepo.GetView(indata);
-
-				response.ObjectState = TObjectState.Update;
-
-				return View(response);
-			}
-			catch (Exception ex)
-			{
-				return View(new TAllMasterVendorView() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
-			}
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> GuaranteeRenew([FromForm] TAllMasterVendorView indata)
-		{
-			try
-			{
-				_repo.GuaranteeRepo.Validate(indata);
-				indata = await _repo.GuaranteeRepo.UpdateReNewAsync(indata);
-
-				indata = await _repo.ContractShare.ViewContractStation(indata);
-
-				return Json(new ResultModelJson<TAllMasterVendorView>
-				{
-					Status = true,
-					Result = indata,
-					UrlRedirect = _repo.GuaranteeRepo.SetUrlRedirect(indata)
-				});
-			}
-			catch (Exception ex)
-			{
-				return Json(new ResultModelJson<Boolean>
-				{
-					MessagError = GeneralUtils.GetExMessage(ex)
-				});
-			}
-		}
-		#endregion
-
-		#region รายการขอคืน
-		public async Task<IActionResult> GuaranteeReturn(ParameterCondition indata)
-		{
-			try
-			{
-				TAllMasterVendorView response = new TAllMasterVendorView();
-				response.ParameterCondition = indata;
-
-				String _ContractTypeId = SecurityRepo.Decrypt(indata.ContractTypeIdEn);
-				if (_ContractTypeId == "01")
-					response = await _repo.T01BuRepo.GetView(indata);
-				else if (_ContractTypeId == "03")
-					response = await _repo.T03BuRepo.GetView(indata);
-				else if (_ContractTypeId == "04")
-					response = await _repo.T04BuRepo.GetView(indata);
-				else if (_ContractTypeId == "11")
-					response = await _repo.T11BuRepo.GetView(indata);
-
-				response.ObjectState = TObjectState.Update;
-
-				return View(response);
-			}
-			catch (Exception ex)
-			{
-				return View(new TAllMasterVendorView() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
-			}
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> GuaranteeReturn([FromForm] TAllMasterVendorView indata)
-		{
-			try
-			{
-				_repo.GuaranteeRepo.Validate(indata);
-				indata = await _repo.GuaranteeRepo.UpdateReturnAsync(indata);
-
-				indata = await _repo.ContractShare.ViewContractStation(indata);
-
-				return Json(new ResultModelJson<TAllMasterVendorView>
-				{
-					Status = true,
-					Result = indata,
-					UrlRedirect = _repo.GuaranteeRepo.SetUrlRedirect(indata)
-				});
-			}
-			catch (Exception ex)
-			{
-				return Json(new ResultModelJson<Boolean>
-				{
-					MessagError = GeneralUtils.GetExMessage(ex)
-				});
-			}
-		}
-		#endregion
-
-		#region รายการขอเคลม
-		public async Task<IActionResult> GuaranteeClaim(ParameterCondition indata)
-		{
-			try
-			{
-				TAllMasterVendorView response = new TAllMasterVendorView();
-				response.ParameterCondition = indata;
-
-				String _ContractTypeId = SecurityRepo.Decrypt(indata.ContractTypeIdEn);
-				if (_ContractTypeId == "01")
-					response = await _repo.T01BuRepo.GetView(indata);
-				else if (_ContractTypeId == "03")
-					response = await _repo.T03BuRepo.GetView(indata);
-				else if (_ContractTypeId == "04")
-					response = await _repo.T04BuRepo.GetView(indata);
-				else if (_ContractTypeId == "11")
-					response = await _repo.T11BuRepo.GetView(indata);
-
-				response.ObjectState = TObjectState.Update;
-
-				return View(response);
-			}
-			catch (Exception ex)
-			{
-				return View(new TAllMasterVendorView() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
-			}
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> GuaranteeClaim([FromForm] TAllMasterVendorView indata)
-		{
-			try
-			{
-				_repo.GuaranteeRepo.Validate(indata);
-				indata = await _repo.GuaranteeRepo.UpdateClaimAsync(indata);
-
-				indata = await _repo.ContractShare.ViewContractStation(indata);
-
-				return Json(new ResultModelJson<TAllMasterVendorView>
-				{
-					Status = true,
-					Result = indata,
-					UrlRedirect = _repo.GuaranteeRepo.SetUrlRedirect(indata)
-				});
-			}
-			catch (Exception ex)
-			{
-				return Json(new ResultModelJson<Boolean>
-				{
-					MessagError = GeneralUtils.GetExMessage(ex)
-				});
-			}
-		}
-		#endregion
-
-		public async Task<IActionResult> GuaranteeReport(SearchOptionGuarantee Condition = null)
-		{
-			try
-			{
-				GuaranteeReportMain response = new GuaranteeReportMain();
-				response.GetLookUp = new Infrastructure.Resources.Share.LookUpResource()
-				{
-					BudgetYears = _repo.MasterData.BudgetYear(),
-					Months = _repo.MasterData.GetMonths()
-				};
-
-				response.GuaranteeReportView = await _repo.GuaranteeRepo.GuaranteeReportView(Condition);
-
-				return View(response);
-			}
-			catch (Exception ex)
-			{
-				return View(new GuaranteeReportMain() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
-			}
-		}
 
 		//สร้างคำขอหนังสือค้ำประกัน L/G
-		public async Task<IActionResult> Create()
+		public async Task<IActionResult> Create(ParameterCreate indata)
 		{
 			try
 			{
 				ELGCreateMain response = new ELGCreateMain();
 
+				String _lgNumber = "00019/200008/0211/65"; //SecurityRepo.Decrypt(indata.lgNumber)
 
-				return View(response);
-			}
-			catch (Exception ex)
-			{
-				return View(new ELGCreateMain() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
-			}
-		}
+				var lGDocumentSearch = await _repo.ServiceOther.eLGDocumentSearch(new eLGDocumentSearchRequest()
+				{
+					lgNumber = _lgNumber
+				});
 
-		public async Task<IActionResult> Create2()
-		{
-			try
-			{
-				ELGCreateMain response = new ELGCreateMain();
+				if (lGDocumentSearch.status != "200" && lGDocumentSearch.message != null)
+				{
+					throw new Exception(lGDocumentSearch.message);
+				}
 
+				if (lGDocumentSearch.result == null || lGDocumentSearch.result.Count == 0)
+				{
+					throw new Exception($"{indata.lgNumber} Not Found.");
+				}
+				if (lGDocumentSearch.result.Count != 1)
+				{
+					throw new Exception("Found more than 1 item.");
+				}
+
+				var lGData = lGDocumentSearch.result[0];
+
+				response.Request.taxId = lGData.taxId;
+				response.Request.lgNumber = lGData.lgNumber;
+				response.Request.requesterNameTh = lGData.requesterNameTh;
+				response.Request.contractNo = SecurityRepo.Decrypt(indata.contractNo);
+
+				if (indata.contractDate != null)
+				{
+					var _contractDate = GeneralUtils.DateToEn(indata.contractDate, "dd/MM/yyyy HH:mm:ss");
+					response.Request.contractDate = GeneralUtils.DateToThString(_contractDate);
+				}
+
+				if (lGData.effectiveDateStart != null)
+				{
+					var _effectiveDateStart = GeneralUtils.DateToEn(lGData.effectiveDateStart, "yyyy-MM-dd");
+					response.Request.effectiveDateStart = GeneralUtils.DateToThString(_effectiveDateStart);
+				}
+				if (lGData.effectiveDateEnd != null)
+				{
+					var _effectiveDateEnd = GeneralUtils.DateToEn(lGData.effectiveDateEnd, "yyyy-MM-dd");
+					response.Request.effectiveDateEnd = GeneralUtils.DateToThString(_effectiveDateEnd);
+				}
+
+				response.Request.lgAmount = lGData.lgAmount;
+				response.Request.guaranteeTypeId = lGData.guaranteeTypeId;
+				response.Request.contractTypeId = lGData.contractTypeId;
+				response.Request.contractDetail = lGData.contractDetail;
+				response.Request.comment = lGData.comment;
+				response.Request.guranteeTypeDesc = lGData.guranteeTypeDesc;
+				response.Request.contractTypeDesc = lGData.contractTypeDesc;
+				response.Request.hospitalCode = lGData.hospitalCode;
+				response.Request.hospitalName = lGData.hospitalName;
 
 				return View(response);
 			}
@@ -316,7 +149,7 @@ namespace SmartContract.Web.Controllers
 				{
 					Status = true,
 					Result = response,
-					UrlRedirect = "Tracking?MenuEn=-jBFSc26KiogIA8Lv0yuvQ"
+					UrlRedirect = "Tracking"
 				});
 			}
 			catch (Exception ex)
