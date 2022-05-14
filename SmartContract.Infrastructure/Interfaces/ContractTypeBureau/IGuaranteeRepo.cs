@@ -15,6 +15,8 @@ namespace SmartContract.Infrastructure.Interfaces.ContractTypeBureau
     public interface IGuaranteeRepo
     {
 
+        Task<ELGCreateMain> GetView(ParameterCreate indata);
+
         IQueryable<GuaranteeLgReqStation> GetListLG(SearchOptionLG condition = null);
         PaginationView<List<GuaranteeLgReqStationDTO>> GetTrackingLG(int? page, int pageSize, SearchOptionLG condition = null);
 

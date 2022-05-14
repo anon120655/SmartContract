@@ -19,6 +19,7 @@ using System.Data;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
 using SmartContract.Infrastructure.Resources.Registers;
+using SmartContract.Infrastructure.Resources.Guarantee;
 
 namespace SmartContract.Infrastructure.Repositorys.Share
 {
@@ -483,5 +484,80 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 
 			return FileSystemDTO;
 		}
+
+		public IEnumerable<AppTypeModel> GetAppTypeList(string AppTypeId = null)
+		{
+			var response = new List<AppTypeModel>();
+			response.Add(new AppTypeModel() { Id = "3", Value = "ขอคืน" });
+			response.Add(new AppTypeModel() { Id = "4", Value = "ขอเคลม" });
+			response.Add(new AppTypeModel() { Id = "5", Value = "ขอเพิ่ม" });
+			response.Add(new AppTypeModel() { Id = "6", Value = "ขอลด" });
+
+			if (AppTypeId != null)
+			{
+				response = response.Where(x => x.Id == AppTypeId).ToList();
+			}
+			return response;
+		}
+
+		public IEnumerable<AppTypeModel> LgStatus(string status = null)
+		{
+			var response = new List<AppTypeModel>();
+			response.Add(new AppTypeModel() { Id = null, Value = "อยู่ระหว่างส่งคำขอ" });
+			response.Add(new AppTypeModel() { Id = "created", Value = "ขอออก" });
+			response.Add(new AppTypeModel() { Id = "extended", Value = "ขอต่ออายุ" });
+			response.Add(new AppTypeModel() { Id = "increased", Value = "ขอเพิ่มวงเงิน" });
+			response.Add(new AppTypeModel() { Id = "decreased", Value = "ขอลดวงเงิน" });
+			response.Add(new AppTypeModel() { Id = "claimed", Value = "ขอเคลม" });
+
+			if (status != null)
+			{
+				response = response.Where(x => x.Id == status).ToList();
+			}
+
+			return response;
+		}
+
+		public IEnumerable<AppTypeModel> GetContractTypeList(string Id = null)
+		{
+			var response = new List<AppTypeModel>();
+			response.Add(new AppTypeModel() { Id = "1", Value = "สัญญาจ้าง" });
+			response.Add(new AppTypeModel() { Id = "2", Value = "สัญญาซื้อขาย" });
+			response.Add(new AppTypeModel() { Id = "3", Value = "สัญญาจะซื้อจะขาย" });
+			response.Add(new AppTypeModel() { Id = "4", Value = "สัญญาเช่า" });
+			response.Add(new AppTypeModel() { Id = "5", Value = "ใบเสนอราคา" });
+			response.Add(new AppTypeModel() { Id = "6", Value = "ใบสั่งซื้อ" });
+			response.Add(new AppTypeModel() { Id = "7", Value = "Purchase Order" });
+			response.Add(new AppTypeModel() { Id = "8", Value = "เอกสารยืนยันการว่าจ้าง" });
+			response.Add(new AppTypeModel() { Id = "99", Value = "อื่นๆ โปรดระบุ" });
+
+			if (Id != null)
+			{
+				response = response.Where(x => x.Id == Id).ToList();
+			}
+
+			return response;
+		}
+
+		public IEnumerable<AppTypeModel> GetGuaranteeTypeList(string Id = null)
+		{
+			var response = new List<AppTypeModel>();
+			response.Add(new AppTypeModel() { Id = "1", Value = "ยื่นซอง" });
+			response.Add(new AppTypeModel() { Id = "2", Value = "การรับเงินล่วงหน้า" });
+			response.Add(new AppTypeModel() { Id = "3", Value = "การปฎิบัติตามสัญญา" });
+			response.Add(new AppTypeModel() { Id = "5", Value = "การใช้กระแสไฟฟ้า" });
+			response.Add(new AppTypeModel() { Id = "6", Value = "ค่าภาษีอากร 19 ทวิ" });
+			response.Add(new AppTypeModel() { Id = "7", Value = "การซื้อสินค้า" });
+			response.Add(new AppTypeModel() { Id = "8", Value = "สาธารณูปโภคเพื่อการจัดสรรที่ดิน" });
+			response.Add(new AppTypeModel() { Id = "9", Value = "การรับเงินประกันผลงาน" });
+
+			if (Id != null)
+			{
+				response = response.Where(x => x.Id == Id).ToList();
+			}
+
+			return response;
+		}
+
 	}
 }

@@ -1,6 +1,7 @@
 ﻿
 @model SmartContract.Infrastructure.Resources.ContractTypeBureau.TrackingGuaranteeMain
 
+@inject SmartContract.Infrastructure.Interfaces.Share.IMasterData MasterData
 @inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
 @using SmartContract.Infrastructure.Resources.Share
 @using SmartContract.Utils
@@ -138,32 +139,34 @@ else
                                             <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                                                 <td class="text-center">@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
                                                 <td class="text-center col-md-1">
-                                                    ขอคืน
+                                                    @(MasterData.GetAppTypeList(item.Value.AppTypeId).FirstOrDefault().Value)
                                                 </td>
                                                 <td class="text-center col-md-1">
-                                                    1234455666789
+                                                    @item.Value.TaxId
                                                 </td>
-                                                <td class="text-center">ชื่อลูกค้าที่เป็นเจ้าของงาน</td>
+                                                <td class="text-center">@item.Value.RequesterNameTh</td>
                                                 <td class="text-center">
                                                     @item.Value.ContractId
                                                 </td>
                                                 <td class="text-center">@GeneralUtils.DateToThString(item.Value.ContractDate)</td>
-                                                <td class="text-center">00019/200008/0203/63</td>
+                                                <td class="text-center">@item.Value.LgNumber</td>
                                                 <td class="text-center">
                                                     @GeneralUtils.DateToThString(item.Value.ContractDate)
                                                 </td>
                                                 <td class="text-center">
                                                     @GeneralUtils.DateToThString(item.Value.EditDate)
                                                 </td>
-                                                <td class="text-right">200,000.00</td>
-                                                <td class="text-center">อยู่ระหว่างส่งคำขอ</td>
+                                                <td class="text-right">@item.Value.LgAmount.Value.ToString("#,##0.00")</td>
+                                                <td class="text-center">
+                                                    @*@(MasterData.LgStatus(item.Value.).FirstOrDefault().Value)*@
+                                                    อยู่ระหว่างส่งคำขอ
+                                                </td>
                                                 <td class="text-center col-md-1">
                                                     <a class="btn-outline-primary" onclick="showLoading()"
                                                        asp-controller="Guarantee"
-                                                       asp-action="Create"
-                                                       asp-route-ContractGuaranteeTypeEn="@SecurityRepo.Encrypt(ContractGuaranteeTypes.T2_RENEW)">รายละเอียด</a>
+                                                       asp-action="View"
+                                                       asp-route-IdGuaranteeLgReq="@(item.Value.IdGuaranteeLgReq)">รายละเอียด</a>
                                                 </td>
-
                                             </tr>
                                         }
                                     }

@@ -39,6 +39,40 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
 			_mySet = settings.Value;
 		}
 
+
+		public async Task<ELGCreateMain> GetView(ParameterCreate indata)
+		{
+			var _GuaranteeLgReqs = await _repo.Context.GuaranteeLgReqs.FirstOrDefaultAsync(x => x.IdGuaranteeLgReq == indata.IdGuaranteeLgReq);
+			var _GuaranteeLgReqStations = await _repo.Context.GuaranteeLgReqStations.FirstOrDefaultAsync(x => x.IdGuaranteeLgReq == indata.IdGuaranteeLgReq);
+
+			var _LgStatusName = _repo.MasterData.LgStatus(_GuaranteeLgReqs.LgStatus).FirstOrDefault().Value;
+			var _effectiveDateStart = GeneralUtils.DateToEn(_GuaranteeLgReqStations.EffectiveDateStart, "yyyy-MM-dd");
+			var _effectiveDateEnd = GeneralUtils.DateToEn(_GuaranteeLgReqStations.EffectiveDateEnd, "yyyy-MM-dd");
+
+			var response = new ELGCreateMain()
+			{
+				Request = new Resources.Share.ServiceOther.eLGCreateRequest()
+				{
+					appTypeId = _GuaranteeLgReqStations.AppTypeId,
+					taxId = _GuaranteeLgReqStations.TaxId,
+					requesterNameTh = _GuaranteeLgReqStations.RequesterNameTh,
+					contractNo = _GuaranteeLgReqStations.ContractId,
+					contractDate = GeneralUtils.DateToThString(_GuaranteeLgReqStations.ContractDate),
+					lgNumber = _GuaranteeLgReqStations.LgNumber,
+					effectiveDateStart = GeneralUtils.DateToThString(_effectiveDateStart),
+					effectiveDateEnd = GeneralUtils.DateToThString(_effectiveDateEnd),
+					lgAmount = _GuaranteeLgReqStations.LgAmount.Value,
+					guaranteeTypeId = _GuaranteeLgReqStations.GuaranteeTypeId,
+					contractTypeId = _GuaranteeLgReqStations.ContractTypeId,
+					contractDetail = _GuaranteeLgReqs.ContractDetail,
+					comment = _GuaranteeLgReqs.Comments,
+					LgStatusName = _LgStatusName
+				}
+			};
+			;
+			return response;
+		}
+
 		public IQueryable<GuaranteeLgReqStation> GetListLG(SearchOptionLG condition = null)
 		{
 			var queryMap = _repo.Context.GuaranteeLgReqStations.OrderByDescending(x => x.EditDate);

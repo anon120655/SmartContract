@@ -1,5 +1,6 @@
 ﻿using SmartContract.Infrastructure.Data.EntityFramework;
 using SmartContract.Infrastructure.Resources.DTO;
+using SmartContract.Infrastructure.Resources.Guarantee;
 using SmartContract.Infrastructure.Resources.Registers;
 using SmartContract.Infrastructure.Resources.Share;
 using System;
@@ -40,5 +41,13 @@ namespace SmartContract.Infrastructure.Interfaces.Share
         Task<IList<VNhsoZone>> ProvincesUnderNHSO();
         //ไฟล์เอกสารจากระบบสมัคร
         Task<IEnumerable<FileSystemDTO>> GetAttachSystem(String hcode = null);
+
+        //LG หลักประกันสัญญา
+        IEnumerable<AppTypeModel> GetAppTypeList(string AppTypeId = null);
+        IEnumerable<AppTypeModel> LgStatus(string status = null);
+        IEnumerable<AppTypeModel> GetContractTypeList(string Id = null);
+        IEnumerable<AppTypeModel> GetGuaranteeTypeList(string Id = null);
+
+
     }
 }

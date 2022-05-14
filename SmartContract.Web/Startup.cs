@@ -94,6 +94,7 @@ namespace SmartContract.Web
             services.AddScoped<IGeneralRepo, GeneralRepo>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMasterData, MasterData>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
             services.AddSignalR();

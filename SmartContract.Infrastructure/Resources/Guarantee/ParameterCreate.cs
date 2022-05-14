@@ -8,6 +8,9 @@ namespace SmartContract.Infrastructure.Resources.Guarantee
 {
 	public class ParameterCreate
 	{
+
+		public string IdGuaranteeLgReq { get; set; }
+
 		public string lgNumber { get; set; }
 		public string contractNo { get; set; }
 		public string contractDate { get; set; }

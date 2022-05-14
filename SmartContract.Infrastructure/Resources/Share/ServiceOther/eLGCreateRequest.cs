@@ -33,7 +33,9 @@ namespace SmartContract.Infrastructure.Resources.Share.ServiceOther
         public string contractTypeDesc { get; set; }
         public string hospitalCode { get; set; }
         public string hospitalName { get; set; }
-        public decimal LgAmountInitial { get; set; }       
+        public decimal LgAmountInitial { get; set; }     
+        
+        public string LgStatusName { get; set; }
 
     }
 }

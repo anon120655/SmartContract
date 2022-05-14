@@ -60,6 +60,23 @@ namespace SmartContract.Web.Controllers
 		}
 		#endregion
 
+
+		public async Task<IActionResult> View(ParameterCreate indata)
+		{
+			try
+			{
+				ELGCreateMain response = new ELGCreateMain();
+
+				response = await _repo.GuaranteeRepo.GetView(indata);
+
+				return View(response);
+			}
+			catch (Exception ex)
+			{
+				return View(new ELGCreateMain() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
+			}
+		}
+
 		//สร้างคำขอหนังสือค้ำประกัน L/G
 		public async Task<IActionResult> Create(ParameterCreate indata)
 		{

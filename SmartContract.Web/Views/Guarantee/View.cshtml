@@ -1,0 +1,195 @@
+﻿
+
+@inject SmartContract.Infrastructure.Interfaces.Share.IMasterData MasterData
+
+@model SmartContract.Infrastructure.Resources.Guarantee.ELGCreateMain
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils;
+
+@{
+    ViewData["Title"] = "View";
+}
+
+
+<link href="~/css/formcontract/formcontract.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/home/progressbarproposal.css" rel="stylesheet" />
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    <form asp-controller="Guarantee" asp-action="Create" enctype="multipart/form-data" method="post"
+          data-ajax="true" data-ajax-method="post"
+          data-ajax-begin="onbeginForm"
+          data-ajax-complete="completedForm"
+          data-ajax-failure="failedForm">
+        <div>
+            <section>
+                <div class="">
+                    <div class="col-md-12">
+                        <div class="form-group m-1">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>
+                                        <small><i class="fa fa-file-alt mr-1 x_title_before"></i>คำขอหนังสือค้ำประกัน</small>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card mb-3"></div>
+                    </div>
+                </div>
+            </section>
+            <div class="card accordion-group">
+                <div class="card-header" id="headingDetailT03_12">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" type="button" data-target="#collapseDetailT03_12" aria-expanded="true" aria-controls="collapseDetailT03_12">
+                            <i class="fas fa-file-alt"></i> รายละเอียดคำขอหนังสือค้ำประกัน
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseDetailT03_12" class="collapse show" aria-labelledby="headingDetailT03_12">
+                    <div class="card-body thead_tabsub1 bg-form">
+                        <section>
+                            <div class="">
+                                <div class="col-md-12">
+                                    <label class="lable_blue h6" for=""><i class="fa fa-th-list mr-1 mb-2"></i>สถานะ</label>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row mb-0">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <div class="col-sm-7">                                           
+                                                <input type="text" readonly class="form-control-plaintext" style="font-weight:bold;"
+                                                       asp-for="Request.LgStatusName">                                          
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 py-3">
+                                    <label class="lable_blue h6" for=""><i class="fa fa-th-list mr-1 mb-2"></i>ประเภทใบคำขอ</label>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row mb-0">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <div class="col-sm-7">
+                                            @(MasterData.GetAppTypeList(Model.Request.appTypeId).FirstOrDefault().Value)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 py-3">
+                                    <label class="lable_blue h6" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดหนังสือค้ำประกัน</label>
+                                </div>
+                                <div class="col-md-12">                                  
+                                    <div class="form-group row mb-0">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <label class="col-sm-2 col-form-label">Tax ID :</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.taxId">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <label class="col-sm-2 col-form-label">ชื่อลูกค้า :</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.requesterNameTh">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <label class="col-sm-2 col-form-label">เลขที่สัญญา :</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.contractNo">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <label class="col-sm-2 col-form-label">สัญญาลงวันที่ :</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.contractDate">
+                                        </div>
+                                    </div>
+                                    <hr class="mt-2 mb-3 width_75" />
+                                    <div class="form-group row">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <label class="col-sm-2 col-form-label">เลขที่หนังสือค้ำประกัน :</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.lgNumber">
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-4">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <div class="form-group col-md-5">
+                                            <label for="inputEmail4">วันที่เริ่มค้ำประกัน</label>
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.effectiveDateStart">
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label for="inputPassword4">วันที่สิ้นสุดค้ำประกัน</label>
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.effectiveDateEnd">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <div class="form-group col-md-5">
+                                            <label for="">มูลค่าค้ำประกัน</label>
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.lgAmount" value="@Model.Request.lgAmount.ToString("#,##0.00")">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <div class="form-group col-md-5">
+                                            <label for="inputEmail4">ประเภทหนังสือค้ำประกัน</label>
+                                            <div class="col-sm-7 text-primary">
+                                                @(MasterData.GetGuaranteeTypeList(Model.Request.guaranteeTypeId).FirstOrDefault().Value)
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label for="inputPassword4">ประเภทสัญญา</label>
+                                            <div class="col-sm-7 text-primary">
+                                                @(MasterData.GetContractTypeList(Model.Request.contractTypeId).FirstOrDefault().Value)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <div class="form-group col-md-10">
+                                            <label for="">รายละเอียดงานตามสัญญา</label>
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.contractDetail">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="col-sm-1 col-form-label text-sm-right"></label>
+                                        <div class="form-group col-md-10">
+                                            <label for="">หมายเหตุ</label>
+                                            <input type="text" readonly class="form-control-plaintext text-primary"
+                                                   asp-for="Request.comment">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    @section Scripts {
+
+    }
+}
