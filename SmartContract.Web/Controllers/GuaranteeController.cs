@@ -25,11 +25,16 @@ namespace SmartContract.Web.Controllers
 		}
 
 		#region หน้าติดตามทุกประเภท
-		public IActionResult Tracking(int? page = 1, int pagesize = 10, SearchOptionLG Condition = null)
+		public async Task<IActionResult> Tracking(int? page = 1, int pagesize = 10, SearchOptionLG Condition = null)
 		{
 			try
 			{
 				TrackingGuaranteeMain response = new TrackingGuaranteeMain();
+				response.GetLookUp = new Infrastructure.Resources.Share.LookUpResource()
+				{
+					LkDepartmentList = await _repo.MasterData.LKDepartments()
+				};
+				response.Dashboard = await _repo.GuaranteeRepo.GetDashboardLG();
 				response.TrackingStation = _repo.GuaranteeRepo.GetTrackingLG(page, pagesize, Condition);
 				response.Condition = Condition;
 
@@ -42,11 +47,15 @@ namespace SmartContract.Web.Controllers
 			}
 		}
 
-		public IActionResult Tracking2(int? page = 1, int pagesize = 10, SearchOptionLG Condition = null)
+		public async Task<IActionResult> Tracking2(int? page = 1, int pagesize = 10, SearchOptionLG Condition = null)
 		{
 			try
 			{
 				TrackingGuaranteeMain response = new TrackingGuaranteeMain();
+				response.GetLookUp = new Infrastructure.Resources.Share.LookUpResource()
+				{
+					LkDepartmentList = await _repo.MasterData.LKDepartments()
+				};
 				response.VGuaranteeLgContract = _repo.GuaranteeRepo.GetTrackingSearchLG(page, pagesize, Condition);
 				response.Condition = Condition;
 

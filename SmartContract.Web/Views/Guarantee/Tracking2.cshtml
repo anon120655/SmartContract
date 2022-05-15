@@ -31,6 +31,7 @@
 }
 else
 {
+    var lookUp = Model.GetLookUp;
     var _Items = (Model != null ? Model.VGuaranteeLgContract.Items : null);
     var _pager = (_Items != null ? Model.VGuaranteeLgContract.Pager : null);
     int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
@@ -66,9 +67,25 @@ else
                 <form method="get" asp-action="Tracking2">
                     <div class="form-group row">
                         <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">สำนัก/กองทุนย่อย/เขต :</label>
+                        <div class="col-sm-3">
+                            <select class="form-control bg-focus selectpicker" data-live-search="true" asp-for="Condition.DepartmentCode"
+                                    asp-items="@(new SelectList((from s in lookUp.LkDepartmentList.Where(x=>x.Dcode != null) select new {
+                                                            Code=s.Dcode,
+                                                            FullName = $"({s.Dcode}) {s.DnameNew}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.Condition.DepartmentCode))">
+                                <option value="">---ทั้งหมด---</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
                         <label class="col-sm-2 col-form-label text-sm-right">ชื่อลูกค้า :</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="ชื่อลูกค้าที่เป็นเจ้าของงาน" asp-for="Condition.requesterNameTh"  />
+                            <input type="text" class="form-control" placeholder="ชื่อลูกค้าที่เป็นเจ้าของงาน" asp-for="Condition.requesterNameTh" />
                         </div>
                         <div class="col-sm-4"></div>
                     </div>
@@ -76,7 +93,7 @@ else
                         <div class="col-sm-3"></div>
                         <label class="col-sm-2 col-form-label text-sm-right">เลขที่สัญญา :</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="XX/X/XXXXX" asp-for="Condition.contractNo"  />
+                            <input type="text" class="form-control" placeholder="XX/X/XXXXX" asp-for="Condition.contractNo" />
                         </div>
                         <div class="col-sm-4"></div>
                     </div>
@@ -84,7 +101,7 @@ else
                         <div class="col-sm-3"></div>
                         <label class="col-sm-2 col-form-label text-sm-right">เลขที่หนังสือค้ำประกัน :</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="00019/200008/0203/63" asp-for="Condition.lgNumber"  />
+                            <input type="text" class="form-control" placeholder="00019/200008/0203/63" asp-for="Condition.lgNumber" />
                         </div>
                         <div class="col-sm-4"></div>
                     </div>

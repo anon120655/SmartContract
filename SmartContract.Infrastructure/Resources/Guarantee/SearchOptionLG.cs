@@ -11,5 +11,6 @@ namespace SmartContract.Infrastructure.Resources.Guarantee
 		public string requesterNameTh { get; set; }
 		public string contractNo { get; set; }
 		public string lgNumber { get; set; }
+		public string DepartmentCode { get; set; }
 	}
 }

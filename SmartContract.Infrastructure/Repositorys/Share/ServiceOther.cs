@@ -253,7 +253,8 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 						GuaranteeTypeDesc = request.guranteeTypeDesc,
 						ContractTypeId = request.contractTypeId,
 						ContractTypeDesc = request.contractTypeDesc,
-						LgAmountInitial = request.LgAmountInitial
+						LgAmountInitial = request.LgAmountInitial,
+						LgStatus = null
 					};
 					await _db.InsterAsync(guaranteeLgReqStation);
 					await _db.SaveAsync();

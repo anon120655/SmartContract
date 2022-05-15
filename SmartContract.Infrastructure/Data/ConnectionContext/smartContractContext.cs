@@ -121,6 +121,7 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -5847,7 +5848,7 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
                     .HasColumnName("EDIT_USER");
 
                 entity.Property(e => e.EffectiveDateEnd)
-                    .HasMaxLength(8)
+                    .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("EFFECTIVE_DATE_END");
 
@@ -5889,13 +5890,18 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
                     .HasColumnName("LG_AMOUNT");
 
                 entity.Property(e => e.LgAmountInitial)
-                    .HasPrecision(17)
+                    .HasColumnType("NUMBER(17,2)")
                     .HasColumnName("LG_AMOUNT_INITIAL");
 
                 entity.Property(e => e.LgNumber)
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("LG_NUMBER");
+
+                entity.Property(e => e.LgStatus)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("LG_STATUS");
 
                 entity.Property(e => e.RefDate)
                     .HasColumnType("DATE")

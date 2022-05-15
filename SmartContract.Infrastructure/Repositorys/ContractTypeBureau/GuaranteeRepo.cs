@@ -73,10 +73,43 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
 			return response;
 		}
 
+		public async Task<DashboardLG> GetDashboardLG()
+		{
+			var lGReqStations = _repo.Context.GuaranteeLgReqStations.Where(x => x.Used);
+			var queryCount = await lGReqStations.GroupBy(s => s.LgStatus)
+					.Select(grp => new
+					{
+						LgStatus = grp.Key,
+						LgStatusCount = grp.Count()
+					}).ToListAsync();
+
+			var _DefualtCount = queryCount.FirstOrDefault(x => x.LgStatus == null)?.LgStatusCount;
+			var _CreatedCount = queryCount.FirstOrDefault(x => x.LgStatus == "Created")?.LgStatusCount;
+			var _ExtendedCount = queryCount.FirstOrDefault(x => x.LgStatus == "Extended")?.LgStatusCount;
+			var _IncreasedCount = queryCount.FirstOrDefault(x => x.LgStatus == "Increased")?.LgStatusCount;
+			var _DecreasedCount = queryCount.FirstOrDefault(x => x.LgStatus == "Decreased")?.LgStatusCount;
+			var _ClaimedCount = queryCount.FirstOrDefault(x => x.LgStatus == "Claimed")?.LgStatusCount;
+			return new DashboardLG()
+			{
+				DefualtCount = _DefualtCount ?? 0,
+				CreatedCount = _CreatedCount ?? 0,
+				ExtendedCount = _ExtendedCount ?? 0,
+				IncreasedCount = _IncreasedCount ?? 0,
+				DecreasedCount = _DecreasedCount ?? 0,
+				ClaimedCount = _ClaimedCount ?? 0
+			};
+		}
+
 		public IQueryable<GuaranteeLgReqStation> GetListLG(SearchOptionLG condition = null)
 		{
-			var queryMap = _repo.Context.GuaranteeLgReqStations.OrderByDescending(x => x.EditDate);
+			var queryMap = _repo.Context.GuaranteeLgReqStations.OrderByDescending(x => x.EditDate).AsQueryable();
 
+			if (condition != null)
+			{
+				if (!String.IsNullOrEmpty(condition.DepartmentCode))
+					queryMap = queryMap.Where(x => x.DepartmentCode.Contains(condition.DepartmentCode)).AsQueryable();
+
+			}
 			return queryMap;
 		}
 
@@ -123,6 +156,8 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
 				if (!String.IsNullOrEmpty(condition.lgNumber))
 					queryMap = queryMap.Where(x => x.LgNumber.Contains(condition.lgNumber)).AsQueryable();
 
+				if (!String.IsNullOrEmpty(condition.DepartmentCode))
+					queryMap = queryMap.Where(x => x.DepartmentCode.Contains(condition.DepartmentCode)).AsQueryable();
 			}
 
 			return queryMap;

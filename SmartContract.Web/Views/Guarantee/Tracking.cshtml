@@ -4,11 +4,13 @@
 @inject SmartContract.Infrastructure.Interfaces.Share.IMasterData MasterData
 @inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
 @using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Infrastructure.Resources.Guarantee
 @using SmartContract.Utils
 
 @{
     ViewData["Title"] = "Tracking";
     String _Title = String.Empty;
+    DashboardLG _Dash = null;
 }
 
 <style>
@@ -32,6 +34,8 @@
 }
 else
 {
+    _Dash = Model.Dashboard;
+    var lookUp = Model.GetLookUp;
     var _Items = (Model != null ? Model.TrackingStation.Items : null);
     var _pager = (_Items != null ? Model.TrackingStation.Pager : null);
     int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
@@ -61,6 +65,39 @@ else
             </div>
         </div>
     </section>
+    <section>
+        <div class="mb-5">
+            <div class="col-md-12">
+                <form method="get" asp-action="Tracking">
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <label class="col-sm-2 col-form-label text-sm-right">สำนัก/กองทุนย่อย/เขต :</label>
+                        <div class="col-sm-3">
+                            <select class="form-control bg-focus selectpicker" data-live-search="true" asp-for="Condition.DepartmentCode"
+                                    asp-items="@(new SelectList((from s in lookUp.LkDepartmentList.Where(x=>x.Dcode != null) select new {
+                                                            Code=s.Dcode,
+                                                            FullName = $"({s.Dcode}) {s.DnameNew}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: Model.Condition.DepartmentCode))">
+                                <option value="">---ทั้งหมด---</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-3 ml-5">
+                            <button type="submit" class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
+                            <button type="button" class="btn btn-secondary loadding text-white" style="width:120px" onclick="clear_input()"> ล้างข้อมูล </button>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
     <section class="container-fluid">
         <div class="row ml-1">
             <div class="col-md-8">
@@ -71,35 +108,35 @@ else
                                 <a id="_SA" class="ml-1 text-dark" onclick="showLoading()"
                                    asp-controller="Guarantee"
                                    asp-action="Tracking2">
-                                    ทั้งหมด (1,000)
+                                    ทั้งหมด (@_Dash.SumCount())
                                 </a>
                             </i>
                             <i class="fas fa-file text-warning mr-2 cursor-pointer">
                                 <a id="_S1" class="ml-1 text-warning" onclick="showLoading()"
                                    asp-controller="Guarantee"
                                    asp-action="Tracking2">
-                                    อยู่ระหว่างส่งคำขอ (xx)
+                                    อยู่ระหว่างส่งคำขอ (@_Dash.DefualtCount)
                                 </a>
                             </i>
                             <i class="fas fa-times-circle text-danger mr-2 cursor-pointer">
                                 <a id="_S2" class="ml-1 text-danger" onclick="showLoading()"
                                    asp-controller="Guarantee"
                                    asp-action="Tracking2">
-                                    ไม่อนุม้ติ (xx)
+                                    ไม่อนุม้ติ (0)
                                 </a>
                             </i>
                             <i class="fas fa-check-circle text-success mr-2 cursor-pointer">
                                 <a id="_S3" class="ml-1 text-success" onclick="showLoading()"
                                    asp-controller="Guarantee"
                                    asp-action="Tracking2">
-                                    อนุม้ติ (xx)
+                                    อนุม้ติ (@_Dash.ApproveCount())
                                 </a>
                             </i>
                             <i class="fas fa-times-circle text-dark mr-2 cursor-pointer">
                                 <a id="_S0" class="ml-1 text-dark" onclick="showLoading()"
                                    asp-controller="Guarantee"
                                    asp-action="Tracking2">
-                                    ยกเลิก (xx)
+                                    ยกเลิก (0)
                                 </a>
                             </i>
                         </div>
@@ -136,6 +173,9 @@ else
                                     {
                                         foreach (var item in _Items.Select((value, index) => new { Value = value, Index = index }))
                                         {
+                                            var _effectiveDateStart = GeneralUtils.DateToEn(item.Value.EffectiveDateStart, "yyyy-MM-dd");
+                                            var _effectiveDateEnd = GeneralUtils.DateToEn(item.Value.EffectiveDateEnd, "yyyy-MM-dd");
+
                                             <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                                                 <td class="text-center">@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
                                                 <td class="text-center col-md-1">
@@ -151,15 +191,16 @@ else
                                                 <td class="text-center">@GeneralUtils.DateToThString(item.Value.ContractDate)</td>
                                                 <td class="text-center">@item.Value.LgNumber</td>
                                                 <td class="text-center">
-                                                    @GeneralUtils.DateToThString(item.Value.ContractDate)
+
+                                                    @GeneralUtils.DateToThString(_effectiveDateStart)
                                                 </td>
                                                 <td class="text-center">
-                                                    @GeneralUtils.DateToThString(item.Value.EditDate)
+
+                                                    @GeneralUtils.DateToThString(_effectiveDateEnd)
                                                 </td>
                                                 <td class="text-right">@item.Value.LgAmount.Value.ToString("#,##0.00")</td>
                                                 <td class="text-center">
-                                                    @*@(MasterData.LgStatus(item.Value.).FirstOrDefault().Value)*@
-                                                    อยู่ระหว่างส่งคำขอ
+                                                    @(MasterData.LgStatus(item.Value.LgStatus).FirstOrDefault().Value)
                                                 </td>
                                                 <td class="text-center col-md-1">
                                                     <a class="btn-outline-primary" onclick="showLoading()"
@@ -197,5 +238,11 @@ else
 @section Scripts {
     <script type="text/javascript">
 
+        function clear_input() {
+            $('form input[type="text"]').val('');
+            $('form select').prop('selectedIndex', 0);
+            $('.selectpicker').selectpicker('refresh');
+
+        }
     </script>
 }

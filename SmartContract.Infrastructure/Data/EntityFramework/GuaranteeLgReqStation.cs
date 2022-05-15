@@ -37,6 +37,7 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public string ContractTypeId { get; set; }
         public string ContractTypeDesc { get; set; }
         public decimal? LgAmountInitial { get; set; }
+        public string LgStatus { get; set; }
 
         public virtual UserSmct CreateUserNavigation { get; set; }
         public virtual UserSmct EditUserNavigation { get; set; }

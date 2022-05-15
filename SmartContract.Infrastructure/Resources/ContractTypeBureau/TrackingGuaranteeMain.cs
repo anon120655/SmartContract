@@ -24,6 +24,8 @@ namespace SmartContract.Infrastructure.Resources.ContractTypeBureau
        
         //Search
         public PaginationView<List<VGuaranteeLgContract>> VGuaranteeLgContract { get; set; }
+        //Dashboard        
+        public DashboardLG Dashboard { get; set; }
         //Tracking        
         public PaginationView<List<GuaranteeLgReqStationDTO>> TrackingStation { get; set; }
 

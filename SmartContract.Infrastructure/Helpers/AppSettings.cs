@@ -9,7 +9,7 @@ namespace SmartContract.Infrastructure.Helpers
     public class AppSettings
     {
         public string Secret { get; set; }
-        public string SiteUpdate { get; set; } = $"1.1.18.20220422";
+        public string SiteUpdate { get; set; } = $"1.1.18.20220515";
         public string ServerSite { get; set; }
         public string SubDomainServer { get; set; }
         public EmailSetting EmailSetting { get; set; }

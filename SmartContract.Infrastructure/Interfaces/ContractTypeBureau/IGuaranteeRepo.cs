@@ -17,6 +17,7 @@ namespace SmartContract.Infrastructure.Interfaces.ContractTypeBureau
 
         Task<ELGCreateMain> GetView(ParameterCreate indata);
 
+        Task<DashboardLG> GetDashboardLG();
         IQueryable<GuaranteeLgReqStation> GetListLG(SearchOptionLG condition = null);
         PaginationView<List<GuaranteeLgReqStationDTO>> GetTrackingLG(int? page, int pageSize, SearchOptionLG condition = null);
 
