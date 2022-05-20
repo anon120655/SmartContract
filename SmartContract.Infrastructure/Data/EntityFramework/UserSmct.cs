@@ -116,6 +116,8 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
             UserSmctVendorCreateUserNavigations = new HashSet<UserSmctVendor>();
             UserSmctVendorEditUserNavigations = new HashSet<UserSmctVendor>();
             UserSmctVendorIdUserSmctNavigations = new HashSet<UserSmctVendor>();
+            VendorLinkReqApproveCreateUserNavigations = new HashSet<VendorLinkReqApprove>();
+            VendorLinkReqApproveEditUserNavigations = new HashSet<VendorLinkReqApprove>();
             VendorLinkReqCreateUserNavigations = new HashSet<VendorLinkReq>();
             VendorLinkReqEditUserNavigations = new HashSet<VendorLinkReq>();
             VendorLinkReqStationCreateUserNavigations = new HashSet<VendorLinkReqStation>();
@@ -250,6 +252,8 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public virtual ICollection<UserSmctVendor> UserSmctVendorCreateUserNavigations { get; set; }
         public virtual ICollection<UserSmctVendor> UserSmctVendorEditUserNavigations { get; set; }
         public virtual ICollection<UserSmctVendor> UserSmctVendorIdUserSmctNavigations { get; set; }
+        public virtual ICollection<VendorLinkReqApprove> VendorLinkReqApproveCreateUserNavigations { get; set; }
+        public virtual ICollection<VendorLinkReqApprove> VendorLinkReqApproveEditUserNavigations { get; set; }
         public virtual ICollection<VendorLinkReq> VendorLinkReqCreateUserNavigations { get; set; }
         public virtual ICollection<VendorLinkReq> VendorLinkReqEditUserNavigations { get; set; }
         public virtual ICollection<VendorLinkReqStation> VendorLinkReqStationCreateUserNavigations { get; set; }

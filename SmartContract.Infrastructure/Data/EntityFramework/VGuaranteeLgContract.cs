@@ -24,5 +24,6 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public DateTime? EffectiveDateStart { get; set; }
         public DateTime? EffectiveDateEnd { get; set; }
         public decimal LgAmountInitial { get; set; }
+        public string Aaa { get; set; }
     }
 }

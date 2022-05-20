@@ -122,7 +122,8 @@ else
                             <i class="fas fa-times-circle text-danger mr-2 cursor-pointer">
                                 <a id="_S2" class="ml-1 text-danger" onclick="showLoading()"
                                    asp-controller="Guarantee"
-                                   asp-action="Tracking">
+                                   asp-action="Tracking"
+                                   asp-route-LgStatus="UnApprove">
                                     ไม่อนุม้ติ (0)
                                 </a>
                             </i>
@@ -137,7 +138,8 @@ else
                             <i class="fas fa-times-circle text-dark mr-2 cursor-pointer">
                                 <a id="_S0" class="ml-1 text-dark" onclick="showLoading()"
                                    asp-controller="Guarantee"
-                                   asp-action="Tracking">
+                                   asp-action="Tracking"
+                                   asp-route-LgStatus="Cancel">
                                     ยกเลิก (0)
                                 </a>
                             </i>

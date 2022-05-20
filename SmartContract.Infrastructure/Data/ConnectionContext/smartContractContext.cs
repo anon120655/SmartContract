@@ -112,6 +112,7 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
         public virtual DbSet<VSmctContract> VSmctContracts { get; set; }
         public virtual DbSet<VSmctContractPeriod> VSmctContractPeriods { get; set; }
         public virtual DbSet<VendorLinkReq> VendorLinkReqs { get; set; }
+        public virtual DbSet<VendorLinkReqApprove> VendorLinkReqApproves { get; set; }
         public virtual DbSet<VendorLinkReqStation> VendorLinkReqStations { get; set; }
         public virtual DbSet<ViewAttachFile> ViewAttachFiles { get; set; }
         public virtual DbSet<ViewAttachfileConfigItem> ViewAttachfileConfigItems { get; set; }
@@ -121,7 +122,7 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -9023,6 +9024,11 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
 
                 entity.ToView("V_GUARANTEE_LG_CONTRACT");
 
+                entity.Property(e => e.Aaa)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("AAA");
+
                 entity.Property(e => e.Budgetyear)
                     .IsRequired()
                     .HasMaxLength(4)
@@ -10228,6 +10234,249 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
                     .HasForeignKey(d => d.IdSmctMaster)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("VENDOR_LINK_REQ_FK3");
+            });
+
+            modelBuilder.Entity<VendorLinkReqApprove>(entity =>
+            {
+                entity.HasKey(e => e.IdVendorLinkReqApprove);
+
+                entity.ToTable("VENDOR_LINK_REQ_APPROVE");
+
+                entity.Property(e => e.IdVendorLinkReqApprove)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_VENDOR_LINK_REQ_APPROVE")
+                    .HasDefaultValueSql("sys_guid() ");
+
+                entity.Property(e => e.AccName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ACC_NAME");
+
+                entity.Property(e => e.AccNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ACC_NO");
+
+                entity.Property(e => e.ApproveDate)
+                    .HasColumnType("DATE")
+                    .HasColumnName("APPROVE_DATE");
+
+                entity.Property(e => e.ApproveUser)
+                    .HasPrecision(10)
+                    .HasColumnName("APPROVE_USER");
+
+                entity.Property(e => e.BankBrnInd)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_BRN_IND");
+
+                entity.Property(e => e.BankId)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("BANK_ID");
+
+                entity.Property(e => e.BranchId)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_ID");
+
+                entity.Property(e => e.BranchName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BRANCH_NAME");
+
+                entity.Property(e => e.Building)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("BUILDING");
+
+                entity.Property(e => e.CardId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CARD_ID");
+
+                entity.Property(e => e.CardType)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("CARD_TYPE");
+
+                entity.Property(e => e.Catm)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("CATM");
+
+                entity.Property(e => e.CompanyName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("COMPANY_NAME");
+
+                entity.Property(e => e.ContractorName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTRACTOR_NAME");
+
+                entity.Property(e => e.CostCenter)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("COST_CENTER");
+
+                entity.Property(e => e.CreateDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUser)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATE_USER");
+
+                entity.Property(e => e.EditDate)
+                    .HasPrecision(6)
+                    .HasColumnName("EDIT_DATE");
+
+                entity.Property(e => e.EditUser)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("EDIT_USER");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("EMAIL");
+
+                entity.Property(e => e.Enaccadr1)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENACCADR1");
+
+                entity.Property(e => e.Enaccadr2)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENACCADR2");
+
+                entity.Property(e => e.Enaccadr3)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENACCADR3");
+
+                entity.Property(e => e.Enaccname)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ENACCNAME");
+
+                entity.Property(e => e.Fax)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("FAX");
+
+                entity.Property(e => e.HouseNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("HOUSE_NUMBER");
+
+                entity.Property(e => e.IdSmctMaster)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_SMCT_MASTER");
+
+                entity.Property(e => e.IdVendorLinkReq)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("ID_VENDOR_LINK_REQ");
+
+                entity.Property(e => e.Mobile)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("MOBILE");
+
+                entity.Property(e => e.Moo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("MOO");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PHONE");
+
+                entity.Property(e => e.PostCode)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("POST_CODE");
+
+                entity.Property(e => e.ProvinceId)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("PROVINCE_ID");
+
+                entity.Property(e => e.Road)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ROAD");
+
+                entity.Property(e => e.SearchTerm)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("SEARCH_TERM");
+
+                entity.Property(e => e.Soi)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("SOI");
+
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("STATUS");
+
+                entity.Property(e => e.TaxId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("TAX_ID");
+
+                entity.Property(e => e.VendorId)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("VENDOR_ID");
+
+                entity.Property(e => e.VendorName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("VENDOR_NAME");
+
+                entity.Property(e => e.VendorType)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("VENDOR_TYPE");
+
+                entity.HasOne(d => d.CreateUserNavigation)
+                    .WithMany(p => p.VendorLinkReqApproveCreateUserNavigations)
+                    .HasForeignKey(d => d.CreateUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("VENDOR_LINK_REQ_APPROVE_FK1");
+
+                entity.HasOne(d => d.EditUserNavigation)
+                    .WithMany(p => p.VendorLinkReqApproveEditUserNavigations)
+                    .HasForeignKey(d => d.EditUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("VENDOR_LINK_REQ_APPROVE_FK2");
+
+                entity.HasOne(d => d.IdSmctMasterNavigation)
+                    .WithMany(p => p.VendorLinkReqApproves)
+                    .HasForeignKey(d => d.IdSmctMaster)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("VENDOR_LINK_REQ_APPROVE_FK3");
+
+                entity.HasOne(d => d.IdVendorLinkReqNavigation)
+                    .WithMany(p => p.VendorLinkReqApproves)
+                    .HasForeignKey(d => d.IdVendorLinkReq)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("VENDOR_LINK_REQ_APPROVE_FK4");
             });
 
             modelBuilder.Entity<VendorLinkReqStation>(entity =>

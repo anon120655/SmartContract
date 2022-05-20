@@ -1158,6 +1158,53 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 			await _db.InsterAsync(vendorLinkReqStation);
 			await _db.SaveAsync();
 
+			var vendorLinkReqApprove = new VendorLinkReqApprove()
+			{
+				CreateUser = _ParameterCon.IdUserSmctCurr,
+				CreateDate = DateTime.Now,
+				EditUser = _ParameterCon.IdUserSmctCurr,
+				EditDate = DateTime.Now,
+				Status = "Y",
+				IdSmctMaster = _ParameterCon.IdSmctMaster,
+				IdVendorLinkReq = vendorLinkReq.IdVendorLinkReq,
+				VendorType = "",
+				VendorId = registerNhsos.VendorId,
+				VendorName = registerNhsos.VendorName,
+				CompanyName = registerNhsos.CompanyName,
+				ProvinceId = registerNhsos.ProvinceId,
+				Catm = registerNhsos.Catm,
+				Moo = registerNhsos.Moo,
+				HouseNumber = registerNhsos.VillageNo,
+				Building = registerNhsos.Building,
+				PostCode = registerNhsos.PostCode,
+				Road = registerNhsos.Road,
+				Soi = registerNhsos.Soi,
+				Phone = registerNhsos.Phone,
+				Mobile = registerNhsos.Phone,
+				Fax = registerNhsos.Fax,
+				Email = registerNhsos.Email,
+				ContractorName = "",
+				AccName = "",
+				AccNo = "",
+				BankId = "",
+				BranchName = "",
+				BranchId = "",
+				CardType = "",
+				CardId = "",
+				SearchTerm = "",
+				CostCenter = "",
+				TaxId = registerNhsos.TaxId,
+				ApproveDate = null,
+				ApproveUser = null,
+				Enaccname = "",
+				Enaccadr1 = "",
+				Enaccadr2 = "",
+				Enaccadr3 = "",
+				BankBrnInd = ""
+			};
+			await _db.InsterAsync(vendorLinkReqApprove);
+			await _db.SaveAsync();
+
 			return vendorLinkReq;
 		}
 

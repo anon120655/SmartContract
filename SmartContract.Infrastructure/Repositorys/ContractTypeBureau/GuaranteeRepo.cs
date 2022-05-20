@@ -110,7 +110,16 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
 					queryMap = queryMap.Where(x => x.DepartmentCode.Contains(condition.DepartmentCode)).AsQueryable();
 
 				if (!String.IsNullOrEmpty(condition.LgStatus))
-					queryMap = queryMap.Where(x => x.LgStatus.Contains(condition.LgStatus)).AsQueryable();
+				{
+					if (condition.LgStatus == "Defualt")
+					{
+						queryMap = queryMap.Where(x => x.LgStatus == null).AsQueryable();
+					}
+					else
+					{
+						queryMap = queryMap.Where(x => x.DepartmentCode.Contains(condition.LgStatus)).AsQueryable();
+					}
+				}
 
 			}
 			return queryMap;

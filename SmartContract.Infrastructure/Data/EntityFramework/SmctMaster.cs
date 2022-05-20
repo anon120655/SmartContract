@@ -21,6 +21,7 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
             SmctMasterFiles = new HashSet<SmctMasterFile>();
             SmctMasterSendmails = new HashSet<SmctMasterSendmail>();
             SmctMasterSigners = new HashSet<SmctMasterSigner>();
+            VendorLinkReqApproves = new HashSet<VendorLinkReqApprove>();
             VendorLinkReqStations = new HashSet<VendorLinkReqStation>();
             VendorLinkReqs = new HashSet<VendorLinkReq>();
         }
@@ -55,6 +56,7 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public virtual ICollection<SmctMasterFile> SmctMasterFiles { get; set; }
         public virtual ICollection<SmctMasterSendmail> SmctMasterSendmails { get; set; }
         public virtual ICollection<SmctMasterSigner> SmctMasterSigners { get; set; }
+        public virtual ICollection<VendorLinkReqApprove> VendorLinkReqApproves { get; set; }
         public virtual ICollection<VendorLinkReqStation> VendorLinkReqStations { get; set; }
         public virtual ICollection<VendorLinkReq> VendorLinkReqs { get; set; }
     }

@@ -9,6 +9,7 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
     {
         public VendorLinkReq()
         {
+            VendorLinkReqApproves = new HashSet<VendorLinkReqApprove>();
             VendorLinkReqStations = new HashSet<VendorLinkReqStation>();
         }
 
@@ -45,6 +46,7 @@ namespace SmartContract.Infrastructure.Data.EntityFramework
         public virtual UserSmct CreateUserNavigation { get; set; }
         public virtual UserSmct EditUserNavigation { get; set; }
         public virtual SmctMaster IdSmctMasterNavigation { get; set; }
+        public virtual ICollection<VendorLinkReqApprove> VendorLinkReqApproves { get; set; }
         public virtual ICollection<VendorLinkReqStation> VendorLinkReqStations { get; set; }
     }
 }
