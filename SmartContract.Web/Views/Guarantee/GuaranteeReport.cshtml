@@ -1,0 +1,235 @@
+﻿
+
+@model SmartContract.Infrastructure.Resources.ContractTypeBureau.GuaranteeReportMain
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+@using SmartContract.Utils
+
+@{
+    ViewData["Title"] = "รายงานทะเบียนคุม";
+
+    //NewCount=ออกใหม่,ReturnCount=ขอคืน,ClaimCount=ขอเคลม,ReNewCount=ขอเพิ่ม,Discount=ขอลด
+    int _TotalCnt = 0, _T1Cnt = 0, _T2Cnt = 0, _T3Cnt = 0, _T4Cnt = 0, _T5Cnt = 0;
+    if (Model.GuaranteeLgReqStationRpt != null && Model.GuaranteeLgReqStationRpt.Count > 0)
+    {
+        _TotalCnt = Model.GuaranteeLgReqStationRpt.Sum(x => x.SumByKetCount());
+        _T1Cnt = Model.GuaranteeLgReqStationRpt.Sum(x => x.NewCount);
+        _T2Cnt = Model.GuaranteeLgReqStationRpt.Sum(x => x.ReNewCount);
+        _T3Cnt = Model.GuaranteeLgReqStationRpt.Sum(x => x.ReturnCount);
+        _T4Cnt = Model.GuaranteeLgReqStationRpt.Sum(x => x.ClaimCount);
+        _T5Cnt = Model.GuaranteeLgReqStationRpt.Sum(x => x.DisCount);
+    }
+}
+
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var lookUp = Model.GetLookUp;
+
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-book mr-1"></i>หลักประกันสัญญา > </small>
+                                <small><span class="text-primary">รายงานทะเบียนคุม</span></small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-5">
+                    <form method="get" asp-action="GuaranteeReport">
+                        <fieldset class="form-group border p-3" style="height:90%;">
+                            <legend class="col-auto px-2 h6">ค้นหา</legend>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="">ประจำปี</label>
+                                    <select class="form-control bg-focus" asp-for="Year"
+                                            asp-items="@(new SelectList((from s in lookUp.BudgetYears.Where(x=> int.Parse(x.Id) >= 2565) select new {
+                                                            Code=s.Id,
+                                                            FullName = $"{s.Value}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: DateTime.Now.Year+ 543))">
+                                        <option value="">---ทั้งหมด---</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="">เดือน</label>
+                                    <select class="form-control bg-focus" asp-for="Month"
+                                            asp-items="@(new SelectList((from s in lookUp.Months select new {
+                                                            Code=s.Id,
+                                                            FullName = $"{s.Value}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: DateTime.Now.Month))">
+                                        <option value="">---ทั้งหมด---</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row justify-content-md-center">
+                                <div class="col-auto mt-2 mb-3">
+                                    <button class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                @*<div class="col-md-7">
+                        <div><canvas id="myChart"></canvas></div>
+                        <br />
+                    </div>*@
+
+                <div class="col-md-7">
+                    <div class="card ">
+                        <div class="card-header" style="background-color: rgb(255, 99, 132,0.8) ">
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">หลักประกันสัญญา(<span class="badge badge-pill badge-dark">@_TotalCnt.ToString("N0")</span>)</span></i>
+                                </div>
+                                <div class="col-6 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="myChart" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-align-justify mr-1"></i>แสดงรายละเอียดข้อมูล</small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-hover table-bordered table-sm justify-content-center bg-white" style="font-size:14px;margin:auto">
+                        <thead style="background-color: rgb(255, 205, 86,0.8)">
+                            <tr style="height:50px;">
+                                <th class="align-middle text-center">สำนัก/กองทุนย่อย/เขต</th>
+                                <th class="align-middle text-center col-md-1">ออกใหม่</th>
+                                <th class="align-middle text-center col-md-1">ขอคืน/ยกเลิก</th>
+                                <th class="align-middle text-center col-md-1">ขอเคลม</th>
+                                <th class="align-middle text-center col-md-1">ขอเพิ่ม</th>
+                                <th class="align-middle text-center col-md-1">ขอลด</th>
+                                <th class="align-middle text-center col-md-1">ทั้งหมด</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.GuaranteeLgReqStationRpt != null && Model.GuaranteeLgReqStationRpt.Count > 0)
+                            {
+                                foreach (var item in Model.GuaranteeLgReqStationRpt)
+                                {
+                                    <tr class=" text-center">
+                                        <td class="text-left">@($"{item.Dcode}_{item.DnameNew}")</td>
+                                        <td><a onclick="showLoading()">@item.NewCount</a></td>
+                                        <td><a onclick="showLoading()">@item.ReNewCount</a></td>
+                                        <td><a onclick="showLoading()">@item.ReturnCount</a></td>
+                                        <td><a onclick="showLoading()">@item.ClaimCount</a></td>
+                                        <td><a onclick="showLoading()">@item.DisCount</a></td>
+                                        <td>@item.SumByKetCount()</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot class="txt_totalAll">
+                            <tr class="align-middle text-center">
+                                <td>รวม</td>
+                                <td>@_T1Cnt</td>
+                                <td>@_T2Cnt</td>
+                                <td>@_T3Cnt</td>
+                                <td>@_T4Cnt</td>
+                                <td>@_T5Cnt</td>
+                                <td>@_TotalCnt</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    </section>
+
+}
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+
+        var ctxdata1 = {
+            labels: [
+                'ออกใหม่(@_T1Cnt)',
+                'ขอคืน/ยกเลิก(@_T2Cnt)',
+                'ขอเคลม(@_T3Cnt)',
+                'ขอเพิ่ม(@_T4Cnt)',
+                'ขอลด(@_T5Cnt)'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [ @_T1Cnt,
+                        @_T2Cnt,
+                        @_T3Cnt,
+                        @_T4Cnt,
+                        @_T5Cnt],
+                backgroundColor: [
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 99, 132,0.8)',
+                    'rgb(255, 165, 0,0.6)',
+                    'rgb(238, 130, 238,0.8)',
+                    'rgb(49, 103, 212,1)'
+                ],
+                hoverOffset: 4
+            }]
+
+        }
+
+        window.onload = function () {
+            var ctx1 = document.getElementById('myChart').getContext('2d');
+            window.mybar = new Chart(ctx1, {
+                type: 'doughnut',
+                data: ctxdata1,
+            });
+        }
+
+    </script>
+}

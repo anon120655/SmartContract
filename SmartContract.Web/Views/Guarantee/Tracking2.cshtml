@@ -36,7 +36,7 @@ else
     var _pager = (_Items != null ? Model.VGuaranteeLgContract.Pager : null);
     int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
 
-    _Title = "หน้าติดตาม";
+    _Title = "สร้างคำขอ";
 
     ViewData["Title"] = _Title;
 
@@ -101,15 +101,15 @@ else
                         <div class="col-sm-3"></div>
                         <label class="col-sm-2 col-form-label text-sm-right">เลขที่หนังสือค้ำประกัน :</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="00019/200008/0203/63" asp-for="Condition.lgNumber" />
+                            <input type="text" class="form-control" placeholder="XXXXX/XXXXXX/XXXX/XX" asp-for="Condition.lgNumber" />
                         </div>
                         <div class="col-sm-4"></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-2"></div>
-                        <div class="col-sm-3 ml-5">
-                            <button type="submit" class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary loadding text-white mr-2" style="width:120px"> ตกลง </button>
                             <button type="button" class="btn btn-secondary loadding text-white" style="width:120px" onclick="clear_input()"> ล้างข้อมูล </button>
                         </div>
                         <div class="col-sm-4"></div>
@@ -131,15 +131,15 @@ else
                                 <thead style="background-color: #fea266;">
                                     <tr>
                                         <th>ลำดับ</th>
+                                        <th>เลขที่</th>
+                                        <th>สังกัด</th>
                                         <th>สัญญา</th>
-                                        <th>ชื่อสัญญา</th>
-                                        <th>ประเภทนิติกรรมสัญญา</th>
-                                        <th>ชื่อคู่สัญญา</th>
+                                        <th>คู่สัญญา</th>
                                         <th>เลขที่หนังสือค้ำประกัน</th>
                                         <th>วันที่เริ่มค้ำประกัน</th>
                                         <th>วันที่สิ้นสุดค้ำประกัน</th>
                                         <th>มูลค่าค้ำประกัน</th>
-                                        <th class="col-2">#</th>
+                                        <th class="col-1">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -149,7 +149,7 @@ else
                                         {
                                             <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                                                 <td class="text-center">@(((_pager.CurrentPage*10)-10)+ (item.Index +1))</td>
-                                                <td class="col-md-2">
+                                                <td class="col-md-1">
                                                     <b class="">
                                                         เลขที่อ้างอิง
                                                     </b> : <br />@item.Value.RefId
@@ -159,11 +159,19 @@ else
                                                     </b> : <br />@item.Value.ContractId
                                                     <br />
                                                     <b>
-                                                        วันที่ทำสัญญา
+                                                        ลงวันที่
                                                     </b> : <br />@GeneralUtils.DateToThString(item.Value.ContractDate)
                                                 </td>
-                                                <td class="col-md-2">@item.Value.ContractName</td>
-                                                <td class="col-md-2">@item.Value.ContractTypeName</td>
+                                                <td class="text-center">@item.Value.DepartmentName</td>
+                                                <td class="col-md-2">
+                                                    <b class="">
+                                                        ชื่อ
+                                                    </b> : <br />@item.Value.ContractName
+                                                    <br />
+                                                    <b class="">
+                                                        ประเภท
+                                                    </b> : <br />@item.Value.ContractTypeName
+                                                </td>
                                                 <td class="col-md-2">
                                                     <b class="">
                                                         รหัสคู่สัญญา
@@ -173,7 +181,7 @@ else
                                                         ชื่อคู่สัญญา
                                                     </b> : @item.Value.VendorName
                                                 </td>
-                                                <td class="text-center">@item.Value.ContractId</td>
+                                                <td class="text-center">@item.Value.LgNumber</td>
                                                 <td class="text-center">
                                                     @GeneralUtils.DateToThString(item.Value.EffectiveDateStart)
                                                 </td>
@@ -182,7 +190,7 @@ else
                                                 </td>
                                                 <td class="text-right">@item.Value.LgAmountInitial.ToString("#,##0.00")</td>
                                                 <td class="text-center col-md-1">
-                                                    <a class="btn btn-warning btn-sm mr-2" onclick="showLoading()"
+                                                    <a class="btn btn-warning btn-sm" onclick="showLoading()"
                                                        asp-controller="Guarantee"
                                                        asp-action="Create"
                                                        asp-route-lgNumber="@SecurityRepo.Encrypt(item.Value.LgNumber)"

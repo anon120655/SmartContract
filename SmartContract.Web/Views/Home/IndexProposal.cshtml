@@ -86,7 +86,7 @@ else
                         <div class="row">
                             <div class="col-6">
                                 <h4>
-                                    <small><i class="fas fa-table mr-1"></i>รายละเอียดข้อเสนอจัดทำนิติกรรมสัญญา</small>
+                                    <small><i class="fas fa-table mr-1"></i>รายละเอียดข้อมูลหนังสือขออนุมัติ</small>
                                 </h4>
                             </div>
                             <div class="col-6">
@@ -252,6 +252,8 @@ else
                             <partial name="~/Views/Shared/LayoutPartial/_PartialPagination.cshtml" for="@Model.TrackingResourceApp.Pager" />
                         </div>
                     </div>
+                    <br />
+                    <br />
                     <section>
                         <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>หมายเหตุ</label>
                         <div class="form-group row col-md-12 align-top">
@@ -259,69 +261,69 @@ else
                                 รายละเอียด :
                             </div>
                             <div class="col-md-10 text-left">
-                                1.xxx<br />
-                                2.xxx
+                                1.ข้อมูลหนังสือขออนุมัติ<br />
+                                @*2.xxx*@
                             </div>
                         </div>
                         @*
-                                        <div class="form-group row col-md-12 align-top">
-                                <div class="col-md-3 text-left">
-                                    ประเภทนิติกรรมสัญญา(Style1) :
-                                </div>
-                                <div class="col-md-9 text-left">
-                                            1.สัญญาให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ<br />
-                                            2.ข้อตกลงให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ<br />
-                                            3.ข้อตกลงการดำเนินงานและบริหารจัดการกองทุนฟื้นฟูสมรรถภาพที่จำเป็นต่อสุขภาพ ระดับจังหวัด<br />
-                                            4.สัญญาให้บริการฯ(ศูนย์สำรองเตียง)<br />
-                                            5.สัญญาให้บริการสาธารสุข (สำรองเตียง) กรณีอุบัติเหตุหรือกรณีเจ็บป่วยฉุกเฉิน<br />
-                                            6.สัญญาให้บริการสาธารสุข (สำรองเตียง) เฉพาะด้าน
-                                </div>
-                            </div>
-                                        <div class="form-group row col-md-12 align-top">
-                                <div class="col-md-3 text-left">
-                                    ประเภทนิติกรรมสัญญา(Style2) :
-                                </div>
-                                <div class="col-md-9 text-left">
-                                    1.สัญญาให้บริการฯตามกิจกรรมบริการ<br />
-                                    2.ข้อตกลงให้บริการฯตามกิจกรรมบริการ<br />
-                                    3.สัญญาให้บริการฯตามกิจกรรมบริการ ไตเทียม<br />
-                                    4.ข้อตกลงให้บริการฯตามกิจกรรมบริการ ไตเทียม
-                                </div>
-                            </div>
-                            <div class="form-group row col-md-12 align-top">
-                                <div class="col-md-3 text-left">
-                                    ประเภทนิติกรรมสัญญา(Style3) :
-                                </div>
-                                <div class="col-md-9 text-left">
-                                    1.ข้อตกลง อปท
-                                </div>
-                            </div>
-                            <div class="form-group row col-md-12 align-top">
-                                <div class="col-md-3 text-left">
-                                    ประเภทนิติกรรมสัญญา(Style4.1) :
-                                </div>
-                                <div class="col-md-9 text-left">
-                                    1.สัญญาดำเนินการตามโครงการ<br />
-                                    2.ข้อตกลงดำเนินการตามโครงการ
-                                </div>
-                            </div>
-                            <div class="form-group row col-md-12 align-top">
-                                <div class="col-md-3 text-left">
-                                    ประเภทนิติกรรมสัญญา(Style4.2) :
-                                </div>
-                                <div class="col-md-9 text-left">
-                                    1.หนังสือแสดงความจำนงตอบรับการดำเนินการ(เอกชน)<br />
-                                    2.หนังสือแสดงความจำนงตอบรับการดำเนินการ(รัฐ)
-                                </div>
-                            </div>
-                            <div class="form-group row col-md-12 align-top">
-                                <div class="col-md-3 text-left">
-                                    ประเภทนิติกรรมสัญญา(Style4.3) :
-                                </div>
-                                <div class="col-md-9 text-left">
-                                    1.โครงการ(รัฐ)
-                                </div>
-                            </div>*@
+                        <div class="form-group row col-md-12 align-top">
+                <div class="col-md-3 text-left">
+                    ประเภทนิติกรรมสัญญา(Style1) :
+                </div>
+                <div class="col-md-9 text-left">
+                            1.สัญญาให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ<br />
+                            2.ข้อตกลงให้บริการสาธารณสุขตามกฎหมายว่าด้วยหลักประกันสุขภาพแห่งชาติ<br />
+                            3.ข้อตกลงการดำเนินงานและบริหารจัดการกองทุนฟื้นฟูสมรรถภาพที่จำเป็นต่อสุขภาพ ระดับจังหวัด<br />
+                            4.สัญญาให้บริการฯ(ศูนย์สำรองเตียง)<br />
+                            5.สัญญาให้บริการสาธารสุข (สำรองเตียง) กรณีอุบัติเหตุหรือกรณีเจ็บป่วยฉุกเฉิน<br />
+                            6.สัญญาให้บริการสาธารสุข (สำรองเตียง) เฉพาะด้าน
+                </div>
+            </div>
+                        <div class="form-group row col-md-12 align-top">
+                <div class="col-md-3 text-left">
+                    ประเภทนิติกรรมสัญญา(Style2) :
+                </div>
+                <div class="col-md-9 text-left">
+                    1.สัญญาให้บริการฯตามกิจกรรมบริการ<br />
+                    2.ข้อตกลงให้บริการฯตามกิจกรรมบริการ<br />
+                    3.สัญญาให้บริการฯตามกิจกรรมบริการ ไตเทียม<br />
+                    4.ข้อตกลงให้บริการฯตามกิจกรรมบริการ ไตเทียม
+                </div>
+            </div>
+            <div class="form-group row col-md-12 align-top">
+                <div class="col-md-3 text-left">
+                    ประเภทนิติกรรมสัญญา(Style3) :
+                </div>
+                <div class="col-md-9 text-left">
+                    1.ข้อตกลง อปท
+                </div>
+            </div>
+            <div class="form-group row col-md-12 align-top">
+                <div class="col-md-3 text-left">
+                    ประเภทนิติกรรมสัญญา(Style4.1) :
+                </div>
+                <div class="col-md-9 text-left">
+                    1.สัญญาดำเนินการตามโครงการ<br />
+                    2.ข้อตกลงดำเนินการตามโครงการ
+                </div>
+            </div>
+            <div class="form-group row col-md-12 align-top">
+                <div class="col-md-3 text-left">
+                    ประเภทนิติกรรมสัญญา(Style4.2) :
+                </div>
+                <div class="col-md-9 text-left">
+                    1.หนังสือแสดงความจำนงตอบรับการดำเนินการ(เอกชน)<br />
+                    2.หนังสือแสดงความจำนงตอบรับการดำเนินการ(รัฐ)
+                </div>
+            </div>
+            <div class="form-group row col-md-12 align-top">
+                <div class="col-md-3 text-left">
+                    ประเภทนิติกรรมสัญญา(Style4.3) :
+                </div>
+                <div class="col-md-9 text-left">
+                    1.โครงการ(รัฐ)
+                </div>
+            </div>*@
                     </section>
 
                     <br />

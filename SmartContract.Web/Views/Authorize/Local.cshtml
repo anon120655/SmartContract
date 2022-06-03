@@ -16,6 +16,28 @@
         line-height: 0.6;
     }
 </style>
+@if (Model.ServerSite.ToUpper() == "TEST")
+{
+    <style>
+        body#body_login {
+            background-image: url('../images/BG_SMART TEST.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+}
+else if (Model.ServerSite.ToUpper() == "DEV")
+{
+    <style>
+        body#body_login {
+            background-image: url('../images/BG_SMART DEV.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+}
 
 <section>
     <div class="container px-0 px-sm-auto">
@@ -39,15 +61,15 @@
                             </div>
                             <button type="submit" class="btn btn-success btn-lg btn-block mt-sm-4">Sign in</button>
                             <p class="text-center m-1">or</p>
-                            @*@if (Model.ServerSite.ToUpper() == "UAT")
+                            @if (Model.ServerSite.ToUpper() != "PRO")
                             {
                                 <a class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#ModalDOPAError">Sign in With D.DOPA</a>
                             }
                             else
                             {
-                                <a class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#ModalDOPA">Sign in With D.DOPA</a>
-                            }*@
-                            <a class="btn btn-info btn-lg btn-block" href="@Model.UrlDDOPA">Sign in With D.DOPA</a>
+                                @*<a class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#ModalDOPA">Sign in With D.DOPA</a>*@
+                                <a class="btn btn-info btn-lg btn-block" href="@Model.UrlDDOPA">Sign in With D.DOPA</a>
+                            }
 
                             <input type="hidden" asp-for="StateRandom" />
                             <input type="hidden" asp-for="UrlDDOPA" />

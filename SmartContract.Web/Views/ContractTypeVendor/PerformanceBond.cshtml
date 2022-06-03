@@ -55,7 +55,7 @@
             }
             else
             {
-                <label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดหักหลักประกันอื่นๆ(กรณีไม่หักจากเงินโอนงวดที่ 1)</label>
+                @*<label class="lable_blue" for=""><i class="fa fa-th-list mr-1 mb-2"></i>รายละเอียดหักหลักประกันอื่นๆ(กรณีไม่หักจากเงินโอนงวดที่ 1)</label>*@
                 <div class="form-group row">
                     <div class="col-sm-1"></div>
                     <div class="col-sm-2 form-check mt-sm-2">
@@ -220,7 +220,7 @@
                             <fieldset class="col-sm-3 Group_BookGuarantee">
                                 <input type="hidden" name="InfoGuaranteeContract.BookGuaranteeDesc[0].IdContractGuaranteeDetail"
                                        value="@(indata.BookGuaranteeDesc != null && indata.BookGuaranteeDesc.Count > 0 ? indata.BookGuaranteeDesc[0].IdContractGuaranteeDetail : String.Empty)" />
-                                <select class="bankcode_0 form-control bg-focus selectpicker" data-live-search="true" onchange="BookGuaranteeChange(this,0)"
+                                <select class="bankcode_0 form-control bg-focus selectpicker" data-live-search="true" onchange="BookGuaranteeChange(this.value,0)"
                                         name="InfoGuaranteeContract.BookGuaranteeDesc[0].BankCode"
                                         asp-items="@(new SelectList((from s in lookUp.BankInfos select new {
                                                             Code=s.BankId,
@@ -246,14 +246,14 @@
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-sm-right">วันที่เริ่มต้น :</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="startdatestr_0 form-control bg-focus input_icon_calendar datepicker"
+                                    <input type="text" class="startdatestr_0 form-control bg-focus input_icon_calendar "
                                            name="InfoGuaranteeContract.BookGuaranteeDesc[0].StartDateStr"
                                            value="@(indata.BookGuaranteeDesc.FirstOrDefault()?.StartDateStr)"
                                            placeholder="วว/ดด/ปปปป" autocomplete="off">
                                 </div>
                                 <label class="col-sm-1 col-form-label text-sm-right">วันที่สิ้นสุด :</label>
                                 <div class="col-sm-2 ">
-                                    <input type="text" class="enddatestr_0 form-control bg-focus input_icon_calendar datepicker"
+                                    <input type="text" class="enddatestr_0 form-control bg-focus input_icon_calendar "
                                            name="InfoGuaranteeContract.BookGuaranteeDesc[0].EndDateStr"
                                            value="@(indata.BookGuaranteeDesc.FirstOrDefault()?.EndDateStr)"
                                            placeholder="วว/ดด/ปปปป" autocomplete="off">
@@ -287,7 +287,7 @@
                                             <fieldset class="col-sm-3 Group_BookGuarantee">
                                                 <input type="hidden" name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].IdContractGuaranteeDetail"
                                                        value="@(item.value.IdContractGuaranteeDetail)" />
-                                                <select class="bankcode_@item.i form-control bg-focus selectpicker" data-live-search="true" onchange="BookGuaranteeChange(this,item.i)"
+                                                <select class="bankcode_@item.i form-control bg-focus selectpicker" data-live-search="true" onchange="BookGuaranteeChange(this.value,@item.i)"
                                                         name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].BankCode"
                                                         asp-items="@(new SelectList((from s in lookUp.BankInfos select new {
                                                             Code=s.BankId,
@@ -313,14 +313,14 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-4 col-form-label text-sm-right">วันที่เริ่มต้น :</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="startdatestr_@item.i form-control bg-focus input_icon_calendar datepicker"
+                                                    <input type="text" class="startdatestr_@item.i form-control bg-focus input_icon_calendar "
                                                            name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].StartDateStr"
                                                            value="@item.value.StartDateStr"
                                                            placeholder="วว/ดด/ปปปป" autocomplete="off">
                                                 </div>
                                                 <label class="col-sm-1 col-form-label text-sm-right">วันที่สิ้นสุด :</label>
                                                 <div class="col-sm-2 ">
-                                                    <input type="text" class="enddatestr_@item.i form-control bg-focus input_icon_calendar datepicker"
+                                                    <input type="text" class="enddatestr_@item.i form-control bg-focus input_icon_calendar "
                                                            name="InfoGuaranteeContract.BookGuaranteeDesc[@item.i].EndDateStr"
                                                            value="@item.value.EndDateStr"
                                                            placeholder="วว/ดด/ปปปป" autocomplete="off">

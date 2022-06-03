@@ -31,7 +31,8 @@ namespace SmartContract.Infrastructure.Interfaces.ContractTypeBureau
         Task<TAllMasterVendorView> UpdateReturnAsync(TAllMasterVendorView indata);
         Task<TAllMasterVendorView> UpdateClaimAsync(TAllMasterVendorView indata);
 
-        Task<List<GuaranteeReportView>> GuaranteeReportView(SearchOptionGuarantee Condition = null);
+        Task<List<GuaranteeLgReqStationRpt>> GuaranteeLgReqStationRpt(SearchOptionGuarantee Condition = null);
+        Task<List<GuaranteeLgReqStationDashboard>> GuaranteeLgReqStationDashboard(SearchOptionGuarantee Condition = null);
 
     }
 }

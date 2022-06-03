@@ -6,6 +6,94 @@
 @{
     ViewData["Title"] = "Dashboard";
     var _ConutConType = Model.ContractTypeCount;
+
+
+    //ข้อมูลนิติกรรมสัญญาผูกพัน
+    int _ContractSuccessTotalCnt = 0;
+    int _ContractSuccessT1TotalCnt = 0, _ContractSuccessT11Cnt = 0, _ContractSuccessT12Cnt = 0, _ContractSuccessT13Cnt = 0, _ContractSuccessT14Cnt = 0;
+    int _ContractSuccessT2TotalCnt = 0, _ContractSuccessT21Cnt = 0, _ContractSuccessT22Cnt = 0, _ContractSuccessT23Cnt = 0, _ContractSuccessT24Cnt = 0;
+    int _ContractSuccessT3TotalCnt = 0, _ContractSuccessT31Cnt = 0, _ContractSuccessT32Cnt = 0, _ContractSuccessT33Cnt = 0, _ContractSuccessT34Cnt = 0;
+    int _ContractSuccessT4TotalCnt = 0, _ContractSuccessT41Cnt = 0, _ContractSuccessT42Cnt = 0, _ContractSuccessT43Cnt = 0, _ContractSuccessT44Cnt = 0;
+    int _ContractSuccessT5TotalCnt = 0, _ContractSuccessT51Cnt = 0, _ContractSuccessT52Cnt = 0, _ContractSuccessT53Cnt = 0, _ContractSuccessT54Cnt = 0;
+    if (Model.ContractStationSuccessDashboard != null && Model.ContractStationSuccessDashboard.Count > 0)
+    {
+        _ContractSuccessTotalCnt = Model.ContractStationSuccessDashboard.Sum(x => x.SumByKetCount());
+
+        _ContractSuccessT11Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.EditCount1);
+        _ContractSuccessT12Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.EditCount2);
+        _ContractSuccessT13Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.EditCount3);
+        _ContractSuccessT14Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.EditCount4);
+        _ContractSuccessT1TotalCnt = _ContractSuccessT11Cnt + _ContractSuccessT12Cnt + _ContractSuccessT13Cnt + _ContractSuccessT14Cnt;
+
+        _ContractSuccessT21Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CancelCount1);
+        _ContractSuccessT22Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CancelCount2);
+        _ContractSuccessT23Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CancelCount3);
+        _ContractSuccessT24Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CancelCount4);
+        _ContractSuccessT2TotalCnt = _ContractSuccessT21Cnt + _ContractSuccessT22Cnt + _ContractSuccessT23Cnt + _ContractSuccessT24Cnt;
+
+        _ContractSuccessT31Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.ExpandCount1);
+        _ContractSuccessT32Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.ExpandCount2);
+        _ContractSuccessT33Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.ExpandCount3);
+        _ContractSuccessT34Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.ExpandCount4);
+        _ContractSuccessT3TotalCnt = _ContractSuccessT31Cnt + _ContractSuccessT32Cnt + _ContractSuccessT33Cnt + _ContractSuccessT34Cnt;
+
+        _ContractSuccessT41Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CloseProjectCount1);
+        _ContractSuccessT42Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CloseProjectCount2);
+        _ContractSuccessT43Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CloseProjectCount3);
+        _ContractSuccessT44Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.CloseProjectCount4);
+        _ContractSuccessT4TotalCnt = _ContractSuccessT41Cnt + _ContractSuccessT42Cnt + _ContractSuccessT43Cnt + _ContractSuccessT44Cnt;
+
+        _ContractSuccessT51Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.TerminateCount1);
+        _ContractSuccessT52Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.TerminateCount2);
+        _ContractSuccessT53Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.TerminateCount3);
+        _ContractSuccessT54Cnt = Model.ContractStationSuccessDashboard.Sum(x => x.TerminateCount4);
+        _ContractSuccessT5TotalCnt = _ContractSuccessT51Cnt + _ContractSuccessT52Cnt + _ContractSuccessT53Cnt + _ContractSuccessT54Cnt;
+
+    }
+
+    //ข้อมูลหลักประกัน
+    //NewCount=ออกใหม่,ReturnCount=ขอคืน,ClaimCount=ขอเคลม,ReNewCount=ขอเพิ่ม,Discount=ขอลด
+    int _GuaranteeTotalCnt = 0;
+    int _GuaranteeT1TotalCnt = 0, _GuaranteeT11Cnt = 0, _GuaranteeT12Cnt = 0, _GuaranteeT13Cnt = 0, _GuaranteeT14Cnt = 0;
+    int _GuaranteeT2TotalCnt = 0, _GuaranteeT21Cnt = 0, _GuaranteeT22Cnt = 0, _GuaranteeT23Cnt = 0, _GuaranteeT24Cnt = 0;
+    int _GuaranteeT3TotalCnt = 0, _GuaranteeT31Cnt = 0, _GuaranteeT32Cnt = 0, _GuaranteeT33Cnt = 0, _GuaranteeT34Cnt = 0;
+    int _GuaranteeT4TotalCnt = 0, _GuaranteeT41Cnt = 0, _GuaranteeT42Cnt = 0, _GuaranteeT43Cnt = 0, _GuaranteeT44Cnt = 0;
+    int _GuaranteeT5TotalCnt = 0, _GuaranteeT51Cnt = 0, _GuaranteeT52Cnt = 0, _GuaranteeT53Cnt = 0, _GuaranteeT54Cnt = 0;
+    if (Model.GuaranteeLgReqStation != null && Model.GuaranteeLgReqStation.Count > 0)
+    {
+        _GuaranteeTotalCnt = Model.GuaranteeLgReqStation.Sum(x => x.SumByKetCount());
+
+        _GuaranteeT11Cnt = Model.GuaranteeLgReqStation.Sum(x => x.NewCount1);
+        _GuaranteeT12Cnt = Model.GuaranteeLgReqStation.Sum(x => x.NewCount2);
+        _GuaranteeT13Cnt = Model.GuaranteeLgReqStation.Sum(x => x.NewCount3);
+        _GuaranteeT14Cnt = Model.GuaranteeLgReqStation.Sum(x => x.NewCount4);
+        _GuaranteeT1TotalCnt = _GuaranteeT11Cnt + _GuaranteeT12Cnt + _GuaranteeT13Cnt + _GuaranteeT14Cnt;
+
+        _GuaranteeT21Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReturnCount1);
+        _GuaranteeT22Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReturnCount2);
+        _GuaranteeT23Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReturnCount3);
+        _GuaranteeT24Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReturnCount4);
+        _GuaranteeT2TotalCnt = _GuaranteeT21Cnt + _GuaranteeT22Cnt + _GuaranteeT23Cnt + _GuaranteeT24Cnt;
+
+        _GuaranteeT31Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ClaimCount1);
+        _GuaranteeT32Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ClaimCount2);
+        _GuaranteeT33Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ClaimCount3);
+        _GuaranteeT34Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ClaimCount4);
+        _GuaranteeT3TotalCnt = _GuaranteeT31Cnt + _GuaranteeT32Cnt + _GuaranteeT33Cnt + _GuaranteeT34Cnt;
+
+        _GuaranteeT41Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReNewCount1);
+        _GuaranteeT42Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReNewCount2);
+        _GuaranteeT43Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReNewCount3);
+        _GuaranteeT44Cnt = Model.GuaranteeLgReqStation.Sum(x => x.ReNewCount4);
+        _GuaranteeT4TotalCnt = _GuaranteeT41Cnt + _GuaranteeT42Cnt + _GuaranteeT43Cnt + _GuaranteeT44Cnt;
+
+        _GuaranteeT51Cnt = Model.GuaranteeLgReqStation.Sum(x => x.DisCount1);
+        _GuaranteeT52Cnt = Model.GuaranteeLgReqStation.Sum(x => x.DisCount2);
+        _GuaranteeT53Cnt = Model.GuaranteeLgReqStation.Sum(x => x.DisCount3);
+        _GuaranteeT54Cnt = Model.GuaranteeLgReqStation.Sum(x => x.DisCount4);
+        _GuaranteeT5TotalCnt = _GuaranteeT51Cnt + _GuaranteeT52Cnt + _GuaranteeT53Cnt + _GuaranteeT54Cnt;
+
+    }
 }
 
 
@@ -158,7 +246,7 @@ else
                         <div class="card-header" style="background-color: rgb(255, 205, 86,0.8)">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">แก้ไขข้อมูลสัญญา(<span class="badge badge-pill badge-dark">33</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">แก้ไขข้อมูลสัญญา(<span class="badge badge-pill badge-dark">@_ContractSuccessT1TotalCnt.ToString("N0")</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -174,7 +262,7 @@ else
                         <div class="card-header" style="background-color:rgb(54, 162, 235,0.8)">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">ยกเลิกข้อมูลสัญญา(<span class="badge badge-pill badge-dark">28</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ยกเลิกข้อมูลสัญญา(<span class="badge badge-pill badge-dark">@_ContractSuccessT2TotalCnt.ToString("N0")</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -190,7 +278,7 @@ else
                         <div class="card-header" style="background-color: aquamarine">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">ขยายสัญญา(<span class="badge badge-pill badge-dark">22</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ขยายสัญญา(<span class="badge badge-pill badge-dark">@_ContractSuccessT3TotalCnt.ToString("N0")</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -206,7 +294,7 @@ else
                         <div class="card-header" style="background-color: rgb(255, 99, 132,0.8)">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">ปิดโครงการ(<span class="badge badge-pill badge-dark">28</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ปิดโครงการ(<span class="badge badge-pill badge-dark">@_ContractSuccessT4TotalCnt.ToString("N0")</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -222,7 +310,7 @@ else
                         <div class="card-header" style="background-color:rgb(238, 130, 238,0.8)">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">ยุติสัญญา(<span class="badge badge-pill badge-dark">28</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ยุติสัญญา(<span class="badge badge-pill badge-dark">@_ContractSuccessT5TotalCnt.ToString("N0")</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -264,7 +352,7 @@ else
                         <div class="card-header" style="background-color: rgb(255, 205, 86,0.8)">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">ออกใหม่(<span class="badge badge-pill badge-dark">15</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ออกใหม่(<span class="badge badge-pill badge-dark">@_GuaranteeT1TotalCnt</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -280,7 +368,7 @@ else
                         <div class="card-header" style="background-color:rgb(54, 162, 235,0.8)">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">ต่ออายุ(<span class="badge badge-pill badge-dark">12</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ขอคืน/ยกเลิก(<span class="badge badge-pill badge-dark">@_GuaranteeT2TotalCnt</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -296,7 +384,7 @@ else
                         <div class="card-header" style="background-color: aquamarine">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">คืน(<span class="badge badge-pill badge-dark">11</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ขอเคลม(<span class="badge badge-pill badge-dark">@_GuaranteeT3TotalCnt</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -312,7 +400,7 @@ else
                         <div class="card-header" style="background-color: rgb(255, 99, 132,0.8)">
                             <div class="row">
                                 <div class="col-8 p-0">
-                                    <i class="fas fa-chart-pie "><span class="ml-1">เคลม/ยึด(<span class="badge badge-pill badge-dark">6</span>)</span></i>
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ขอเพิ่ม(<span class="badge badge-pill badge-dark">@_GuaranteeT4TotalCnt</span>)</span></i>
                                 </div>
                                 <div class="col-4 p-0">
                                     <p class="text-right mb-0">&nbsp;</p>
@@ -320,6 +408,22 @@ else
                             </div>
                         </div>
                         <div><canvas id="Chart_14" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 mb-2 p-1">
+                    <div class="card ">
+                        <div class="card-header" style="background-color:rgb(238, 130, 238,0.8)">
+                            <div class="row">
+                                <div class="col-8 p-0">
+                                    <i class="fas fa-chart-pie "><span class="ml-1">ขอลด(<span class="badge badge-pill badge-dark">@_GuaranteeT5TotalCnt</span>)</span></i>
+                                </div>
+                                <div class="col-4 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="Chart_15" height="180"></canvas></div>
                         <br />
                     </div>
                 </div>
@@ -340,14 +444,14 @@ else
 
         var ctxdata1 = {
             labels: [
-                'สัญญา(@_ConutConType.ContractType1)',
-                'ข้อตกลง(@_ConutConType.ContractType2)',
-                'หนังสือแสดงความจำนง(@_ConutConType.ContractType3)',
-                'โครงการ(@_ConutConType.ContractType4)'
+                'สัญญา(@_ConutConType.ContractType1.ToString("N0"))',
+                'ข้อตกลง(@_ConutConType.ContractType2.ToString("N0"))',
+                'หนังสือแสดงความจำนง(@_ConutConType.ContractType3.ToString("N0"))',
+                'โครงการ(@_ConutConType.ContractType4.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [2, 1, 1, 1],
+                data: [@_ConutConType.ContractType1, @_ConutConType.ContractType2, @_ConutConType.ContractType3, @_ConutConType.ContractType4],
                 backgroundColor: [
                     'rgb(255, 205, 86,0.8)',
                     'rgb(54, 162, 235,0.8)',
@@ -359,14 +463,14 @@ else
         }
         var ctxdata_01 = {
             labels: [
-                'รอดำเนินการ(7)',
-                'อนุมัติ(20)',
-                'ไม่อนุมัติ(5)',
-                'ยกเลิก(1)'
+                'รอดำเนินการ(@_ContractSuccessT11Cnt.ToString("N0"))',
+                'อนุมัติ(@_ContractSuccessT12Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_ContractSuccessT13Cnt.ToString("N0"))',
+                'ยกเลิก(@_ContractSuccessT14Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [7, 20, 5, 1],
+                data: [@_ContractSuccessT11Cnt, @_ContractSuccessT12Cnt, @_ContractSuccessT13Cnt, @_ContractSuccessT14Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -378,14 +482,14 @@ else
         }
         var ctxdata_02 = {
             labels: [
-                'รอดำเนินการ(15)',
-                'อนุมัติ(9)',
-                'ไม่อนุมัติ(3)',
-                'ยกเลิก(1)'
+                'รอดำเนินการ(@_ContractSuccessT21Cnt.ToString("N0"))',
+                'อนุมัติ(@_ContractSuccessT22Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_ContractSuccessT23Cnt.ToString("N0"))',
+                'ยกเลิก(@_ContractSuccessT24Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [15, 9, 3, 1],
+                data: [@_ContractSuccessT21Cnt, @_ContractSuccessT22Cnt, @_ContractSuccessT23Cnt, @_ContractSuccessT24Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -397,14 +501,14 @@ else
         }
         var ctxdata_03 = {
             labels: [
-                'รอดำเนินการ(7)',
-                'อนุมัติ(7)',
-                'ไม่อนุมัติ(7)',
-                'ยกเลิก(1)'
+                'รอดำเนินการ(@_ContractSuccessT31Cnt.ToString("N0"))',
+                'อนุมัติ(@_ContractSuccessT32Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_ContractSuccessT33Cnt.ToString("N0"))',
+                'ยกเลิก(@_ContractSuccessT34Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [7, 7, 7, 1],
+                data: [@_ContractSuccessT31Cnt, @_ContractSuccessT32Cnt, @_ContractSuccessT33Cnt, @_ContractSuccessT34Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -416,14 +520,14 @@ else
         }
         var ctxdata_04 = {
             labels: [
-                'รอดำเนินการ(10)',
-                'อนุมัติ(3)',
-                'ไม่อนุมัติ(14)',
-                'ยกเลิก(1)'
+                'รอดำเนินการ(@_ContractSuccessT41Cnt.ToString("N0"))',
+                'อนุมัติ(@_ContractSuccessT42Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_ContractSuccessT43Cnt.ToString("N0"))',
+                'ยกเลิก(@_ContractSuccessT44Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [10, 3, 14, 1],
+                data: [@_ContractSuccessT41Cnt, @_ContractSuccessT42Cnt, @_ContractSuccessT43Cnt, @_ContractSuccessT44Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -435,14 +539,14 @@ else
         }
         var ctxdata_05 = {
             labels: [
-                'รอดำเนินการ(10)',
-                'อนุมัติ(3)',
-                'ไม่อนุมัติ(14)',
-                'ยกเลิก(1)'
+                'รอดำเนินการ(@_ContractSuccessT51Cnt.ToString("N0"))',
+                'อนุมัติ(@_ContractSuccessT52Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_ContractSuccessT53Cnt.ToString("N0"))',
+                'ยกเลิก(@_ContractSuccessT54Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [10, 3, 14, 1],
+                data: [@_ContractSuccessT51Cnt, @_ContractSuccessT52Cnt, @_ContractSuccessT53Cnt, @_ContractSuccessT54Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -454,14 +558,14 @@ else
         }
         var ctxdata_11 = {
             labels: [
-                'รอดำเนินการ(2)',
-                'อนุมัติ(5)',
-                'ไม่อนุมัติ(7)',
-                'ยกเลิก(1)'
+                'ส่งคำขอ(@_GuaranteeT11Cnt.ToString("N0"))',
+                'อนุมัติ(@_GuaranteeT12Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_GuaranteeT13Cnt.ToString("N0"))',
+                'ยกเลิก(@_GuaranteeT14Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [2, 5, 7, 1],
+                data: [@_GuaranteeT11Cnt, @_GuaranteeT12Cnt, @_GuaranteeT13Cnt, @_GuaranteeT14Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -473,14 +577,14 @@ else
         }
         var ctxdata_12 = {
             labels: [
-                'รอดำเนินการ(5)',
-                'อนุมัติ(4)',
-                'ไม่อนุมัติ(2)',
-                'ยกเลิก(1)'
+                'ส่งคำขอ(@_GuaranteeT21Cnt.ToString("N0"))',
+                'อนุมัติ(@_GuaranteeT22Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_GuaranteeT23Cnt.ToString("N0"))',
+                'ยกเลิก(@_GuaranteeT24Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [5, 4, 2, 1],
+                data: [@_GuaranteeT21Cnt, @_GuaranteeT22Cnt, @_GuaranteeT23Cnt, @_GuaranteeT24Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -492,14 +596,14 @@ else
         }
         var ctxdata_13 = {
             labels: [
-                'รอดำเนินการ(7)',
-                'อนุมัติ(2)',
-                'ไม่อนุมัติ(1)',
-                'ยกเลิก(1)'
+                'ส่งคำขอ(@_GuaranteeT31Cnt.ToString("N0"))',
+                'อนุมัติ(@_GuaranteeT32Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_GuaranteeT33Cnt.ToString("N0"))',
+                'ยกเลิก(@_GuaranteeT34Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [7, 2, 1, 1],
+                data: [@_GuaranteeT31Cnt, @_GuaranteeT32Cnt, @_GuaranteeT33Cnt, @_GuaranteeT34Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -511,14 +615,14 @@ else
         }
         var ctxdata_14 = {
             labels: [
-                'รอดำเนินการ(2)',
-                'อนุมัติ(3)',
-                'ไม่อนุมัติ(0)',
-                'ยกเลิก(1)'
+                'ส่งคำขอ(@_GuaranteeT41Cnt.ToString("N0"))',
+                'อนุมัติ(@_GuaranteeT42Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_GuaranteeT43Cnt.ToString("N0"))',
+                'ยกเลิก(@_GuaranteeT44Cnt.ToString("N0"))'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [2, 3, 0, 1],
+                data: [@_GuaranteeT41Cnt, @_GuaranteeT42Cnt, @_GuaranteeT43Cnt, @_GuaranteeT44Cnt],
                 backgroundColor: [
                     'rgb(255, 165, 0,0.6)',
                     'rgba(99, 255, 0, 0.6)',
@@ -528,7 +632,25 @@ else
                 hoverOffset: 4
             }]
         }
-
+        var ctxdata_15 = {
+            labels: [
+                'ส่งคำขอ(@_GuaranteeT51Cnt.ToString("N0"))',
+                'อนุมัติ(@_GuaranteeT52Cnt.ToString("N0"))',
+                'ไม่อนุมัติ(@_GuaranteeT53Cnt.ToString("N0"))',
+                'ยกเลิก(@_GuaranteeT54Cnt.ToString("N0"))'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [@_GuaranteeT51Cnt, @_GuaranteeT52Cnt, @_GuaranteeT53Cnt, @_GuaranteeT54Cnt],
+                backgroundColor: [
+                    'rgb(255, 165, 0,0.6)',
+                    'rgba(99, 255, 0, 0.6)',
+                    'rgba(255, 0, 0, 0.6)',
+                    'rgb(54, 162, 235,0.8)'
+                ],
+                hoverOffset: 4
+            }]
+        }
 
         window.onload = function () {
             var ctx1 = document.getElementById('myChart1').getContext('2d');
@@ -541,6 +663,7 @@ else
             var ctx_12 = document.getElementById('Chart_12').getContext('2d');
             var ctx_13 = document.getElementById('Chart_13').getContext('2d');
             var ctx_14 = document.getElementById('Chart_14').getContext('2d');
+            var ctx_15 = document.getElementById('Chart_15').getContext('2d');
             window.myBar = new Chart(ctx1, {
                 type: 'doughnut',
                 data: ctxdata1,
@@ -598,6 +721,10 @@ else
             window.myBar = new Chart(ctx_14, {
                 type: 'pie',
                 data: ctxdata_14,
+            });
+            window.myBar = new Chart(ctx_15, {
+                type: 'pie',
+                data: ctxdata_15,
             });
         }
 

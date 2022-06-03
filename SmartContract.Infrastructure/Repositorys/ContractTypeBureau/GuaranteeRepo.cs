@@ -256,22 +256,23 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
 			}
 		}
 
-		public async Task<List<GuaranteeReportView>> GuaranteeReportView(SearchOptionGuarantee Condition = null)
+		public async Task<List<GuaranteeLgReqStationRpt>> GuaranteeLgReqStationRpt(SearchOptionGuarantee Condition = null)
 		{
-			List<GuaranteeReportView> response = new List<GuaranteeReportView>();
+			List<GuaranteeLgReqStationRpt> response = new List<GuaranteeLgReqStationRpt>();
 
 			string[] Dcodes = { "03000", "03100", "03200", "03300", "03400", "03500", "03600", "03700", "03800", "03900", "04000", "04100", "04200" };
 
-			var StationGuarantees = _repo.Context.ContractStationGuarantees.Where(x => x.Used);
+			var _VGuaranteeLgContracts = _repo.Context.VGuaranteeLgContracts.Where(x => x.LgNumber != "");//NewCount=ออกใหม่
+			var _GuaranteeLgReqStations = _repo.Context.GuaranteeLgReqStations.Where(x => x.Used);//ReturnCount=ขอคืน,ClaimCount=ขอเคลม,ReNewCount=ขอเพิ่ม,Discount=ขอลด
 
 			if (Condition != null)
 			{
 				if (!String.IsNullOrEmpty(Condition.Year))
-					StationGuarantees = StationGuarantees.Where(x => x.Budgetyear == Condition.Year);
+					_GuaranteeLgReqStations = _GuaranteeLgReqStations.Where(x => x.Budgetyear == Condition.Year);
 				if (!String.IsNullOrEmpty(Condition.Month))
 				{
 					int _Month = int.Parse(Condition.Month);
-					StationGuarantees = StationGuarantees.Where(x => x.ContractGuaranteeEditDate.Month == _Month);
+					_GuaranteeLgReqStations = _GuaranteeLgReqStations.Where(x => x.ContractDate.Month == _Month);
 				}
 			}
 
@@ -279,21 +280,130 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
 			var LkDepartments = _repo.Context.LkDepartments.Where(x => x.Display == "Y" && x.Dcode != null && Dcodes.Contains(x.Dcode)).OrderBy(x => x.Dcode).ToList();
 			foreach (var item in LkDepartments)
 			{
-				var queryCount = await StationGuarantees.Where(x => x.DepartmentCode == item.Dcode).GroupBy(s => s.ContractGuaranteeType)
+				var queryCount1 = await _VGuaranteeLgContracts.Where(x => x.DepartmentCode == item.Dcode).GroupBy(s => s.DepartmentCode)
 						.Select(grp => new
 						{
-							ContractGuaranteeType = grp.Key,
-							ContractGuaranteeTypeCount = grp.Count()
+							AppTypeId = grp.Key,
+							AppTypeIdCount = grp.Count()
 						}).ToListAsync();
 
-				response.Add(new Resources.ContractTypeBureau.GuaranteeReportView()
+				var queryCount2 = await _GuaranteeLgReqStations.Where(x => x.DepartmentCode == item.Dcode).GroupBy(s => s.AppTypeId)
+						.Select(grp => new
+						{
+							AppTypeId = grp.Key,
+							AppTypeIdCount = grp.Count()
+						}).ToListAsync();
+
+				//NewCount=ออกใหม่,ReturnCount=ขอคืน,ClaimCount=ขอเคลม,ReNewCount=ขอเพิ่ม,Discount=ขอลด
+				response.Add(new Resources.ContractTypeBureau.GuaranteeLgReqStationRpt()
 				{
 					Dcode = item.Dcode,
 					DnameNew = item.DnameNew,
-					NewCount = queryCount.FirstOrDefault(x => x.ContractGuaranteeType == ContractGuaranteeTypes.T1_NEW)?.ContractGuaranteeTypeCount ?? 0,
-					ReNewCount = queryCount.FirstOrDefault(x => x.ContractGuaranteeType == ContractGuaranteeTypes.T2_RENEW)?.ContractGuaranteeTypeCount ?? 0,
-					ReturnCount = queryCount.FirstOrDefault(x => x.ContractGuaranteeType == ContractGuaranteeTypes.T3_RETURN)?.ContractGuaranteeTypeCount ?? 0,
-					ClaimCount = queryCount.FirstOrDefault(x => x.ContractGuaranteeType == ContractGuaranteeTypes.T4_CLAIM)?.ContractGuaranteeTypeCount ?? 0
+					NewCount = queryCount1.FirstOrDefault(x => x.AppTypeId != "")?.AppTypeIdCount ?? 0,
+					ReturnCount = queryCount2.FirstOrDefault(x => x.AppTypeId == "3")?.AppTypeIdCount ?? 0,
+					ClaimCount = queryCount2.FirstOrDefault(x => x.AppTypeId == "4")?.AppTypeIdCount ?? 0,
+					ReNewCount = queryCount2.FirstOrDefault(x => x.AppTypeId == "5")?.AppTypeIdCount ?? 0,
+					DisCount = queryCount2.FirstOrDefault(x => x.AppTypeId == "6")?.AppTypeIdCount ?? 0
+				});
+			}
+
+			return response;
+		}
+
+
+		public async Task<List<GuaranteeLgReqStationDashboard>> GuaranteeLgReqStationDashboard(SearchOptionGuarantee Condition = null)
+		{
+			List<GuaranteeLgReqStationDashboard> response = new List<GuaranteeLgReqStationDashboard>();
+
+			string[] Dcodes = { "03000", "03100", "03200", "03300", "03400", "03500", "03600", "03700", "03800", "03900", "04000", "04100", "04200" };
+
+			var _VGuaranteeLgContracts = _repo.Context.VGuaranteeLgContracts.Where(x => x.LgNumber != "");//NewCount=ออกใหม่
+			var _GuaranteeLgReqStations = _repo.Context.GuaranteeLgReqStations.Where(x => x.Used);//ReturnCount=ขอคืน,ClaimCount=ขอเคลม,ReNewCount=ขอเพิ่ม,Discount=ขอลด
+
+			//if (Condition != null)
+			//{
+			//	if (!String.IsNullOrEmpty(Condition.Year))
+			//		_GuaranteeLgReqStations = _GuaranteeLgReqStations.Where(x => x.Budgetyear == Condition.Year);
+			//	if (!String.IsNullOrEmpty(Condition.Month))
+			//	{
+			//		int _Month = int.Parse(Condition.Month);
+			//		_GuaranteeLgReqStations = _GuaranteeLgReqStations.Where(x => x.ContractDate.Month == _Month);
+			//	}
+			//}
+
+
+			var LkDepartments = _repo.Context.LkDepartments.Where(x => x.Display == "Y" && x.Dcode != null && Dcodes.Contains(x.Dcode)).OrderBy(x => x.Dcode).ToList();
+			foreach (var item in LkDepartments)
+			{
+				//NewCount=ออกใหม่
+				var queryCount1 = await _VGuaranteeLgContracts.Where(x => x.DepartmentCode == item.Dcode).GroupBy(s => s.DepartmentCode)
+						.Select(grp => new
+						{
+							AppTypeId = grp.Key,
+							AppTypeIdCount = grp.Count()
+						}).ToListAsync();
+
+				//ReturnCount=ขอคืน/ยกเลิก
+				var queryCount2 = await _GuaranteeLgReqStations.Where(x => x.DepartmentCode == item.Dcode && x.AppTypeId == "3").GroupBy(s => s.LgStatus)
+						.Select(grp => new
+						{
+							LgStatus = grp.Key,
+							LgStatusCount = grp.Count()
+						}).ToListAsync();
+
+				//ClaimCount=ขอเคลม
+				var queryCount3 = await _GuaranteeLgReqStations.Where(x => x.DepartmentCode == item.Dcode && x.AppTypeId == "4").GroupBy(s => s.LgStatus)
+						.Select(grp => new
+						{
+							LgStatus = grp.Key,
+							LgStatusCount = grp.Count()
+						}).ToListAsync();
+
+				//ReNewCount=ขอเพิ่ม
+				var queryCount4 = await _GuaranteeLgReqStations.Where(x => x.DepartmentCode == item.Dcode && x.AppTypeId == "5").GroupBy(s => s.LgStatus)
+						.Select(grp => new
+						{
+							LgStatus = grp.Key,
+							LgStatusCount = grp.Count()
+						}).ToListAsync();
+
+				//Discount=ขอลด
+				var queryCount5 = await _GuaranteeLgReqStations.Where(x => x.DepartmentCode == item.Dcode && x.AppTypeId == "6").GroupBy(s => s.LgStatus)
+						.Select(grp => new
+						{
+							LgStatus = grp.Key,
+							LgStatusCount = grp.Count()
+						}).ToListAsync();
+
+				response.Add(new Resources.ContractTypeBureau.GuaranteeLgReqStationDashboard()
+				{
+					Dcode = item.Dcode,
+					DnameNew = item.DnameNew,
+
+					NewCount1 = 0,
+					NewCount2 = queryCount1.FirstOrDefault(x => x.AppTypeId != "")?.AppTypeIdCount ?? 0,
+					NewCount3 = 0,
+					NewCount4 = 0,
+
+					ReturnCount1 = queryCount2.FirstOrDefault(x => x.LgStatus == "")?.LgStatusCount ?? 0,
+					ReturnCount2 = queryCount2.FirstOrDefault(x => x.LgStatus != "")?.LgStatusCount ?? 0,
+					ReturnCount3 = 0,
+					ReturnCount4 = 0,
+
+					ClaimCount1 = queryCount3.FirstOrDefault(x => x.LgStatus == "")?.LgStatusCount ?? 0,
+					ClaimCount2 = queryCount3.FirstOrDefault(x => x.LgStatus != "")?.LgStatusCount ?? 0,
+					ClaimCount3 = 0,
+					ClaimCount4 = 0,
+
+					ReNewCount1 = queryCount4.FirstOrDefault(x => x.LgStatus == "")?.LgStatusCount ?? 0,
+					ReNewCount2 = queryCount4.FirstOrDefault(x => x.LgStatus != "")?.LgStatusCount ?? 0,
+					ReNewCount3 = 0,
+					ReNewCount4 = 0,
+
+					DisCount1 = queryCount4.FirstOrDefault(x => x.LgStatus == "")?.LgStatusCount ?? 0,
+					DisCount2 = queryCount4.FirstOrDefault(x => x.LgStatus != "")?.LgStatusCount ?? 0,
+					DisCount3 = 0,
+					DisCount4 = 0
 				});
 			}
 

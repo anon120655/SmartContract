@@ -40,7 +40,7 @@ else
     var _pager = (_Items != null ? Model.TrackingStation.Pager : null);
     int _orderNo = _pager != null ? (_pager.PageSize * _pager.CurrentPage - 10) : 0;
 
-    _Title = "หน้าติดตาม";
+    _Title = "หน้าติดตามคำขอ";
 
     ViewData["Title"] = _Title;
 
@@ -88,8 +88,8 @@ else
                     <div class="form-group row">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-2"></div>
-                        <div class="col-sm-3 ml-5">
-                            <button type="submit" class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary loadding text-white mr-2" style="width:120px"> ตกลง </button>
                             <button type="button" class="btn btn-secondary loadding text-white" style="width:120px" onclick="clear_input()"> ล้างข้อมูล </button>
                         </div>
                         <div class="col-sm-4"></div>
@@ -160,8 +160,8 @@ else
                                     <tr>
                                         <th>ลำดับ</th>
                                         <th>ประเภทใบคำขอ</th>
-                                        <th>Tax ID</th>
-                                        <th>ชื่อลูกค้า</th>
+                                        <th>สังกัด</th>
+                                        <th>ลูกค้า</th>
                                         <th>เลขที่สัญญา</th>
                                         <th>สัญญาลงวันที่</th>
                                         <th>เลขที่หนังสือค้ำประกัน</th>
@@ -185,10 +185,19 @@ else
                                                 <td class="text-center col-md-1">
                                                     @(MasterData.GetAppTypeList(item.Value.AppTypeId).FirstOrDefault().Value)
                                                 </td>
-                                                <td class="text-center col-md-1">
+                                                <td class="text-center">
+                                                    @item.Value.DepartmentName
+                                                </td>
+                                                <td class="text-center col-md-2">
+                                                    <b class="">
+                                                        ชื่อ
+                                                    </b> :
+                                                    @item.Value.RequesterNameTh<br />
+                                                    <b class="">
+                                                        TaxID
+                                                    </b> :
                                                     @item.Value.TaxId
                                                 </td>
-                                                <td class="text-center">@item.Value.RequesterNameTh</td>
                                                 <td class="text-center">
                                                     @item.Value.ContractId
                                                 </td>

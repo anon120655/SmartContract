@@ -61,7 +61,7 @@ else
                                     <label class="col-sm-1 col-form-label text-sm-right"></label>
                                     <div class="form-check form-check-inline mr-5">
                                         <input class="form-check-input" type="radio" asp-for="Request.appTypeId" id="inlineRadio3" value="3">
-                                        <label class="form-check-label" for="inlineRadio3">ขอคืน</label>
+                                        <label class="form-check-label" for="inlineRadio3">ขอคืน/ยกเลิก</label>
                                     </div>
                                     <div class="form-check form-check-inline mr-5">
                                         <input class="form-check-input" type="radio" asp-for="Request.appTypeId" id="inlineRadio4" value="4">
@@ -217,8 +217,8 @@ else
                 <input type="hidden" asp-for="Request.hospitalCode" value="@Model.Request.hospitalCode" />
                 <input type="hidden" asp-for="Request.hospitalName" value="@Model.Request.hospitalName" />
                 <input type="hidden" asp-for="Request.LgAmountInitial" value="@Model.Request.lgAmount" />
-                <a class="btn btn-secondary mr-2" asp-controller="Guarantee" asp-action="Tracking2"> ยกเลิกทำรายการ</a>
-                <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกคำขอ </button>
+                <a class="btn btn-secondary mr-2" asp-controller="Guarantee" asp-action="Tracking2"><i class="fas fa-times-circle align-middle"></i> ยกเลิกทำรายการ</a>
+                <button type="submit" class="btn btn-success" name="BtnSubmit" value="1">บันทึกคำขอ <i class="fa fa-angle-right align-middle"></i></button>
             </div>
         </div>
     </form>

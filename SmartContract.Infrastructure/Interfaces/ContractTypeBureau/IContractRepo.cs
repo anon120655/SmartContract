@@ -32,10 +32,9 @@ namespace SmartContract.Infrastructure.Interfaces.ContractTypeBureau
         string ParameterSearchOptionStation(Pager resource);
         Task<DashboardBinding> GetDashboardBinding(SearchOptionStation Condition);
         IEnumerable<ContractStationSuccessDTO> GetListSuccess(SearchOptionStation condition = null);
+        Task<List<ContractStationSuccessDashboard>> ContractStationSuccessDashboard();
         PaginationView<List<ContractStationSuccessDTO>> GetTrackingBinding(int? page, int pageSize, SearchOptionStation condition = null);
-
-
-
+        Task<List<ContractReport01>> ContractReport01(SearchOptionContractReport Condition = null);
 
     }
 }

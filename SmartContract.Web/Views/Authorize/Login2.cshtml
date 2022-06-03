@@ -1,6 +1,29 @@
-﻿@{
+﻿@model SmartContract.Infrastructure.Resources.Authenticate.UserLogin
+@{
     ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+@if (Model.ServerSite.ToUpper() == "TEST")
+{
+<style>
+        body#body_login {
+            background-image: url('../images/BG_SMART TEST.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+</style>
+}
+else if (Model.ServerSite.ToUpper() == "DEV")
+{
+<style>
+        body#body_login {
+            background-image: url('../images/BG_SMART DEV.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+</style>
 }
 
 <link href="~/css/home/progressbar.css" rel="stylesheet" />
@@ -42,6 +65,7 @@
 <br />
 @section Scripts {
     <script type="text/javascript">
+
 
     </script>
 }

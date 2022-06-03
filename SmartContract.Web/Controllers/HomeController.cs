@@ -115,7 +115,16 @@ namespace SmartContract.Web.Controllers
             {
                 DashboardHomeMain response = new DashboardHomeMain();
 
+                //ข้อมูลนิติกรรมสัญญาใหม่
                 response = await _repo.ContractRepo.GetDashboardHome();
+
+
+                //ข้อมูลนิติกรรมสัญญาผูกพัน
+                response.ContractStationSuccessDashboard = await _repo.ContractRepo.ContractStationSuccessDashboard();
+
+                //ข้อมูลหลักประกัน
+                SearchOptionGuarantee Condition = null;
+                response.GuaranteeLgReqStation = await _repo.GuaranteeRepo.GuaranteeLgReqStationDashboard(Condition);
 
                 return View(response);
 

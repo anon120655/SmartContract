@@ -70,6 +70,7 @@ namespace SmartContract.Web.Controllers
 		#endregion
 
 
+		#region สร้างคำขอ
 		public async Task<IActionResult> View(ParameterCreate indata)
 		{
 			try
@@ -93,9 +94,10 @@ namespace SmartContract.Web.Controllers
 			{
 				ELGCreateMain response = new ELGCreateMain();
 
-				String _lgNumber = "00019/200008/0211/65"; //SecurityRepo.Decrypt(indata.lgNumber)
+                //String _lgNumber = "00019/200008/0207/65";
+                String _lgNumber = SecurityRepo.Decrypt(indata.lgNumber);
 
-				var lGDocumentSearch = await _repo.ServiceOther.eLGDocumentSearch(new eLGDocumentSearchRequest()
+                var lGDocumentSearch = await _repo.ServiceOther.eLGDocumentSearch(new eLGDocumentSearchRequest()
 				{
 					lgNumber = _lgNumber
 				});
@@ -186,6 +188,34 @@ namespace SmartContract.Web.Controllers
 				});
 			}
 		}
+
+		#endregion
+
+
+		#region รายงาน
+
+		public async Task<IActionResult> GuaranteeReport(SearchOptionGuarantee Condition = null)
+		{
+			try
+			{
+				GuaranteeReportMain response = new GuaranteeReportMain();
+				response.GetLookUp = new Infrastructure.Resources.Share.LookUpResource()
+				{
+					BudgetYears = _repo.MasterData.BudgetYear(),
+					Months = _repo.MasterData.GetMonths()
+				};
+
+				response.GuaranteeLgReqStationRpt = await _repo.GuaranteeRepo.GuaranteeLgReqStationRpt(Condition);
+
+				return View(response);
+			}
+			catch (Exception ex)
+			{
+				return View(new GuaranteeReportMain() { errorCheck = true, errorMessage = GeneralUtils.GetExMessage(ex) });
+			}
+		}
+
+		#endregion
 
 	}
 }

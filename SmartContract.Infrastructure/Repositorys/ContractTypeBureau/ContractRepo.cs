@@ -542,6 +542,104 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
             return response;
         }
 
+        public async Task<List<ContractStationSuccessDashboard>> ContractStationSuccessDashboard()
+        {
+            var response = new List<ContractStationSuccessDashboard>();
+
+            string[] Dcodes = { "03000", "03100", "03200", "03300", "03400", "03500", "03600", "03700", "03800", "03900", "04000", "04100", "04200" };
+
+            var _contractStationSuccesses = _repo.Context.ContractStationSuccesses.Where(x => x.Used).OrderByDescending(x => x.ContractSuccessEditDate);
+
+
+            var LkDepartments = _repo.Context.LkDepartments.Where(x => x.Display == "Y" && x.Dcode != null && Dcodes.Contains(x.Dcode)).OrderBy(x => x.Dcode).ToList();
+            foreach (var item in LkDepartments)
+            {
+                //แก้ไข
+                var queryCount1 = await _contractStationSuccesses.Where(x => x.DepartmentCode == item.Dcode && x.ContractSuccessType == "T1").GroupBy(s => new { s.ContractId, s.ContractSuccessStatus })
+                        .Select(grp => new
+                        {
+                            //ContractSuccessStatus = grp.Select(x=> x.ContractSuccessStatus).FirstOrDefault(),
+                            ContractId = grp.Key.ContractId,
+                            ContractSuccessStatus = grp.Key.ContractSuccessStatus,
+                            ContractIdCount = grp.Count()
+                        }).ToListAsync();
+
+                //ยกเลิก
+                var queryCount2 = await _contractStationSuccesses.Where(x => x.DepartmentCode == item.Dcode && x.ContractSuccessType == "T2").GroupBy(s => new { s.ContractId, s.ContractSuccessStatus })
+                        .Select(grp => new
+                        {
+                            //ContractSuccessStatus = grp.Select(x=> x.ContractSuccessStatus).FirstOrDefault(),
+                            ContractId = grp.Key.ContractId,
+                            ContractSuccessStatus = grp.Key.ContractSuccessStatus,
+                            ContractIdCount = grp.Count()
+                        }).ToListAsync();
+
+                //ขยาย
+                var queryCount3 = await _contractStationSuccesses.Where(x => x.DepartmentCode == item.Dcode && x.ContractSuccessType == "T3").GroupBy(s => new { s.ContractId, s.ContractSuccessStatus })
+                        .Select(grp => new
+                        {
+                            //ContractSuccessStatus = grp.Select(x=> x.ContractSuccessStatus).FirstOrDefault(),
+                            ContractId = grp.Key.ContractId,
+                            ContractSuccessStatus = grp.Key.ContractSuccessStatus,
+                            ContractIdCount = grp.Count()
+                        }).ToListAsync();
+
+                //ปิดโครงการ
+                //var contractTypesUse = _repo.Context.ContractTypes.Where(x => x.Used && x.FPay).Select(x => x.ContractTypeId).ToList();
+                var queryCount4 = await _contractStationSuccesses.Where(x => x.DepartmentCode == item.Dcode && x.ContractSuccessType == "T4" /*&& contractTypesUse.Contains(x.ContractTypeId)*/).GroupBy(s => new { s.ContractId, s.ContractSuccessStatus })
+                        .Select(grp => new
+                        {
+                            //ContractSuccessStatus = grp.Select(x=> x.ContractSuccessStatus).FirstOrDefault(),
+                            ContractId = grp.Key.ContractId,
+                            ContractSuccessStatus = grp.Key.ContractSuccessStatus,
+                            ContractIdCount = grp.Count()
+                        }).ToListAsync();
+
+                //ยุติสัญญา
+                var queryCount5 = await _contractStationSuccesses.Where(x => x.DepartmentCode == item.Dcode && x.ContractSuccessType == "T5").GroupBy(s => new { s.ContractId, s.ContractSuccessStatus })
+                        .Select(grp => new
+                        {
+                            //ContractSuccessStatus = grp.Select(x=> x.ContractSuccessStatus).FirstOrDefault(),
+                            ContractId = grp.Key.ContractId,
+                            ContractSuccessStatus = grp.Key.ContractSuccessStatus,
+                            ContractIdCount = grp.Count()
+                        }).ToListAsync();
+
+                response.Add(new Resources.ContractTypeBureau.ContractStationSuccessDashboard()
+                {
+                    Dcode = item.Dcode,
+                    DnameNew = item.DnameNew,
+
+                    EditCount1 = queryCount1.Where(x => x.ContractSuccessStatus == "S1").Sum(x=> x.ContractIdCount),
+                    EditCount2 = queryCount1.Where(x => x.ContractSuccessStatus == "S3").Sum(x=> x.ContractIdCount),
+                    EditCount3 = queryCount1.Where(x => x.ContractSuccessStatus == "S2").Sum(x=> x.ContractIdCount),
+                    EditCount4 = queryCount1.Where(x => x.ContractSuccessStatus == "S4").Sum(x => x.ContractIdCount),
+
+                    CancelCount1 = queryCount2.Where(x => x.ContractSuccessStatus == "S1").Sum(x=> x.ContractIdCount),
+                    CancelCount2 = queryCount2.Where(x => x.ContractSuccessStatus == "S3").Sum(x=> x.ContractIdCount),
+                    CancelCount3 = queryCount2.Where(x => x.ContractSuccessStatus == "S2").Sum(x=> x.ContractIdCount),
+                    CancelCount4 = queryCount2.Where(x => x.ContractSuccessStatus == "S4").Sum(x => x.ContractIdCount),
+
+                    ExpandCount1 = queryCount3.Where(x => x.ContractSuccessStatus == "S1").Sum(x=> x.ContractIdCount),
+                    ExpandCount2 = queryCount3.Where(x => x.ContractSuccessStatus == "S3").Sum(x=> x.ContractIdCount),
+                    ExpandCount3 = queryCount3.Where(x => x.ContractSuccessStatus == "S2").Sum(x=> x.ContractIdCount),
+                    ExpandCount4 = queryCount3.Where(x => x.ContractSuccessStatus == "S4").Sum(x => x.ContractIdCount),
+
+                    CloseProjectCount1 = queryCount4.Where(x => x.ContractSuccessStatus == "S1").Sum(x=> x.ContractIdCount),
+                    CloseProjectCount2 = queryCount4.Where(x => x.ContractSuccessStatus == "S3").Sum(x=> x.ContractIdCount),
+                    CloseProjectCount3 = queryCount4.Where(x => x.ContractSuccessStatus == "S2").Sum(x=> x.ContractIdCount),
+                    CloseProjectCount4 = queryCount4.Where(x => x.ContractSuccessStatus == "S4").Sum(x => x.ContractIdCount),
+
+                    TerminateCount1 = queryCount5.Where(x => x.ContractSuccessStatus == "S1").Sum(x=> x.ContractIdCount),
+                    TerminateCount2 = queryCount5.Where(x => x.ContractSuccessStatus == "S3").Sum(x=> x.ContractIdCount),
+                    TerminateCount3 = queryCount5.Where(x => x.ContractSuccessStatus == "S2").Sum(x=> x.ContractIdCount),
+                    TerminateCount4 = queryCount5.Where(x => x.ContractSuccessStatus == "S4").Sum(x => x.ContractIdCount),
+                });
+            }
+
+            return response;
+        }
+
         public PaginationView<List<ContractStationSuccessDTO>> GetTrackingBinding(int? page, int pageSize, SearchOptionStation condition = null)
         {
             IEnumerable<ContractStationSuccessDTO> queryMap = null;
@@ -562,6 +660,52 @@ namespace SmartContract.Infrastructure.Repositorys.ContractTypeBureau
             return response;
         }
 
+        #region รายงาน
 
+        public async Task<List<ContractReport01>> ContractReport01(SearchOptionContractReport Condition = null)
+        {
+            List<ContractReport01> response = new List<ContractReport01>();
+
+            string[] Dcodes = { "03000", "03100", "03200", "03300", "03400", "03500", "03600", "03700", "03800", "03900", "04000", "04100", "04200" };
+
+            var _ContractStations = _repo.Context.ContractStations.Where(x => x.Used);
+
+            if (Condition != null)
+            {
+                if (!String.IsNullOrEmpty(Condition.Year))
+                    _ContractStations = _ContractStations.Where(x => x.Budgetyear == Condition.Year);
+                if (!String.IsNullOrEmpty(Condition.Month))
+                {
+                    int _Month = int.Parse(Condition.Month);
+                    _ContractStations = _ContractStations.Where(x => x.ContractDate.Value.Month == _Month);
+                }
+            }
+
+
+            var LkDepartments = _repo.Context.LkDepartments.Where(x => x.Display == "Y" && x.Dcode != null && Dcodes.Contains(x.Dcode)).OrderBy(x => x.Dcode).ToList();
+            foreach (var item in LkDepartments)
+            {
+                var queryCount = await _ContractStations.Where(x => x.DepartmentCode == item.Dcode).GroupBy(s => s.ContractTypeId)
+                        .Select(grp => new
+                        {
+                            ContractTypeId = grp.Key,
+                            ContractTypeIdCount = grp.Count()
+                        }).ToListAsync();
+
+                response.Add(new Resources.ContractTypeBureau.ContractReport01()
+                {
+                    Dcode = item.Dcode,
+                    DnameNew = item.DnameNew,
+                    GroupType1Count = queryCount.Where(x => x.ContractTypeId == "01" || x.ContractTypeId == "11").Sum(x => x.ContractTypeIdCount),
+                    GroupType2Count = queryCount.Where(x => x.ContractTypeId == "02" || x.ContractTypeId == "05" || x.ContractTypeId == "07" || x.ContractTypeId == "09" || x.ContractTypeId == "10" || x.ContractTypeId == "12").Sum(x => x.ContractTypeIdCount),
+                    GroupType3Count = queryCount.Where(x => x.ContractTypeId == "13").Sum(x => x.ContractTypeIdCount),
+                    GroupType4Count = queryCount.Where(x => x.ContractTypeId == "14").Sum(x => x.ContractTypeIdCount)
+                });
+            }
+
+            return response;
+        }
+
+        #endregion
     }
 }

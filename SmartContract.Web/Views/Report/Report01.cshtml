@@ -1,199 +1,235 @@
-﻿@{
-    ViewData["Title"] = "รายงาน";
+﻿
+@model SmartContract.Infrastructure.Resources.ContractTypeBureau.ContractReportMain
+@inject SmartContract.Infrastructure.Interfaces.Authenticate.IUserService UserService
+@using SmartContract.Infrastructure.Resources.Share
+
+@{
+    ViewData["Title"] = "รายงานการจัดทำสัญญาแยกตามเขตพื้นที่";
+
+
+    //NewCount=ออกใหม่,ReturnCount=ขอคืน,ClaimCount=ขอเคลม,ReNewCount=ขอเพิ่ม,Discount=ขอลด
+    int _TotalCnt = 0, _T1Cnt = 0, _T2Cnt = 0, _T3Cnt = 0, _T4Cnt = 0;
+    if (Model.ContractReport01 != null && Model.ContractReport01.Count > 0)
+    {
+        _TotalCnt = Model.ContractReport01.Sum(x => x.SumByKetCount());
+        _T1Cnt = Model.ContractReport01.Sum(x => x.GroupType1Count);
+        _T2Cnt = Model.ContractReport01.Sum(x => x.GroupType2Count);
+        _T3Cnt = Model.ContractReport01.Sum(x => x.GroupType3Count);
+        _T4Cnt = Model.ContractReport01.Sum(x => x.GroupType4Count);
+    }
 }
 
+@if (Model.errorCheck)
+{
+    <partial name="../Shared/LayoutPartial/_PartialMessageError.cshtml" model="new CommonModel() { errorMessage = Model.errorMessage }" />
+}
+else
+{
+    var lookUp = Model.GetLookUp;
 
-<section>
-    <div class="">
-        <div class="col-md-12">
-            <div class="form-group m-1">
-                <div class="row">
-                    <div class="col-6">
-                        <h4>
-                            <small><i class="fa fa-book mr-1"></i>รายงาน > </small>
-                            <small><span class="text-primary">รายงานการจัดทำสัญญาแยกตามเขตพื้นที่</span></small>
-                        </h4>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card mb-3"></div>
-        </div>
-    </div>
-</section>
-
-<section>
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-5">
-                <fieldset class="form-group border p-3" style="height:90%;">
-                    <legend class="col-auto px-2 h6">ค้นหา</legend>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="inputYY">ประจำปี</label>
-                            <select id="inputYY" class="form-control">
-                                <option>2564</option>
-                                <option>2563</option>
-                                <option>2562</option>
-                                <option>2561</option>
-                                <option>2560</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputMM">ประจำเดือน</label>
-                            <select id="inputMM" class="form-control">
-                                <option value="00">ทุกเดือน</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
-                                <option value="01">มกราคม</option>
-                                <option value="02">กุมภาพันธ์</option>
-                                <option value="03">มีนาคม</option>
-                                <option value="04">เมษายน</option>
-                                <option value="05">พฤษภาคม</option>
-                                <option value="06">มิถุนายน</option>
-                                <option value="07">กรกฎาคม</option>
-                                <option value="08">สิงหาคม</option>
-                                <option value="09">กันยายน</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="inputStatus">สถานะ</label>
-                            <select id="inputStatus" class="form-control">
-                                <option>ทั้งหมด</option>
-                                <option>กำลังดำเนินการ</option>
-                                <option>อนุมัติ</option>
-                                <option>ยุติสัญญา</option>
-                                <option>ปิดโครงการ</option>
-                                <option>ยกเลิก</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputYear">ประเภทกองทุน</label>
-                            <input type="text" class="form-control" id="inputFund" placeholder="ชื่อเหรือรหัสกองทุน">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="inputYear">รหัสคู่สัญญา</label>
-                            <input type="text" class="form-control" id="inputVendorID" placeholder="รหัสคู่สัญญา">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputYear">รหัสงบประมาณ</label>
-                            <input type="text" class="form-control" id="inputBudgetID" placeholder="รหัสงบประมาณ">
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-md-center">
-                        <div class="col-auto mt-2 mb-3">
-                            <button class="btn btn-primary loadding text-white" style="width:120px"> ตกลง </button>
-                            <button class="btn btn-secondary loadding text-white" style="width:120px"> ยกเลิก </button>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="col-md-7">
-                <div class="bg-white"><canvas id="myChart"></canvas></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<br />
-<br />
-<section>
-    <div class="">
-        <div class="col-md-12">
-            <div class="form-group m-1">
-                <div class="row">
-                    <div class="col-6">
-                        <h4>
-                            <small><i class="fa fa-align-justify mr-1"></i>แสดงรายละเอียดข้อมูล</small>
-                        </h4>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section>
-    <div class="col-md-12">
-        <div class="row">
+    <section>
+        <div class="">
             <div class="col-md-12">
-                <table class="table table-hover table-bordered table-sm justify-content-center bg-white">
-                    <thead style="background-color: rgb(255, 205, 86,0.8)">
-                        <tr>
-                            <th rowspan="2" class="align-middle text-center">สำนักที่จัดทำสัญญา</th>
-                            <th colspan="5" class="align-middle text-center">ประเภทสัญญา</th>
-                        </tr>
-                        <tr>
-                            <th class="align-middle text-center">สัญญา</th>
-                            <th class="align-middle text-center">ข้อตกลง</th>
-                            <th class="align-middle text-center">หนังสือแสดงความจำนง</th>
-                            <th class="align-middle text-center">โครงการ</th>
-                            <th class="align-middle text-center">รวม</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-left">03000_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 7 ขอนแก่น</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">1</a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">5</a></td>
-                            <td>0</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">2</a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">8</a></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">03100_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 1 เชียงใหม่</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">5</a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">5</a></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">10</a></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">03300_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 12 สงขลา</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">1</a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">5</a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">1</a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">6</a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">13</a></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">03400_สำนักงานหลักประกันสุขภาพแห่งชาติ เขต 9 นครราชสีมา</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">1</a></td>
-                            <td>0</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail">1</a></td>
-                        </tr>
-                    </tbody>
-                    <tfoot class="txt_totalAll">
-                        <tr class="align-middle text-center">
-                            <td>รวม</td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail"><b>7</b></a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail"><b>15</b></a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail"><b>2</b></a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail"><b>8</b></a></td>
-                            <td><a onclick="showLoading()" asp-area="" asp-controller="Report" asp-action="Report01Detail"><b>32</b></a></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-book mr-1"></i>รายงาน > </small>
+                                <small><span class="text-primary">รายงานการจัดทำสัญญาแยกตามเขตพื้นที่</span></small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <section>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-5">
+                    <fieldset class="form-group border p-3" style="height:90%;">
+                        <legend class="col-auto px-2 h6">ค้นหา</legend>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="inputYY">ประจำปี</label>
+                                <select class="form-control bg-focus" asp-for="Year"
+                                        asp-items="@(new SelectList((from s in lookUp.BudgetYears.Where(x=> int.Parse(x.Id) >= 2565) select new {
+                                                            Code=s.Id,
+                                                            FullName = $"{s.Value}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: DateTime.Now.Year+ 543))">
+                                    <option value="">---ทั้งหมด---</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputMM">ประจำเดือน</label>
+                                <select class="form-control bg-focus" asp-for="Month"
+                                        asp-items="@(new SelectList((from s in lookUp.Months select new {
+                                                            Code=s.Id,
+                                                            FullName = $"{s.Value}"}),
+                                                            "Code",
+                                                            "FullName",
+                                                            selectedValue: DateTime.Now.Month))">
+                                    <option value="">---ทั้งหมด---</option>
+                                </select>
+                                @*<select id="inputMM" class="form-control">
+                            <option value="00">ทุกเดือน</option>
+                            <option value="10">ตุลาคม</option>
+                            <option value="11">พฤศจิกายน</option>
+                            <option value="12">ธันวาคม</option>
+                            <option value="01">มกราคม</option>
+                            <option value="02">กุมภาพันธ์</option>
+                            <option value="03">มีนาคม</option>
+                            <option value="04">เมษายน</option>
+                            <option value="05">พฤษภาคม</option>
+                            <option value="06">มิถุนายน</option>
+                            <option value="07">กรกฎาคม</option>
+                            <option value="08">สิงหาคม</option>
+                            <option value="09">กันยายน</option>
+                        </select>*@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="inputStatus">สถานะ</label>
+                                <select id="inputStatus" class="form-control">
+                                    <option>ทั้งหมด</option>
+                                    <option>กำลังดำเนินการ</option>
+                                    <option>อนุมัติ</option>
+                                    <option>ยุติสัญญา</option>
+                                    <option>ปิดโครงการ</option>
+                                    <option>ยกเลิก</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputYear">ประเภทกองทุน</label>
+                                <input type="text" class="form-control" id="inputFund" placeholder="ชื่อเหรือรหัสกองทุน">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="inputYear">รหัสคู่สัญญา</label>
+                                <input type="text" class="form-control" id="inputVendorID" placeholder="รหัสคู่สัญญา">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputYear">รหัสงบประมาณ</label>
+                                <input type="text" class="form-control" id="inputBudgetID" placeholder="รหัสงบประมาณ">
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-md-center">
+                            <div class="col-auto">
+                                <button class="btn btn-primary loadding text-white mr-2" style="width:120px"> ตกลง </button>
+                                <button class="btn btn-secondary loadding text-white" style="width:120px"> ยกเลิก </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                @*<div class="col-md-7">
+            <div class="bg-white"><canvas id="myChart"></canvas></div>
+        </div>*@
+                <div class="col-md-7">
+                    <div class="card ">
+                        <div class="card-header" style="background-color:aquamarine">
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <i class="fas fa-chart-bar "><span class="ml-1">การจัดทำสัญญา(<span class="badge badge-pill badge-dark">@_TotalCnt.ToString("N0")</span>)</span></i>
+                                </div>
+                                <div class="col-6 p-0">
+                                    <p class="text-right mb-0">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div><canvas id="myChart" height="180"></canvas></div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <br />
+    <br />
+    <section>
+        <div class="">
+            <div class="col-md-12">
+                <div class="form-group m-1">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>
+                                <small><i class="fa fa-align-justify mr-1"></i>แสดงรายละเอียดข้อมูล</small>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-hover table-bordered table-sm justify-content-center bg-white" style="font-size:14px;margin:auto">
+                        <thead style="background-color: rgb(255, 205, 86,0.8)">
+                            <tr style="height:50px;">
+                                <th class="align-middle text-center">สำนัก/กองทุนย่อย/เขต</th>
+                                <th class="align-middle text-center col-md-1">สัญญา</th>
+                                <th class="align-middle text-center col-md-1">ข้อตกลง</th>
+                                <th class="align-middle text-center col-md-1">หนังสือแสดงความจำนง</th>
+                                <th class="align-middle text-center col-md-1">โครงการ</th>
+                                @*<th class="align-middle text-center col-md-1">ขอลด</th>*@
+                                <th class="align-middle text-center col-md-1">ทั้งหมด</th>
+                                @*ต่ออายุ คืน เคลม/ยึด*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ContractReport01 != null && Model.ContractReport01.Count > 0)
+                            {
+                                foreach (var item in Model.ContractReport01)
+                                {
+                                    <tr class=" text-center">
+                                        <td class="text-left">@($"{item.Dcode}_{item.DnameNew}")</td>
+                                        <td><a onclick="showLoading()">@item.GroupType1Count</a></td>
+                                        <td><a onclick="showLoading()">@item.GroupType2Count</a></td>
+                                        <td><a onclick="showLoading()">@item.GroupType3Count</a></td>
+                                        <td><a onclick="showLoading()">@item.GroupType4Count</a></td>
+                                        <td>@item.SumByKetCount()</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot class="txt_totalAll">
+                            <tr class="align-middle text-center">
+                                <td>รวม</td>
+                                <td>@_T1Cnt</td>
+                                <td>@_T2Cnt</td>
+                                <td>@_T3Cnt</td>
+                                <td>@_T4Cnt</td>
+                                <td>@_TotalCnt</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+}
 
 <br />
 <br />
 
+@*<partial name="/Views/Shared/Layout/_DataDate.cshtml" />*@
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
@@ -210,8 +246,8 @@
                 'โครงการ'
             ],
             datasets: [{
-                label: 'ข้อมูลการจัดทำสัญญาแยกตามเขตพื้นที่',
-                data: [7, 15, 2, 8],
+                label: 'ข้อมูลการจัดทำสัญญา',
+                data: [@_T1Cnt, @_T2Cnt, @_T3Cnt, @_T4Cnt],
                 backgroundColor: [
                     'rgb(255, 99, 132,0.8)',
                     'rgb(54, 162, 235,0.8)',
@@ -223,65 +259,6 @@
             }]
 
         }
-
-        //var ctxdata1 = {
-        //    labels: [
-        //        'ตุลาคม',
-        //        'พฤศจิกายน',
-        //        'ธันวาคม',
-        //        'มกราคม',
-        //        'กุมภาพันธ์',
-        //        'มีนาคม',
-        //        'เมษายน',
-        //        'พฤษภาคม',
-        //        'มิถุนายน',
-        //        'กรกฎาคม',
-        //        'สิงหาคม',
-        //        'กันยายน',
-        //    ],
-        //    datasets: [
-        //        {
-        //            type: 'line',
-        //            label: 'สัญญา',
-        //            backgroundColor: 'rgb(255, 99, 132,0.5)',
-        //            borderColor: 'rgb(255, 99, 132,1)',
-        //            //borderDash: [5, 5],
-        //            borderWidth: 1,
-        //            fill: false,
-        //            data: [12, 29, 30, 15, 5, 43, 7, 33, 12, 21, 23, 12]
-        //        },
-        //        {
-        //            type: 'line',
-        //            label: 'ข้อตกลง',
-        //            backgroundColor: 'rgb(54, 162, 235,0.5)',
-        //            borderColor: 'rgb(54, 162, 235,1)',
-        //            //borderDash: [5, 5],
-        //            borderWidth: 1,
-        //            fill: false,
-        //            data: [5, 43, 7, 33, 12, 29, 30, 15, 12, 21, 23, 12]
-        //        },
-        //        {
-        //            type: 'line',
-        //            label: 'โครงการ',
-        //            backgroundColor: 'rgb(255, 205, 86,0.5)',
-        //            borderColor: 'rgb(255, 205, 86,1)',
-        //            //borderDash: [5, 5],
-        //            borderWidth: 1,
-        //            fill: false,
-        //            data: [33, 12, 21, 23, 12,12, 29, 30, 15, 5, 43, 7]
-        //        },
-        //        {
-        //            type: 'line',
-        //            label: 'หนังสือแสดงความจำนง',
-        //            backgroundColor: 'rgb(238, 130, 238,0.5)',
-        //            borderColor: 'rgb(238, 130, 238,1)',
-        //            //borderDash: [5, 5],
-        //            borderWidth: 1,
-        //            fill: false,
-        //            data: [25,5, 43, 7, 33, 12, 21,29, 30, 15,  23, 12]
-        //        },
-        //    ]
-        //}
 
         window.onload = function () {
             var ctx1 = document.getElementById('myChart').getContext('2d');

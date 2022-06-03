@@ -472,7 +472,8 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 			{
 				DomainName = "https://hra.nhso.go.th/hra";
 			}
-			var query = await _repo.Context.ViewAttachFiles.Where(x => x.FileName != null && x.FilePath != null && x.OriginalFileName != null).ToListAsync();
+			//var query = await _repo.Context.ViewAttachFiles.Where(x => x.FileName != null && x.FilePath != null && x.OriginalFileName != null).ToListAsync();
+			var query = await _repo.Context.ViewRegisterAttachFiles.Where(x => x.Hcode == hcode).ToListAsync();
 			foreach (var item in query)
 			{
 				FileSystemDTO.Add(new Resources.Registers.FileSystemDTO()
@@ -488,7 +489,7 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 		public IEnumerable<AppTypeModel> GetAppTypeList(string AppTypeId = null)
 		{
 			var response = new List<AppTypeModel>();
-			response.Add(new AppTypeModel() { Id = "3", Value = "ขอคืน" });
+			response.Add(new AppTypeModel() { Id = "3", Value = "ขอคืน/ยกเลิก" });
 			response.Add(new AppTypeModel() { Id = "4", Value = "ขอเคลม" });
 			response.Add(new AppTypeModel() { Id = "5", Value = "ขอเพิ่ม" });
 			response.Add(new AppTypeModel() { Id = "6", Value = "ขอลด" });
@@ -504,7 +505,8 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 		{
 			var response = new List<AppTypeModel>();
 			response.Add(new AppTypeModel() { Id = null, Value = "อยู่ระหว่างส่งคำขอ" });
-			response.Add(new AppTypeModel() { Id = "created", Value = "ขอออก" });
+			response.Add(new AppTypeModel() { Id = "created", Value = "ขอออกใหม่" });
+			response.Add(new AppTypeModel() { Id = "cancelled", Value = "ขอคืน/ยกเลิก" });
 			response.Add(new AppTypeModel() { Id = "extended", Value = "ขอต่ออายุ" });
 			response.Add(new AppTypeModel() { Id = "increased", Value = "ขอเพิ่มวงเงิน" });
 			response.Add(new AppTypeModel() { Id = "decreased", Value = "ขอลดวงเงิน" });

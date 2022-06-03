@@ -75,8 +75,8 @@
                 </li>
 
                 @if (UserService.GetRoleRoleCode() == PermissionRole.SystemAdmin
-                   || UserService.GetRoleRoleCode() == PermissionRole.CentralAdmin
-                   || UserService.GetRoleRoleCode() == PermissionRole.CentralUser)
+                  || UserService.GetRoleRoleCode() == PermissionRole.CentralAdmin
+                  || UserService.GetRoleRoleCode() == PermissionRole.CentralUser)
                 {
                     <li class="nav-item active dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownSmart01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,7 +86,7 @@
                             <li>
                                 <a class="dropdown-item" onclick="showLoading()"
                                    asp-controller="Guarantee"
-                                   asp-action="Tracking">หน้าติดตาม</a>
+                                   asp-action="Tracking">หน้าติดตามคำขอ</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" onclick="showLoading()"
@@ -94,32 +94,32 @@
                                    asp-action="Tracking2">สร้างคำขอ</a>
                             </li>
                             @*<li>
-            <a class="dropdown-item" onclick="showLoading()"
-               asp-controller="Guarantee"
-               asp-action="Tracking"
-               asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T1_NEW))">ออกใหม่</a>
-        </li>
-        <li>
-            <a class="dropdown-item" onclick="showLoading()"
-               asp-controller="Guarantee"
-               asp-action="Tracking"
-               asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T2_RENEW))">ต่ออายุ</a>
-        </li>
-        <li>
-            <a class="dropdown-item" onclick="showLoading()"
-               asp-controller="Guarantee"
-               asp-action="Tracking"
-               asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T3_RETURN))">คืน</a>
-        </li>
-        <li>
-            <a class="dropdown-item" onclick="showLoading()"
-               asp-controller="Guarantee"
-               asp-action="Tracking"
-               asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T4_CLAIM))">เคลม/ยึด</a>
-        </li>
-        <li>
-            <a class="dropdown-item" onclick="showLoading()" asp-controller="Guarantee" asp-action="GuaranteeReport">รายงานทะเบียนคุม</a>
-        </li>*@
+                                    <a class="dropdown-item" onclick="showLoading()"
+                                       asp-controller="Guarantee"
+                                       asp-action="Tracking"
+                                       asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T1_NEW))">ออกใหม่</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" onclick="showLoading()"
+                                       asp-controller="Guarantee"
+                                       asp-action="Tracking"
+                                       asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T2_RENEW))">ต่ออายุ</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" onclick="showLoading()"
+                                       asp-controller="Guarantee"
+                                       asp-action="Tracking"
+                                       asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T3_RETURN))">คืน</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" onclick="showLoading()"
+                                       asp-controller="Guarantee"
+                                       asp-action="Tracking"
+                                       asp-route-MenuEn="@(SecurityRepo.Encrypt(ContractGuaranteeTypes.T4_CLAIM))">เคลม/ยึด</a>
+                                </li>*@
+                            <li>
+                                <a class="dropdown-item" onclick="showLoading()" asp-controller="Guarantee" asp-action="GuaranteeReport">รายงานทะเบียนคุม</a>
+                            </li>
                         </ul>
                     </li>
                 }

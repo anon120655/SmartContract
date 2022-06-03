@@ -117,12 +117,14 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
         public virtual DbSet<ViewAttachFile> ViewAttachFiles { get; set; }
         public virtual DbSet<ViewAttachfileConfigItem> ViewAttachfileConfigItems { get; set; }
         public virtual DbSet<ViewHraRegister> ViewHraRegisters { get; set; }
+        public virtual DbSet<ViewRegisterAttachFile> ViewRegisterAttachFiles { get; set; }
+        public virtual DbSet<ViewRegisterFile> ViewRegisterFiles { get; set; }
         public virtual DbSet<ViewRequestRegister> ViewRequestRegisters { get; set; }
         public virtual DbSet<ViewStandardRegister> ViewStandardRegisters { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -9843,10 +9845,9 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
                 entity.ToView("V_NHSO_SIGNER");
 
                 entity.Property(e => e.DepartmentCode)
-                    .HasMaxLength(5)
+                    .HasMaxLength(10)
                     .IsUnicode(false)
-                    .HasColumnName("DEPARTMENT_CODE")
-                    .IsFixedLength(true);
+                    .HasColumnName("DEPARTMENT_CODE");
 
                 entity.Property(e => e.EmpId)
                     .HasMaxLength(10)
@@ -9859,7 +9860,7 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
                     .HasColumnName("SIGNER_EMAIL");
 
                 entity.Property(e => e.SignerFullname)
-                    .HasMaxLength(207)
+                    .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("SIGNER_FULLNAME");
 
@@ -10929,6 +10930,107 @@ namespace SmartContract.Infrastructure.Data.ConnectionContext
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("VILLAGE_NO");
+            });
+
+            modelBuilder.Entity<ViewRegisterAttachFile>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VIEW_REGISTER_ATTACH_FILES");
+
+                entity.Property(e => e.ContentType)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("CONTENT_TYPE");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("CREATED_DATE");
+
+                entity.Property(e => e.CreatedId)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATED_ID");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.FileName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FILE_NAME");
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("FILE_PATH");
+
+                entity.Property(e => e.FileSize)
+                    .HasPrecision(19)
+                    .HasColumnName("FILE_SIZE");
+
+                entity.Property(e => e.FileType)
+                    .HasPrecision(10)
+                    .HasColumnName("FILE_TYPE");
+
+                entity.Property(e => e.FileTypeName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("FILE_TYPE_NAME");
+
+                entity.Property(e => e.Hcode)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("HCODE");
+
+                entity.Property(e => e.Hname)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("HNAME");
+
+                entity.Property(e => e.Id)
+                    .HasPrecision(19)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.LastupdatedDate)
+                    .HasPrecision(6)
+                    .HasColumnName("LASTUPDATED_DATE");
+
+                entity.Property(e => e.LastupdatedId)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("LASTUPDATED_ID");
+
+                entity.Property(e => e.OriginalFileName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("ORIGINAL_FILE_NAME");
+
+                entity.Property(e => e.Uuid)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UUID");
+            });
+
+            modelBuilder.Entity<ViewRegisterFile>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VIEW_REGISTER_FILES");
+
+                entity.Property(e => e.FileId)
+                    .HasPrecision(19)
+                    .HasColumnName("FILE_ID");
+
+                entity.Property(e => e.FileTypeId)
+                    .HasPrecision(10)
+                    .HasColumnName("FILE_TYPE_ID");
+
+                entity.Property(e => e.RegisterId)
+                    .HasPrecision(19)
+                    .HasColumnName("REGISTER_ID");
             });
 
             modelBuilder.Entity<ViewRequestRegister>(entity =>

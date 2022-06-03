@@ -1730,16 +1730,39 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 			if (DateTime.Now.Month >= 10 && DateTime.Now.Day >= 1)
 				budgetYear++;
 
-			var query = await _repo.Context.Contracts.OrderByDescending(x => x.ContractId).FirstOrDefaultAsync(x => x.Used && x.ContractId != null);
-
 			String _BudgetYear = budgetYear.ToString().Substring(2);
-			if (query == null)
+
+			var query = await _repo.Context.Contracts.Where(x => x.ContractId != null).OrderByDescending(x => x.ContractId).ToListAsync();
+
+			//ปีงบ 2565 Running >4000 เริ่ม KickOff ปีงบ 2565
+			if (_BudgetYear == "65")
 			{
-				return $"{_BudgetYear}/B/00001";
+				//query = await _repo.Context.Contracts.OrderByDescending(x => x.ContractId).FirstOrDefaultAsync(x => x.ContractId.Substring(0, 2) == _BudgetYear && int.Parse(x.ContractId.Substring(5)) > 4000);
+
+				var query65 = query.Where(x => x.ContractId.Substring(0, 2) == _BudgetYear && int.Parse(x.ContractId.Substring(5)) > 4000).FirstOrDefault();
+
+				if (query65 == null)
+				{
+					return $"{_BudgetYear}/B/04001";
+				}
+
+				var ContractId = int.Parse(query65.ContractId.Substring(5)) + 1;
+				return $"{_BudgetYear}/B/{ContractId.ToString("00000")}";
+			}
+			else
+            {
+				//var query1 = await _repo.Context.Contracts.OrderByDescending(x => x.ContractId).FirstOrDefaultAsync(x => x.ContractId.Substring(0, 2) == _BudgetYear);
+				var query1 = query.Where(x => x.ContractId.Substring(0, 2) == _BudgetYear).FirstOrDefault();
+
+				if (query1 == null)
+				{
+					return $"{_BudgetYear}/B/00001";
+				}
+
+				var ContractId = int.Parse(query1.ContractId.Substring(5)) + 1;
+				return $"{_BudgetYear}/B/{ContractId.ToString("00000")}";
 			}
 
-			var ContractId = int.Parse(query.ContractId.Substring(5)) + 1;
-			return $"{_BudgetYear}/B/{ContractId.ToString("00000")}";
 
 		}
 
@@ -2110,6 +2133,18 @@ namespace SmartContract.Infrastructure.Repositorys.Share
 				if (vNhsoBorads != null)
 				{
 					emailSent = vNhsoBorads.BoradEmail;
+                }
+                else
+                {
+					if (!String.IsNullOrEmpty(_mySet.EmailSetting.DefualtMail))
+					{
+						emailSent = _mySet.EmailSetting.DefualtMail;
+					}
+                    else
+                    {
+						emailSent = "ti-claim@nhso.go.th";
+					}
+					
 				}
 			}
 
